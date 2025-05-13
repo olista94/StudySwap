@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faFileArrowUp, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faFileArrowUp, faFolderOpen, faRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
     const navigate = useNavigate();
@@ -58,12 +58,12 @@ export default function Navbar() {
                         <>
                             {location.pathname !== "/" && location.pathname !== "/login" && (
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/login">Iniciar sesión</Link>
+                                    <Link className="nav-link" to="/login"><FontAwesomeIcon icon={faRightToBracket} /> Iniciar sesión</Link>
                                 </li>
                             )}
                             {location.pathname !== "/" && location.pathname !== "/register" && (
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/register">Registrarse</Link>
+                                    <Link className="nav-link" to="/register"><FontAwesomeIcon icon={faUserPlus} /> Registrarse</Link>
                                 </li>
                             )}
                         </>
