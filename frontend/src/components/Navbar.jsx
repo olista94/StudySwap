@@ -1,5 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faFileArrowUp, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
     const navigate = useNavigate();
@@ -37,13 +39,13 @@ export default function Navbar() {
                         // Usuario logueado: mostrar opciones
                         <>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/upload">📤 Subir</Link>
+                                <Link className="nav-link" to="/upload"><FontAwesomeIcon icon={faFileArrowUp} /> Subir</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/my-resources">📁 Mis recursos</Link>
+                                <Link className="nav-link" to="/my-resources"><FontAwesomeIcon icon={faFolderOpen} /> Mis recursos</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/profile">👤 {user.name}</Link>
+                                <Link className="nav-link" to="/profile"><FontAwesomeIcon icon={faUser} /> Perfil</Link>
                             </li>
                             <li className="nav-item">
                                 <button className="btn btn-outline-light btn-sm ms-2" onClick={handleLogout}>
