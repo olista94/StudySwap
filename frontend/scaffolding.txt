@@ -1,0 +1,8 @@
+frontend/
+  └── src/
+      ├── pages/         # Página de login, registro, dashboard...
+      ├── components/    # Navbar, cards, formularios reutilizables...
+      ├── services/      # Conexión con la API
+      ├── context/       # Estado global si usas Context API
+      ├── App.jsx
+      └── main.jsx
