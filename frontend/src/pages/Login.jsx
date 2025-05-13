@@ -1,12 +1,25 @@
-// Archivo: src/pages/Login.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
 
 export default function Login() {
+
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+
+  useEffect(() => {
+    const user = localStorage.getItem("studyswap_user");
+    if (user) {
+      navigate("/");
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -14,11 +27,13 @@ export default function Login() {
       const { token, user } = await loginUser(form);
       localStorage.setItem("studyswap_token", token);
       localStorage.setItem("studyswap_user", JSON.stringify(user));
-      window.location.href = "/"; // redirigir al dashboard o página principal
+      navigate("/"); // redirigir al dashboard o página principal
     } catch (err) {
       setError(err.message);
     }
   };
+
+  if (loading) return null;
 
   return (
     <div className="container mt-5" style={{ maxWidth: "400px" }}>

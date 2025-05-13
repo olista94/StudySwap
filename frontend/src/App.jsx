@@ -11,10 +11,9 @@ export default function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/profile"
-          element={<div className="container mt-4"><h2>Perfil del usuario (por hacer)</h2></div>}
-        />
+        {/* Placeholder por ahora */}
+        <Route path="/upload" element={<div className="container mt-5">Subida de apuntes (por hacer)</div>} />
+        <Route path="/my-resources" element={<div className="container mt-5">Listado de tus apuntes (por hacer)</div>} />
       </Routes>
     </BrowserRouter>
   );
