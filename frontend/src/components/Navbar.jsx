@@ -24,7 +24,7 @@ export default function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
             <Link className="navbar-brand d-flex align-items-center" to="/">
-                <img src="/icon.png" alt="Logo StudySwap" className="logo-icon me-2" />
+                <img src="/images/icon.png" alt="Logo StudySwap" className="logo-icon me-2" />
                 StudySwap
             </Link>
 
