@@ -1,5 +1,5 @@
 .login-container {
-  background-image: url("/frontend/src/public/images/login-background.jpg");
+  background-image: url("/frontend/public/images/login-wallpaper.jpg");
   background-size: cover;
   background-position: center;
   min-height: 100vh;

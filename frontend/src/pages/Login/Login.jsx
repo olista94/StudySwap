@@ -28,7 +28,7 @@ export default function Login() {
       const { token, user } = await loginUser(form);
       localStorage.setItem("studyswap_token", token);
       localStorage.setItem("studyswap_user", JSON.stringify(user));
-      navigate("/"); // redirigir al dashboard o página principal
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
@@ -37,7 +37,7 @@ export default function Login() {
   if (loading) return null;
 
   return (
-    <div clasName="login-container">
+    <div className="login-container">
       <div className="container mt-5" style={{ maxWidth: "400px" }}>
         <h2 className="mb-3">Iniciar sesión</h2>
         {error && <div className="alert alert-danger">{error}</div>}

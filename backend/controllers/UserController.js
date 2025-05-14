@@ -62,6 +62,35 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+exports.updateProfile = async (req, res) => {
+  const userId = req.user.id;
+  const { name, university, email } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+
+    if (email && email !== user.email) {
+      const emailUsed = await User.findOne({ email });
+      if (emailUsed) return res.status(400).json({ message: "Email ya registrado" });
+    }
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.university = university || user.university;
+    
+    await user.save();
+
+    const sanitizedUser = user.toObject();
+    delete sanitizedUser.passwordHash;
+
+    res.json(sanitizedUser);
+  } catch (err) {
+    res.status(500).json({ message: "Error al actualizar el perfil", error: err.message });
+  }
+};
+
 exports.changePassword = async (req, res) => {
   const userId = req.user.id;
   const { currentPassword, newPassword } = req.body;

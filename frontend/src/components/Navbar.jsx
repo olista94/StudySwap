@@ -56,15 +56,19 @@ export default function Navbar() {
                     ) : (
                         // Solo mostrar login/register si no estás ya en el home después del login
                         <>
-                            {location.pathname !== "/" && location.pathname !== "/login" && (
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/login"><FontAwesomeIcon icon={faRightToBracket} /> Iniciar sesión</Link>
-                                </li>
-                            )}
-                            {location.pathname !== "/" && location.pathname !== "/register" && (
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/register"><FontAwesomeIcon icon={faUserPlus} /> Registrarse</Link>
-                                </li>
+                            {location.pathname !== "/" && (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/login">
+                                            <FontAwesomeIcon icon={faRightToBracket} /> Iniciar sesión
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/register">
+                                            <FontAwesomeIcon icon={faUserPlus} /> Registrarse
+                                        </Link>
+                                    </li>
+                                </>
                             )}
                         </>
                     )}
