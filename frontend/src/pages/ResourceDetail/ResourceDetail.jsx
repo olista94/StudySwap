@@ -99,7 +99,7 @@ export default function ResourceDetail() {
       <ul className="detail-comments">
         {comments.map(c => (
           <li key={c._id}>
-            <strong>{c.userId.name}</strong> dijo:
+            <strong>{c.userId.name}</strong>:
             <p>{c.content}</p>
           </li>
         ))}

@@ -1,5 +1,3 @@
-/* src/components/PublicResources/PublicResources.css */
-
 :root {
   --primary-color: #248232;
   --accent-color: #2BA84A;
@@ -136,4 +134,20 @@
 .public-card h5 {
   text-decoration: none;
   color: var(--text-color);
+}
+
+.vote-comment-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.vote-buttons button {
+  margin-right: 8px;
+}
+
+.comments-count {
+  font-size: 0.95rem;
+  color: #555;
 }

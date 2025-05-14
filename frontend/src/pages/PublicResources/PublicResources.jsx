@@ -11,34 +11,50 @@ export default function PublicResources() {
   const token = localStorage.getItem("studyswap_token");
 
   useEffect(() => {
-    const fetchResourcesWithVotes = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/resources");
-        const data = await res.json();
+  const fetchResourcesWithVotesAndComments = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/resources");
+      const data = await res.json();
 
-        const enriched = await Promise.all(
-          data.map(async (r) => {
-            try {
-              const resVotes = await fetch(`http://localhost:3000/api/votes/resources/${r._id}`);
-              const votes = await resVotes.ok ? resVotes.json() : { likes: 0, dislikes: 0 };
-              return { ...r, votes };
-            } catch {
-              return { ...r, votes: { likes: 0, dislikes: 0 } };
+      const enriched = await Promise.all(
+        data.map(async (r) => {
+          let votes = { likes: 0, dislikes: 0 };
+          let comments = 0;
+
+          // Votos
+          try {
+            const resVotes = await fetch(`http://localhost:3000/api/votes/resources/${r._id}`);
+            if (resVotes.ok) votes = await resVotes.json();
+          } catch (err) {
+            console.error(`Error al obtener votos del recurso ${r._id}:`, err);
+          }
+
+          // Comentarios
+          try {
+            const resComments = await fetch(`http://localhost:3000/api/comments/resources/${r._id}/comments/count`);
+            if (resComments.ok) {
+              const json = await resComments.json();
+              comments = json.count;
             }
-          })
-        );
+          } catch (err) {
+            console.error(`Error al contar comentarios del recurso ${r._id}:`, err);
+          }
 
-        setResources(enriched);
-        setFiltered(enriched);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error:", err);
-        setLoading(false);
-      }
-    };
+          return { ...r, votes, comments };
+        })
+      );
 
-    fetchResourcesWithVotes();
-  }, []);
+      setResources(enriched);
+      setFiltered(enriched);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error:", err);
+      setLoading(false);
+    }
+  };
+
+  fetchResourcesWithVotesAndComments();
+}, []);
 
   const handleFilter = e => {
     const { name, value } = e.target;
@@ -107,9 +123,14 @@ export default function PublicResources() {
                   <span>{resource.year}</span>
                 </div>
 
-                <div className="vote-buttons" onClick={e => e.stopPropagation()}>
-                  <button onClick={(e) => { e.preventDefault(); handleVote(resource._id, 1); }}>👍 {resource.votes?.likes || 0}</button>
-                  <button onClick={(e) => { e.preventDefault(); handleVote(resource._id, -1); }}>👎 {resource.votes?.dislikes || 0}</button>
+                <div className="vote-comment-row" onClick={e => e.stopPropagation()}>
+                  <div className="vote-buttons">
+                    <button onClick={(e) => { e.preventDefault(); handleVote(resource._id, 1); }}>👍 {resource.votes?.likes || 0}</button>
+                    <button onClick={(e) => { e.preventDefault(); handleVote(resource._id, -1); }}>👎 {resource.votes?.dislikes || 0}</button>
+                  </div>
+                  <div className="comments-count">
+                    💬 {resource.comments || 0}
+                  </div>
                 </div>
 
                 <a

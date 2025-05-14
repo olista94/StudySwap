@@ -9,6 +9,15 @@ exports.getByResource = async (req, res) => {
   }
 };
 
+exports.countByResource = async (req, res) => {
+  try {
+    const count = await Comment.countDocuments({ resource: req.params.id });
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ message: "Error al contar comentarios" });
+  }
+};
+
 exports.create = async (req, res) => {
   try {
     const comment = new Comment({

@@ -1,8 +1,19 @@
 const Vote = require('../models/Vote');
 const Resource = require('../models/Resource');
 
+exports.getVotes = async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    if (!resource) return res.status(404).json({ message: 'Recurso no encontrado' });
+
+    res.json({ likes: resource.likes || 0, dislikes: resource.dislikes || 0 });
+  } catch (err) {
+    res.status(500).json({ message: 'Error al obtener votos' });
+  }
+};
+
 exports.vote = async (req, res) => {
-  const { value } = req.body; // debe ser 1 (like) o -1 (dislike)
+  const { value } = req.body;
 
   if (![1, -1].includes(value)) {
     return res.status(400).json({ message: 'Valor de voto inválido' });
@@ -12,24 +23,27 @@ exports.vote = async (req, res) => {
     const existing = await Vote.findOne({ userId: req.user.id, resourceId: req.params.id });
 
     if (existing) {
-      // Si cambia el valor del voto, se actualiza
-      if (existing.value !== value) {
-        const diff = value - existing.value; // +2 o -2
-        await existing.updateOne({ value });
-
-        const update = value === 1 ? { likes: 1, dislikes: -1 } : { likes: -1, dislikes: 1 };
-        await Resource.findByIdAndUpdate(req.params.id, { $inc: update });
-
-        return res.json({ message: 'Voto actualizado' });
+      // Si el voto ya es el mismo, se ignora
+      if (existing.value === value) {
+        return res.status(200).json({ message: 'Ya has votado' });
       }
 
-      // Si es igual, se ignora (ya ha votado igual)
-      return res.status(200).json({ message: 'Ya has votado' });
+      // Revertir voto anterior
+      const revert = existing.value === 1 ? { likes: -1 } : { dislikes: -1 };
+      await Resource.findByIdAndUpdate(req.params.id, { $inc: revert });
+
+      // Aplicar nuevo voto
+      existing.value = value;
+      await existing.save();
+
+      const apply = value === 1 ? { likes: 1 } : { dislikes: 1 };
+      await Resource.findByIdAndUpdate(req.params.id, { $inc: apply });
+
+      return res.json({ message: 'Voto actualizado' });
     }
 
     // Nuevo voto
     await Vote.create({ userId: req.user.id, resourceId: req.params.id, value });
-
     const inc = value === 1 ? { likes: 1 } : { dislikes: 1 };
     await Resource.findByIdAndUpdate(req.params.id, { $inc: inc });
 
