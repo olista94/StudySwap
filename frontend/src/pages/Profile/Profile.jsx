@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateProfile, changePassword } from "../../services/userService";
+import "./Profile.css";
 
 export default function Profile() {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function Profile() {
     if (!user) return null;
 
     return (
-        <div className="container mt-5" style={{ maxWidth: "600px" }}>
+        <div className="profile-container">
             <h2 className="mb-4">Mi perfil</h2>
 
             {message && <div className="alert alert-info">{message}</div>}

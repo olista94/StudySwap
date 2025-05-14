@@ -76,3 +76,32 @@ exports.remove = async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar recurso' });
   }
 };
+
+exports.uploadWithFile = async (req, res) => {
+  try {
+    const { title, description, subject, professor, university, year } = req.body;
+    const file = req.file;
+
+    if (!file) return res.status(400).json({ message: "Archivo no enviado" });
+
+    const fileType = file.mimetype.includes("pdf") ? "pdf" :
+                     file.mimetype.includes("markdown") ? "markdown" : "image";
+
+    const resource = new Resource({
+      title,
+      description,
+      fileUrl: `/uploads/${file.filename}`,
+      fileType,
+      subject,
+      professor,
+      university,
+      year,
+      uploadedBy: req.user.id
+    });
+
+    await resource.save();
+    res.status(201).json(resource);
+  } catch (err) {
+    res.status(500).json({ message: "Error al subir recurso", error: err.message });
+  }
+};

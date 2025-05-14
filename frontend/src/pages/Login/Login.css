@@ -1,9 +1,51 @@
 .login-container {
-  background-image: url("/frontend/public/images/login-wallpaper.jpg");
-  background-size: cover;
-  background-position: center;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background-color: var(--color-secondary);
+}
+
+.login-container .container {
+  background-color: var(--color-white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.login-container h2 {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.login-container .form-control {
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.login-container .form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.15rem rgba(36, 130, 50, 0.25);
+}
+
+.login-container .btn-primary {
+  background-color: var(--color-primary);
+  border: none;
+  padding: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease;
+}
+
+.login-container .btn-primary:hover {
+  background-color: var(--color-accent);
+}
+
+.alert {
+  text-align: center;
+  border-radius: var(--border-radius);
 }

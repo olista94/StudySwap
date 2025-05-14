@@ -1,0 +1,65 @@
+/* src/components/Navbar/Navbar.css */
+:root {
+  --primary-color: #248232;
+  --accent-color: #2BA84A;
+  --text-color: #2D3A3A;
+  --bg-color: #ffffff;
+  --hover-bg: #f1f1f1;
+  --radius: 8px;
+}
+
+.navbar-wuolah {
+  background-color: var(--bg-color);
+  border-bottom: 1px solid #eee;
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-brand .brand-link {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.navbar-brand img {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li a,
+.navbar-links li button {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius);
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-links li a:hover,
+.navbar-links li button:hover {
+  background-color: var(--hover-bg);
+}

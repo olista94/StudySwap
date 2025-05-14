@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const voteSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  resource: { type: mongoose.Schema.Types.ObjectId, ref: 'Resource', required: true },
-  type: { type: String, enum: ['like', 'dislike'], required: true }
+  resourceId: { type: mongoose.Schema.Types.ObjectId, ref: "Resource", required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  value: { type: Number, enum: [1, -1], required: true }, // 1 = like, -1 = dislike
 });
 
-module.exports = mongoose.model('Vote', voteSchema);
+voteSchema.index({ resourceId: 1, userId: 1 }, { unique: true });
+
+module.exports = mongoose.model("Vote", voteSchema);

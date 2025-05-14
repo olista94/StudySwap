@@ -1,8 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import Profile from "./pages/Profile/Profile";
+import PublicResources from "./pages/PublicResources/PublicResources";
+import ResourceDetail from "./pages/ResourceDetail/ResourceDetail";
 import Navbar from "./components/Navbar";
+import Upload from "./pages/Upload/Upload";
+import MyResources from "./pages/MyResources/MyResources";
+import Profile from "./pages/Profile/Profile";
 
 export default function App() {
   return (
@@ -12,9 +16,10 @@ export default function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* Placeholder por ahora */}
-        <Route path="/upload" element={<div className="container mt-5">Subida de apuntes (por hacer)</div>} />
-        <Route path="/my-resources" element={<div className="container mt-5">Listado de tus apuntes (por hacer)</div>} />
+        <Route path="/explorar" element={<PublicResources />} />
+        <Route path="/resources/:id" element={<ResourceDetail />} />
+        <Route path="/upload" element={<Upload />} />
+        <Route path="/my-resources" element={<MyResources />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>

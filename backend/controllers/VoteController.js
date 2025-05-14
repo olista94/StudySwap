@@ -2,43 +2,54 @@ const Vote = require('../models/Vote');
 const Resource = require('../models/Resource');
 
 exports.vote = async (req, res) => {
-  const { type } = req.body;
+  const { value } = req.body; // debe ser 1 (like) o -1 (dislike)
 
-  if (!['like', 'dislike'].includes(type)) {
-    return res.status(400).json({ message: 'Tipo de voto inválido' });
+  if (![1, -1].includes(value)) {
+    return res.status(400).json({ message: 'Valor de voto inválido' });
   }
 
   try {
-    const existing = await Vote.findOne({ user: req.user.id, resource: req.params.id });
+    const existing = await Vote.findOne({ userId: req.user.id, resourceId: req.params.id });
 
     if (existing) {
-      await existing.deleteOne();
+      // Si cambia el valor del voto, se actualiza
+      if (existing.value !== value) {
+        const diff = value - existing.value; // +2 o -2
+        await existing.updateOne({ value });
+
+        const update = value === 1 ? { likes: 1, dislikes: -1 } : { likes: -1, dislikes: 1 };
+        await Resource.findByIdAndUpdate(req.params.id, { $inc: update });
+
+        return res.json({ message: 'Voto actualizado' });
+      }
+
+      // Si es igual, se ignora (ya ha votado igual)
+      return res.status(200).json({ message: 'Ya has votado' });
     }
 
-    const newVote = new Vote({ user: req.user.id, resource: req.params.id, type });
-    await newVote.save();
+    // Nuevo voto
+    await Vote.create({ userId: req.user.id, resourceId: req.params.id, value });
 
-    // Actualiza contador del recurso
-    const inc = type === 'like' ? { likes: 1 } : { dislikes: 1 };
+    const inc = value === 1 ? { likes: 1 } : { dislikes: 1 };
     await Resource.findByIdAndUpdate(req.params.id, { $inc: inc });
 
-    res.json({ message: 'Voto registrado' });
+    res.status(201).json({ message: 'Voto registrado' });
   } catch (err) {
-    res.status(500).json({ message: 'Error al registrar voto' });
+    res.status(500).json({ message: 'Error al registrar voto', error: err.message });
   }
 };
 
 exports.removeVote = async (req, res) => {
   try {
-    const vote = await Vote.findOne({ user: req.user.id, resource: req.params.id });
+    const vote = await Vote.findOne({ userId: req.user.id, resourceId: req.params.id });
     if (!vote) return res.status(404).json({ message: 'No hay voto registrado' });
 
-    const dec = vote.type === 'like' ? { likes: -1 } : { dislikes: -1 };
+    const dec = vote.value === 1 ? { likes: -1 } : { dislikes: -1 };
     await Resource.findByIdAndUpdate(req.params.id, { $inc: dec });
 
     await vote.deleteOne();
     res.json({ message: 'Voto eliminado' });
   } catch (err) {
-    res.status(500).json({ message: 'Error al eliminar voto' });
+    res.status(500).json({ message: 'Error al eliminar voto', error: err.message });
   }
 };

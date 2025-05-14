@@ -1,79 +1,61 @@
+// src/components/Navbar/Navbar.jsx
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faFileArrowUp, faFolderOpen, faRightToBracket, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMagnifyingGlass,
+  faUser,
+  faFileArrowUp,
+  faFolderOpen,
+  faRightToBracket,
+  faUserPlus,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+import "./Navbar.css";
 
 export default function Navbar() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem("studyswap_user");
-        if (storedUser) setUser(JSON.parse(storedUser));
-        else setUser(null);
-    }, [location]); // Se actualiza al navegar
+  useEffect(() => {
+    const storedUser = localStorage.getItem("studyswap_user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+    else setUser(null);
+  }, [location]);
 
-    const handleLogout = () => {
-        localStorage.removeItem("studyswap_token");
-        localStorage.removeItem("studyswap_user");
-        setUser(null);
-        navigate("/login");
-    };
+  const handleLogout = () => {
+    localStorage.removeItem("studyswap_token");
+    localStorage.removeItem("studyswap_user");
+    setUser(null);
+    navigate("/login");
+  };
 
-    return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-            <Link className="navbar-brand d-flex align-items-center" to="/">
-                <img src="/images/icon.png" alt="Logo StudySwap" className="logo-icon me-2" />
-                StudySwap
-            </Link>
+  return (
+    <nav className="navbar-wuolah">
+      <div className="navbar-brand">
+        <Link to="/" className="brand-link">
+          <img src="/images/icon.png" alt="StudySwap" />
+          StudySwap
+        </Link>
+      </div>
 
-            {/* Hamburguesa para móviles */}
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav ms-auto">
-                    {user ? (
-                        // Usuario logueado: mostrar opciones
-                        <>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/upload"><FontAwesomeIcon icon={faFileArrowUp} /> Subir</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/my-resources"><FontAwesomeIcon icon={faFolderOpen} /> Mis recursos</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/profile"><FontAwesomeIcon icon={faUser} /> Perfil</Link>
-                            </li>
-                            <li className="nav-item">
-                                <button className="btn btn-outline-light btn-sm ms-2" onClick={handleLogout}>
-                                    Cerrar sesión
-                                </button>
-                            </li>
-                        </>
-                    ) : (
-                        // Solo mostrar login/register si no estás ya en el home después del login
-                        <>
-                            {location.pathname !== "/" && (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/login">
-                                            <FontAwesomeIcon icon={faRightToBracket} /> Iniciar sesión
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to="/register">
-                                            <FontAwesomeIcon icon={faUserPlus} /> Registrarse
-                                        </Link>
-                                    </li>
-                                </>
-                            )}
-                        </>
-                    )}
-                </ul>
-            </div>
-        </nav>
-    );
+      <ul className="navbar-links">
+        {user ? (
+          <>
+            <li><Link to="/explorar"><FontAwesomeIcon icon={faMagnifyingGlass} />Buscar apuntes</Link></li>
+            <li><Link to="/upload"><FontAwesomeIcon icon={faFileArrowUp} /> Subir</Link></li>
+            <li><Link to="/my-resources"><FontAwesomeIcon icon={faFolderOpen} /> Mis recursos</Link></li>
+            <li><Link to="/profile"><FontAwesomeIcon icon={faUser} /> Perfil</Link></li>
+            <li><button onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /> Cerrar sesión</button></li>
+          </>
+        ) : (
+          <>
+            <li><Link to="/login"><FontAwesomeIcon icon={faRightToBracket} /> Iniciar sesión</Link></li>
+            <li><Link to="/register"><FontAwesomeIcon icon={faUserPlus} /> Registrarse</Link></li>
+          </>
+        )}
+      </ul>
+    </nav>
+  );
 }

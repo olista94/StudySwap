@@ -1,0 +1,87 @@
+/* src/components/MyResources/MyResources.css */
+:root {
+  --primary-color: #248232;
+  --text-color: #2d3a3a;
+  --card-bg: #ffffff;
+  --border-radius: 10px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --muted: #888;
+  --accent-color: #2ba84a;
+}
+
+.myresources-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.myresources-container h2 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.myresources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.myresources-card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+
+.myresources-card:hover {
+  transform: translateY(-4px);
+}
+
+.myresources-card h5 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.myresources-card p {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+}
+
+.myresources-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.myresources-btn {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.myresources-btn:hover {
+  background-color: var(--accent-color);
+}
+
+.myresources-loading,
+.myresources-error,
+.myresources-empty {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-color);
+}
