@@ -16,7 +16,7 @@ export default function Login() {
   useEffect(() => {
     const user = localStorage.getItem("studyswap_user");
     if (user) {
-      navigate("/");
+      navigate("/explorer");
     } else {
       setLoading(false);
     }
@@ -28,7 +28,7 @@ export default function Login() {
       const { token, user } = await loginUser(form);
       localStorage.setItem("studyswap_token", token);
       localStorage.setItem("studyswap_user", JSON.stringify(user));
-      navigate("/");
+      navigate("/explorer");
     } catch (err) {
       setError(err.message);
     }

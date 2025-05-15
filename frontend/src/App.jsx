@@ -6,6 +6,8 @@ import ResourceDetail from "./pages/ResourceDetail/ResourceDetail";
 import Navbar from "./components/Navbar";
 import Upload from "./pages/Upload/Upload";
 import MyResources from "./pages/MyResources/MyResources";
+import PublishTutorOffer from "./pages/PublishTutorOffer/PublishTutorOffer";
+import TutorOffersList from "./pages/TutorOffersList/TutorOffersList";
 import Profile from "./pages/Profile/Profile";
 
 export default function App() {
@@ -16,10 +18,12 @@ export default function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/explorar" element={<PublicResources />} />
+        <Route path="/explorer" element={<PublicResources />} />
         <Route path="/resources/:id" element={<ResourceDetail />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/my-resources" element={<MyResources />} />
+        <Route path="/tutors" element={<TutorOffersList />} />
+        <Route path="/tutors/publish" element={<PublishTutorOffer />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>

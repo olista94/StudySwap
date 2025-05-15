@@ -1,0 +1,53 @@
+:root {
+  --primary-color: #248232;
+  --accent-color: #2BA84A;
+  --text-color: #2D3A3A;
+  --bg-color: #ffffff;
+  --input-bg: #f9f9f9;
+  --border-radius: 10px;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --font-main: 'Poppins', sans-serif;
+}
+
+.tutors-container {
+  padding: 1.5rem;
+}
+
+.tutors-container h2 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.tutor-card {
+  background-color: #FCFFFC;
+  border: 1px solid #ddd;
+  border-left: 6px solid #248232;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.tutor-card h5 {
+  color: #2D3A3A;
+  margin-bottom: 0.4rem;
+}
+
+.tutor-card p {
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.tutor-card .btn {
+  background-color: #248232;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.tutor-card .btn:hover {
+  background-color: #2BA84A;
+}

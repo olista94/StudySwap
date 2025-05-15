@@ -10,6 +10,8 @@ import {
   faRightToBracket,
   faUserPlus,
   faRightFromBracket,
+  faChalkboardUser,
+  faUserTie
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 
@@ -47,9 +49,11 @@ export default function Navbar() {
       <ul className={`navbar-links ${menuOpen ? "show" : ""}`}>
         {user ? (
           <>
-            <li><Link to="/explorar" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faMagnifyingGlass} /> Buscar apuntes</Link></li>
-            <li><Link to="/upload" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faFileArrowUp} /> Subir</Link></li>
+            <li><Link to="/explorer" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faMagnifyingGlass} /> Buscar apuntes</Link></li>
             <li><Link to="/my-resources" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faFolderOpen} /> Mis recursos</Link></li>
+            <li><Link to="/upload" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faFileArrowUp} /> Subir apunter</Link></li>
+            <li><Link to="/tutors"><FontAwesomeIcon icon={faChalkboardUser} /> Profesores particulares</Link></li>
+            <li><Link to="/tutors/publish"><FontAwesomeIcon icon={faUserTie} /> Dar clases</Link></li>
             <li><Link to="/profile" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faUser} /> Perfil</Link></li>
             <li><button onClick={() => { setMenuOpen(false); handleLogout(); }}><FontAwesomeIcon icon={faRightFromBracket} /> Cerrar sesión</button></li>
           </>
