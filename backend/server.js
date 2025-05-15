@@ -4,7 +4,6 @@ const cors = require('cors');
 const path = require("path");
 require('dotenv').config({ path: __dirname + '/.env' });
 
-// Rutas
 const userRoutes = require('./routes/userRoutes');
 const resourceRoutes = require('./routes/resourceRoutes');
 const commentRoutes = require("./routes/commentRoutes");
@@ -19,7 +18,7 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Rutas
+// Rutas API
 app.use('/api/users', userRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/comments', commentRoutes);

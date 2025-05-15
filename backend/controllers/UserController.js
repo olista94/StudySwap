@@ -1,4 +1,5 @@
 const User = require('../models/User.js');
+const { sendWelcomeEmail } = require("../services/emailService");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -14,6 +15,8 @@ exports.register = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, passwordHash: hashed, university });
     await newUser.save();
+
+    await sendWelcomeEmail(newUser.email, newUser.name);
 
     res.status(201).json({ message: 'Usuario creado con éxito' });
   } catch (err) {
