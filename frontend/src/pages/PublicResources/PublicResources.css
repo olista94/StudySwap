@@ -1,154 +1,32 @@
-:root {
-  --primary-color: #248232;
-  --accent-color: #2BA84A;
-  --text-color: #2D3A3A;
-  --bg-color: #ffffff;
-  --input-bg: #f9f9f9;
-  --radius: 10px;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  --font-main: 'Poppins', sans-serif;
+.public-resource-card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(36, 130, 50, 0.2); /* sombra verde suave */
+  cursor: pointer;
 }
 
-.public-container {
-  font-family: var(--font-main);
-  padding: 2rem;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.public-container h2 {
-  color: var(--primary-color);
-  margin-bottom: 2rem;
-  text-align: center;
+.public-resource-title {
+  color: #040F0F; /* texto oscuro */
+  font-weight: 600;
 }
 
 .public-filters {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .public-filters input {
-  padding: 0.6rem;
-  border-radius: var(--radius);
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-  background-color: var(--input-bg);
-  min-width: 200px;
-}
-
-.public-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-
-.public-card {
-  background-color: #FCFFFC;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border-left: 6px solid #248232;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.public-card h5 {
-  color: var(--text-color);
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.public-card p {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 1rem;
-}
-
-.meta {
-  font-size: 0.8rem;
-  color: #888;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.public-btn {
-  text-align: center;
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius);
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.3s;
-}
-
-.public-btn:hover {
-  background-color: var(--accent-color);
-}
-
-.public-loading,
-.public-empty {
-  text-align: center;
-  margin-top: 2rem;
+  flex: 1 1 30%;
+  min-width: 180px;
+  padding: 10px;
   font-size: 1rem;
-  color: var(--text-color);
-}
-
-.vote-buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.vote-buttons button {
-  background-color: var(--input-bg);
   border: 1px solid #ccc;
-  border-radius: var(--radius);
-  padding: 0.3rem 0.8rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s;
-}
-
-.vote-buttons button:hover {
-  background-color: #e0f4e0;
-}
-
-.public-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.public-card-link:hover .public-card {
-  box-shadow: 0 0 10px rgba(36, 130, 50, 0.2);
-  transform: translateY(-2px);
-  transition: all 0.2s ease;
-}
-
-.public-card h5 {
-  text-decoration: none;
-  color: var(--text-color);
-}
-
-.vote-comment-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 10px;
-}
-
-.vote-buttons button {
-  margin-right: 8px;
+  border-radius: 6px;
 }
 
 .comments-count {
-  font-size: 0.95rem;
-  color: #555;
+  font-size: 0.875rem;
+  color: #2d3a3a;
 }

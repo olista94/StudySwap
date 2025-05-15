@@ -1,4 +1,13 @@
 import { useState } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Alert,
+  Stack,
+  InputLabel,
+} from "@mui/material";
 import "./Upload.css";
 
 export default function Upload() {
@@ -14,7 +23,7 @@ export default function Upload() {
 
   const [message, setMessage] = useState("");
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value, files } = e.target;
     setForm({
       ...form,
@@ -22,7 +31,7 @@ export default function Upload() {
     });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("studyswap_token");
 
@@ -37,48 +46,97 @@ export default function Upload() {
       });
 
       if (!res.ok) throw new Error("Error al subir el recurso");
+
       setMessage("✅ Recurso subido correctamente");
-      setForm({ title: "", description: "", subject: "", professor: "", university: "", year: "", file: null });
+      setForm({
+        title: "",
+        description: "",
+        subject: "",
+        professor: "",
+        university: "",
+        year: "",
+        file: null
+      });
     } catch (err) {
       setMessage("❌ " + err.message);
     }
   };
 
   return (
-    <div className="upload-container container mt-5">
-      <h2 className="mb-3">📤 Subir apunte</h2>
-      {message && <div className="alert alert-info">{message}</div>}
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="mb-3">
-          <label>Título</label>
-          <input name="title" className="form-control" required value={form.title} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Descripción</label>
-          <textarea name="description" className="form-control" value={form.description} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Asignatura</label>
-          <input name="subject" className="form-control" required value={form.subject} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Profesor</label>
-          <input name="professor" className="form-control" value={form.professor} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Universidad</label>
-          <input name="university" className="form-control" value={form.university} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Año</label>
-          <input name="year" type="number" className="form-control" value={form.year} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label>Archivo (PDF o imagen)</label>
-          <input name="file" type="file" className="form-control" accept=".pdf,.md,.jpg,.png,.jpeg" required onChange={handleChange} />
-        </div>
-        <button className="btn btn-success w-100" type="submit">Subir recurso</button>
-      </form>
-    </div>
+    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
+      <Typography variant="h5" gutterBottom>📤 Subir apunte</Typography>
+
+      {message && (
+        <Alert severity={message.startsWith("✅") ? "success" : "error"} sx={{ mb: 2 }}>
+          {message}
+        </Alert>
+      )}
+
+      <Box component="form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <Stack spacing={2}>
+          <TextField
+            name="title"
+            label="Título"
+            required
+            value={form.title}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            name="description"
+            label="Descripción"
+            multiline
+            rows={3}
+            value={form.description}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            name="subject"
+            label="Asignatura"
+            required
+            value={form.subject}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            name="professor"
+            label="Profesor"
+            value={form.professor}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            name="university"
+            label="Universidad"
+            value={form.university}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            name="year"
+            label="Año"
+            type="number"
+            value={form.year}
+            onChange={handleChange}
+            fullWidth
+          />
+          <Box>
+            <InputLabel>Archivo (PDF o imagen)</InputLabel>
+            <input
+              name="file"
+              type="file"
+              accept=".pdf,.md,.jpg,.png,.jpeg"
+              required
+              onChange={handleChange}
+              style={{ marginTop: "8px" }}
+            />
+          </Box>
+          <Button type="submit" variant="contained" color="success" fullWidth>
+            Subir recurso
+          </Button>
+        </Stack>
+      </Box>
+    </Box>
   );
 }

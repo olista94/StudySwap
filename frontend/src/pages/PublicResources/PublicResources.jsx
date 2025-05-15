@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
-import "./PublicResources.css";
+import {
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
+  TextField,
+  Button,
+  Box,
+  Stack,
+  Chip,
+  CircularProgress,
+} from "@mui/material";
 import { Link } from "react-router-dom";
+import "./PublicResources.css";
 
 export default function PublicResources() {
   const [resources, setResources] = useState([]);
@@ -21,7 +35,6 @@ export default function PublicResources() {
             let votes = { likes: 0, dislikes: 0 };
             let comments = 0;
 
-            // Votos
             try {
               const resVotes = await fetch(`http://localhost:3000/api/votes/resources/${r._id}`);
               if (resVotes.ok) votes = await resVotes.json();
@@ -29,7 +42,6 @@ export default function PublicResources() {
               console.error(`Error al obtener votos del recurso ${r._id}:`, err);
             }
 
-            // Comentarios
             try {
               const resComments = await fetch(`http://localhost:3000/api/comments/resources/${r._id}/comments/count`);
               if (resComments.ok) {
@@ -56,12 +68,12 @@ export default function PublicResources() {
     fetchResourcesWithVotesAndComments();
   }, []);
 
-  const handleFilter = e => {
+  const handleFilter = (e) => {
     const { name, value } = e.target;
     const newFilters = { ...filters, [name]: value };
     setFilters(newFilters);
 
-    const result = resources.filter(r =>
+    const result = resources.filter((r) =>
       (!newFilters.subject || r.subject?.toLowerCase().includes(newFilters.subject.toLowerCase())) &&
       (!newFilters.university || r.university?.toLowerCase().includes(newFilters.university.toLowerCase())) &&
       (!newFilters.year || r.year?.toString().includes(newFilters.year))
@@ -77,18 +89,16 @@ export default function PublicResources() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ value })
+        body: JSON.stringify({ value }),
       });
 
       const res = await fetch(`http://localhost:3000/api/votes/resources/${resourceId}`);
       const updatedVotes = await res.json();
 
       setFiltered((prev) =>
-        prev.map((r) =>
-          r._id === resourceId ? { ...r, votes: updatedVotes } : r
-        )
+        prev.map((r) => (r._id === resourceId ? { ...r, votes: updatedVotes } : r))
       );
     } catch (err) {
       alert("Error al votar.");
@@ -96,56 +106,87 @@ export default function PublicResources() {
     }
   };
 
-  if (loading) return <p className="public-loading">Cargando apuntes...</p>;
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <div className="public-container">
-      <h2>📚 Explora recursos académicos</h2>
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        📚 Explora recursos académicos
+      </Typography>
 
-      <div className="public-filters">
-        <input name="subject" placeholder="Asignatura" value={filters.subject} onChange={handleFilter} />
-        <input name="university" placeholder="Universidad" value={filters.university} onChange={handleFilter} />
-        <input name="year" type="number" placeholder="Año" value={filters.year} onChange={handleFilter} />
-      </div>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mb={4}>
+        <TextField
+          name="subject"
+          label="Asignatura"
+          value={filters.subject}
+          onChange={handleFilter}
+          fullWidth
+        />
+        <TextField
+          name="university"
+          label="Universidad"
+          value={filters.university}
+          onChange={handleFilter}
+          fullWidth
+        />
+        <TextField
+          name="year"
+          label="Año"
+          type="number"
+          value={filters.year}
+          onChange={handleFilter}
+          fullWidth
+        />
+      </Stack>
 
       {filtered.length === 0 ? (
-        <p className="public-empty">No hay recursos que coincidan con tu búsqueda.</p>
+        <Typography>No hay recursos que coincidan con tu búsqueda.</Typography>
       ) : (
-        <div className="public-grid">
-          {filtered.map(resource => (
-            <Link to={`/resources/${resource._id}`} className="public-card-link" key={resource._id}>
-              <div className="public-card">
-                <h5>{resource.title}</h5>
-                <p>{resource.description}</p>
-                <div className="meta">
-                  <span>{resource.subject}</span>
-                  <span>{resource.university}</span>
-                  <span>{resource.year}</span>
-                </div>
-
-                <div className="vote-comment-row" onClick={e => e.stopPropagation()}>
-                  <div className="vote-buttons">
-                    <button onClick={(e) => {
+        <Grid container spacing={3}>
+          {filtered.map((resource) => (
+            <Grid item xs={12} sm={6} md={4} key={resource._id}>
+              <Card component={Link} to={`/resources/${resource._id}`} sx={{ textDecoration: "none", color: "inherit" }}>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {resource.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
+                    {resource.description}
+                  </Typography>
+                  <Stack direction="row" spacing={1} mb={1}>
+                    <Chip label={resource.subject} size="small" />
+                    <Chip label={resource.university} size="small" />
+                    <Chip label={resource.year} size="small" />
+                  </Stack>
+                </CardContent>
+                <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }} onClick={(e) => e.stopPropagation()}>
+                  <Stack direction="row" spacing={1}>
+                    <Button size="small" onClick={(e) => {
                       e.preventDefault();
-                      console.log("Resource on like:", resource);
                       handleVote(resource._id, 1);
-                    }}>👍 {resource.votes?.likes || 0}</button>
-
-                    <button onClick={(e) => {
+                    }}>
+                      👍 {resource.votes?.likes || 0}
+                    </Button>
+                    <Button size="small" onClick={(e) => {
                       e.preventDefault();
-                      console.log("Resource on dislike:", resource);
                       handleVote(resource._id, -1);
-                    }}>👎 {resource.votes?.dislikes || 0}</button>
-                  </div>
-                  <div className="comments-count">
-                    💬 {resource.comments.length || 0}
-                  </div>
-                </div>
-              </div>
-            </Link>
+                    }}>
+                      👎 {resource.votes?.dislikes || 0}
+                    </Button>
+                  </Stack>
+                  <Typography variant="body2">💬 {resource.comments} comentarios</Typography>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       )}
-    </div>
+    </Container>
   );
 }

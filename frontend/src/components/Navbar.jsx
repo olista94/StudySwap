@@ -1,8 +1,20 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
-  faBars,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Typography,
+  Box,
+  Button,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import {
   faMagnifyingGlass,
   faUser,
   faFileArrowUp,
@@ -11,20 +23,19 @@ import {
   faUserPlus,
   faRightFromBracket,
   faChalkboardUser,
-  faUserTie
+  faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Navbar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("studyswap_user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-    else setUser(null);
+    setUser(storedUser ? JSON.parse(storedUser) : null);
   }, [location]);
 
   const handleLogout = () => {
@@ -34,36 +45,112 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  return (
-    <nav className="navbar-studyswap">
-      <div className="navbar-left">
-        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-          <FontAwesomeIcon icon={faBars} />
-        </button>
-        <Link to="/" className="brand-link">
-          <img src="/images/icon.png" alt="StudySwap" className="brand-icon" />
-          <span className="brand-text">StudySwap</span>
-        </Link>
-      </div>
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open);
+  };
 
-      <ul className={`navbar-links ${menuOpen ? "show" : ""}`}>
-        {user ? (
-          <>
-            <li><Link to="/explorer" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faMagnifyingGlass} /> Buscar apuntes</Link></li>
-            <li><Link to="/my-resources" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faFolderOpen} /> Mis recursos</Link></li>
-            <li><Link to="/upload" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faFileArrowUp} /> Subir apunter</Link></li>
-            <li><Link to="/tutors"><FontAwesomeIcon icon={faChalkboardUser} /> Profesores particulares</Link></li>
-            <li><Link to="/tutors/publish"><FontAwesomeIcon icon={faUserTie} /> Dar clases</Link></li>
-            <li><Link to="/profile" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faUser} /> Perfil</Link></li>
-            <li><button onClick={() => { setMenuOpen(false); handleLogout(); }}><FontAwesomeIcon icon={faRightFromBracket} /> Cerrar sesión</button></li>
-          </>
-        ) : (
-          <>
-            <li><Link to="/login" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faRightToBracket} /> Iniciar sesión</Link></li>
-            <li><Link to="/register" onClick={() => setMenuOpen(false)}><FontAwesomeIcon icon={faUserPlus} /> Registrarse</Link></li>
-          </>
-        )}
-      </ul>
-    </nav>
+  const renderLinks = () =>
+    user ? (
+      <>
+        <ListItem button component={Link} to="/explorer" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
+          <ListItemText primaryTypographyProps={{
+            sx: {
+              color: '#2BA84A', // tu verde claro
+              textDecoration: 'none'
+            }
+          }} primary="Buscar apuntes" />
+        </ListItem>
+        <ListItem button component={Link} to="/my-resources" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faFolderOpen} /></ListItemIcon>
+          <ListItemText primary="Mis recursos" />
+        </ListItem>
+        <ListItem button component={Link} to="/upload" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faFileArrowUp} /></ListItemIcon>
+          <ListItemText primary="Subir apuntes" />
+        </ListItem>
+        <ListItem button component={Link} to="/tutors" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faChalkboardUser} /></ListItemIcon>
+          <ListItemText primary="Profesores particulares" />
+        </ListItem>
+        <ListItem button component={Link} to="/tutors/publish" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
+          <ListItemText primary="Dar clases" />
+        </ListItem>
+        <ListItem button component={Link} to="/profile" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faUser} /></ListItemIcon>
+          <ListItemText primary="Perfil" />
+        </ListItem>
+        <ListItem button onClick={() => { toggleDrawer(false)(); handleLogout(); }}>
+          <ListItemIcon><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
+          <ListItemText primary="Cerrar sesión" />
+        </ListItem>
+      </>
+    ) : (
+      <>
+        <ListItem button component={Link} to="/login" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faRightToBracket} /></ListItemIcon>
+          <ListItemText primary="Iniciar sesión" />
+        </ListItem>
+        <ListItem button component={Link} to="/register" onClick={toggleDrawer(false)}>
+          <ListItemIcon><FontAwesomeIcon icon={faUserPlus} /></ListItemIcon>
+          <ListItemText primary="Registrarse" />
+        </ListItem>
+      </>
+    );
+
+  return (
+    <>
+      <AppBar position="static" sx={{ backgroundColor: "#040F0F" }}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="background"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+            sx={{ mr: 2, color: "#FCFFFC" }}
+          >
+            <MenuIcon />
+          </IconButton>
+
+          <Box
+            component={Link}
+            to="/"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              color: "#FCFFFC",
+              flexGrow: 1,
+            }}
+          >
+            <img
+              src="/images/icon.png"
+              alt="StudySwap"
+              style={{ width: 32, height: 32, marginRight: 8 }}
+            />
+            <Typography variant="h6" fontWeight={600}>
+              StudySwap
+            </Typography>
+          </Box>
+
+          {user && (
+            <Typography variant="body2" sx={{ mr: 1 }}>
+              👋 {user.name}
+            </Typography>
+          )}
+        </Toolbar>
+      </AppBar>
+
+      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Box
+          sx={{ width: 260, pt: 2 }}
+          role="presentation"
+          onClick={toggleDrawer(false)}
+        >
+          <List>{renderLinks()}</List>
+        </Box>
+      </Drawer>
+    </>
   );
 }

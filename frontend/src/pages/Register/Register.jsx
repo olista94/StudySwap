@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { registerUser } from "../../services/authService";
-import "./Register.css";
+import {
+  Box,
+  TextField,
+  Button,
+  Alert,
+  Typography,
+  Paper,
+} from "@mui/material";
 
 export default function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "", university: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    university: "",
+  });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await registerUser(form);
@@ -21,31 +34,78 @@ export default function Register() {
   };
 
   return (
-    <div className="register-container">
-      <div className="container mt-5" style={{ maxWidth: "400px" }}>
-        <h2 className="mb-3">Crear cuenta</h2>
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">✅ ¡Registro exitoso! Ya puedes iniciar sesión.</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label>Nombre</label>
-            <input name="name" className="form-control" required onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label>Universidad</label>
-            <input name="university" className="form-control" required onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label>Email</label>
-            <input name="email" type="email" className="form-control" required onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label>Contraseña</label>
-            <input name="password" type="password" className="form-control" required onChange={handleChange} />
-          </div>
-          <button className="btn btn-success w-100" type="submit">Registrarse</button>
-        </form>
-      </div>
-    </div>
+    <Box
+      minHeight="100vh"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ backgroundColor: "#FCFFFC", p: 2 }}
+    >
+      <Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 450 }}>
+        <Typography variant="h5" color="primary" gutterBottom>
+          Crear cuenta
+        </Typography>
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            ✅ ¡Registro exitoso! Ya puedes iniciar sesión.
+          </Alert>
+        )}
+
+        <Box component="form" onSubmit={handleSubmit} noValidate>
+          <TextField
+            label="Nombre"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Universidad"
+            name="university"
+            value={form.university}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Contraseña"
+            name="password"
+            type="password"
+            value={form.password}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{ mt: 2, backgroundColor: "#248232", ":hover": { backgroundColor: "#2BA84A" } }}
+          >
+            Registrarse
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }

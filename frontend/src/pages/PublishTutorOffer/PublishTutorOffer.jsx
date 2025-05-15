@@ -1,5 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  TextField,
+  Typography,
+  Select,
+  MenuItem,
+  Button,
+  Alert,
+  Stack,
+  InputLabel,
+  FormControl
+} from "@mui/material";
 import "./PublishTutorOffer.css";
 
 export default function PublishTutorOffer() {
@@ -13,9 +25,12 @@ export default function PublishTutorOffer() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("studyswap_token");
 
@@ -24,37 +39,84 @@ export default function PublishTutorOffer() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(form)
+        body: JSON.stringify(form),
       });
 
       if (!res.ok) throw new Error("Error al publicar oferta");
 
-      // ✅ Mensaje + redirección
       setMessage("✅ Oferta publicada");
-      setTimeout(() => navigate("/tutors"), 1500); // Redirige tras 1.5s
+      setTimeout(() => navigate("/tutors"), 1500);
     } catch (err) {
       setMessage("❌ " + err.message);
     }
   };
 
   return (
-    <div className="publish-container container mt-5" style={{ maxWidth: "600px" }}>
-      <h2>Publicar clases particulares</h2>
-      {message && <div className="alert alert-info">{message}</div>}
-      <form onSubmit={handleSubmit}>
-        <input className="form-control" name="subject" placeholder="Asignatura" required onChange={handleChange} value={form.subject} />
-        <textarea className="form-control" name="description" placeholder="Descripción" onChange={handleChange} value={form.description} />
-        <input className="form-control" type="number" name="price" placeholder="Precio por hora (€)" required onChange={handleChange} value={form.price} />
-        <select className="form-control" name="modality" onChange={handleChange} value={form.modality}>
-          <option value="online">Online</option>
-          <option value="presencial">Presencial</option>
-          <option value="ambas">Ambas</option>
-        </select>
-        <input className="form-control" name="availability" placeholder="Disponibilidad" onChange={handleChange} value={form.availability} />
-        <button className="btn btn-success w-100 mt-3">Publicar</button>
-      </form>
-    </div>
+    <Box className="publish-container" sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3 }}>
+      <Typography variant="h5" gutterBottom>🎯 Publicar clases particulares</Typography>
+
+      {message && (
+        <Alert severity={message.startsWith("✅") ? "success" : "error"} sx={{ mb: 2 }}>
+          {message}
+        </Alert>
+      )}
+
+      <Box component="form" onSubmit={handleSubmit}>
+        <Stack spacing={2}>
+          <TextField
+            name="subject"
+            label="Asignatura"
+            required
+            fullWidth
+            value={form.subject}
+            onChange={handleChange}
+          />
+          <TextField
+            name="description"
+            label="Descripción"
+            multiline
+            rows={3}
+            fullWidth
+            value={form.description}
+            onChange={handleChange}
+          />
+          <TextField
+            name="price"
+            label="Precio por hora (€)"
+            type="number"
+            required
+            fullWidth
+            value={form.price}
+            onChange={handleChange}
+          />
+          <FormControl fullWidth>
+            <InputLabel id="modality-label">Modalidad</InputLabel>
+            <Select
+              labelId="modality-label"
+              name="modality"
+              value={form.modality}
+              label="Modalidad"
+              onChange={handleChange}
+            >
+              <MenuItem value="online">Online</MenuItem>
+              <MenuItem value="presencial">Presencial</MenuItem>
+              <MenuItem value="ambas">Ambas</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            name="availability"
+            label="Disponibilidad"
+            fullWidth
+            value={form.availability}
+            onChange={handleChange}
+          />
+          <Button type="submit" variant="contained" color="success" fullWidth>
+            Publicar
+          </Button>
+        </Stack>
+      </Box>
+    </Box>
   );
 }
