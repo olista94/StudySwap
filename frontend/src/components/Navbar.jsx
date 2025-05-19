@@ -54,12 +54,7 @@ export default function Navbar() {
       <>
         <ListItem button component={Link} to="/explorer" onClick={toggleDrawer(false)}>
           <ListItemIcon><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
-          <ListItemText primaryTypographyProps={{
-            sx: {
-              color: '#2BA84A', // tu verde claro
-              textDecoration: 'none'
-            }
-          }} primary="Buscar apuntes" />
+          <ListItemText primary="Buscar apuntes" />
         </ListItem>
         <ListItem button component={Link} to="/my-resources" onClick={toggleDrawer(false)}>
           <ListItemIcon><FontAwesomeIcon icon={faFolderOpen} /></ListItemIcon>

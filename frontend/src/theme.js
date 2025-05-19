@@ -21,6 +21,17 @@ const theme = createTheme({
   shape: {
     borderRadius: 6,
   },
-});
+  components: {
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          color: '#2BA84A',
+          textDecoration: 'none'
+        }
+      }
+    }
+  }
+},
+);
 
 export default theme;
