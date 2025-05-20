@@ -26,6 +26,7 @@ import {
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./Navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
