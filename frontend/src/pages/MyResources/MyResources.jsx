@@ -18,18 +18,57 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  TextField,
+  InputLabel
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
 import "./MyResources.css";
 
 export default function MyResources() {
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [resourceToDelete, setResourceToDelete] = useState(null); // recurso pendiente de eliminar
+  const [resourceToDelete, setResourceToDelete] = useState(null);
+  const [resourceToEdit, setResourceToEdit] = useState(null);
+  const [editForm, setEditForm] = useState({ title: "", description: "", subject: "", year: "" });
+
+const handleUpdateResource = async () => {
+  const token = localStorage.getItem("studyswap_token");
+
+  const formData = new FormData();
+  formData.append("title", editForm.title);
+  formData.append("description", editForm.description);
+  formData.append("subject", editForm.subject);
+  formData.append("university", editForm.university);
+  formData.append("year", editForm.year);
+
+  if (editForm.newFile) {
+    formData.append("file", editForm.newFile);
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/resources/${resourceToEdit._id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const updated = await res.json();
+
+    if (!res.ok) throw new Error(updated.message || "Error al actualizar recurso");
+
+    setResources((prev) =>
+      prev.map((r) => (r._id === updated._id ? updated : r))
+    );
+    setResourceToEdit(null);
+  } catch (err) {
+    console.error("❌ Error al actualizar:", err.message);
+  }
+};
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -75,7 +114,6 @@ export default function MyResources() {
 
       if (!res.ok) throw new Error(data.message || "Error al eliminar recurso");
 
-      // Eliminado correctamente, actualizamos la lista
       setResources((prev) => prev.filter((r) => r._id !== resourceToDelete._id));
       setResourceToDelete(null);
     } catch (err) {
@@ -137,9 +175,11 @@ export default function MyResources() {
 
                   <Tooltip title="Editar recurso">
                     <IconButton
-                      color="secondary"
-                      component={Link}
-                      to={`/edit-resource/${resource._id}`}
+                      color="text"
+                      onClick={() => {
+                        setResourceToEdit(resource);
+                        setEditForm({ title: resource.title, description: resource.description, subject: resource.subject, year: resource.year });
+                      }}
                     >
                       <EditIcon />
                     </IconButton>
@@ -172,6 +212,57 @@ export default function MyResources() {
           <Button onClick={handleDelete} variant="contained" color="error">
             Eliminar
           </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Diálogo de edición */}
+      <Dialog open={!!resourceToEdit} onClose={() => setResourceToEdit(null)} fullWidth maxWidth="sm">
+        <DialogTitle>Editar recurso</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            label="Título"
+            fullWidth
+            value={editForm.title}
+            onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Descripción"
+            fullWidth
+            multiline
+            rows={3}
+            value={editForm.description}
+            onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Asignatura"
+            fullWidth
+            multiline
+            rows={1}
+            value={editForm.subject}
+            onChange={(e) => setEditForm({ ...editForm, subject: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Año"
+            fullWidth
+            multiline
+            rows={1}
+            value={editForm.year}
+            onChange={(e) => setEditForm({ ...editForm, year: e.target.value })}
+          />
+          <InputLabel>Archivo (PDF o imagen)</InputLabel>
+          <input
+            type="file"
+            accept=".pdf,.png,.jpg,.jpeg,.md"
+            onChange={(e) => setEditForm({ ...editForm, newFile: e.target.files[0] })}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setResourceToEdit(null)}>Cancelar</Button>
+          <Button onClick={handleUpdateResource} variant="contained" color="primary">Guardar</Button>
         </DialogActions>
       </Dialog>
     </Container>
