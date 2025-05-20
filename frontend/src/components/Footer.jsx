@@ -1,32 +1,69 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, Stack, Link, Modal, Paper } from "@mui/material";
+import { useState } from "react";
+import "./Footer.css";
 
 export default function Footer() {
+  const [open, setOpen] = useState(false);
+  const [content, setContent] = useState("");
+
+  const handleOpen = (type) => {
+    setContent(type);
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const getModalContent = () => {
+    if (content === "contact") {
+      return (
+        <>
+          <Typography variant="h6">Contact</Typography>
+          <Typography>Email: olista94@gmail.com</Typography>
+          <Typography>Phone: +34 617 595 452</Typography>
+        </>
+      );
+    }
+
+    if (content === "about") {
+      return (
+        <>
+          <Typography variant="h6">About</Typography>
+          <Typography>
+            Soy Oscar, desarrollador web full-stack. Esta plataforma ha sido creada para conectar estudiantes y facilitar el intercambio de recursos académicos.
+            <br />
+            Este es mi proyecto final del bootcamp de desarrollo web full-stack de Evolve Academy.
+            <br />
+            Para ver más proyectos, visita mi perfil de <Link href="https://github.com/olista94" target="_blank">GitHub</Link>
+          </Typography>
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: "#040f0f",
-        color: "#FCFFFC",
-        py: 3,
-        mt: "auto",
-      }}
-    >
-      <Container maxWidth="lg" sx={{ textAlign: "center" }}>
-        <Typography variant="body2" sx={{ mb: 1 }}>
+    <Box component="footer" className="footer">
+      <Container maxWidth="lg">
+        <Stack direction="row" justifyContent="center" spacing={4} className="footer-links">
+          <Link component="button" onClick={() => handleOpen("contact")} className="footer-link">
+            Contact
+          </Link>
+          <Link component="button" onClick={() => handleOpen("about")} className="footer-link">
+            About
+          </Link>
+        </Stack>
+
+        <Typography variant="body2" align="center" className="footer-copy">
           © {new Date().getFullYear()} StudySwap · Todos los derechos reservados
         </Typography>
-        {/* <Typography variant="body2">
-          <Link href="/explorer" underline="hover" color="#2BA84A" sx={{ mx: 1 }}>
-            Explorar
-          </Link>
-          <Link href="/upload" underline="hover" color="#2BA84A" sx={{ mx: 1 }}>
-            Subir recursos
-          </Link>
-          <Link href="/tutors" underline="hover" color="#2BA84A" sx={{ mx: 1 }}>
-            Profesores
-          </Link>
-        </Typography> */}
       </Container>
+
+      <Modal open={open} onClose={handleClose}>
+        <Paper className="footer-modal">
+          {getModalContent()}
+        </Paper>
+      </Modal>
     </Box>
   );
 }
