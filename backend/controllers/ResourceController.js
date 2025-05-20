@@ -47,19 +47,44 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
-    if (!resource) return res.status(404).json({ message: 'Recurso no encontrado' });
+    if (!resource) return res.status(404).json({ message: "Recurso no encontrado" });
 
-    if (resource.uploadedBy.toString() !== req.user.id && req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'No autorizado' });
+    if (resource.uploadedBy.toString() !== req.user.id && req.user.role !== "admin") {
+      return res.status(403).json({ message: "No autorizado" });
     }
 
-    Object.assign(resource, req.body);
+    // Actualiza campos
+    const { title, description, subject, university, year } = req.body;
+    if (title) resource.title = title;
+    if (description) resource.description = description;
+    if (subject) resource.subject = subject;
+    if (university) resource.university = university;
+    if (year) resource.year = year;
+
+    // Si se ha subido nuevo archivo
+    if (req.file) {
+      const fileUrl = `/uploads/${req.file.filename}`;
+      const fileType = getFileType(req.file.originalname); // Implementar esto
+      resource.fileUrl = fileUrl;
+      resource.fileType = fileType;
+    }
+
     await resource.save();
     res.json(resource);
   } catch (err) {
-    res.status(500).json({ message: 'Error al actualizar recurso' });
+    console.error(err);
+    res.status(500).json({ message: "Error al actualizar recurso" });
   }
 };
+
+// Función para detectar el tipo de archivo
+function getFileType(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  if (ext === 'pdf') return 'pdf';
+  if (ext === 'md') return 'markdown';
+  if (['jpg', 'jpeg', 'png'].includes(ext)) return 'image';
+  return 'unknown';
+}
 
 exports.remove = async (req, res) => {
   try {

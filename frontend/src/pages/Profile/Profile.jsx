@@ -1,91 +1,134 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateProfile, changePassword } from "../../services/userService";
+import {
+  Box,
+  TextField,
+  Button,
+  Alert,
+  Typography,
+  Divider,
+  Stack
+} from "@mui/material";
 import "./Profile.css";
 
 export default function Profile() {
-    const navigate = useNavigate();
-    const [user, setUser] = useState(null);
-    const [form, setForm] = useState({ name: "", university: "", email: "" });
-    const [passForm, setPassForm] = useState({ currentPassword: "", newPassword: "" });
-    const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [form, setForm] = useState({ name: "", university: "", email: "" });
+  const [passForm, setPassForm] = useState({ currentPassword: "", newPassword: "" });
+  const [message, setMessage] = useState("");
 
-    useEffect(() => {
-        const stored = localStorage.getItem("studyswap_user");
-        if (!stored) return navigate("/login");
+  useEffect(() => {
+    const stored = localStorage.getItem("studyswap_user");
+    if (!stored) return navigate("/login");
 
-        const user = JSON.parse(stored);
-        setUser(user);
-        setForm({ name: user.name, university: user.university, email: user.email });
-    }, []);
+    const user = JSON.parse(stored);
+    setUser(user);
+    setForm({ name: user.name, university: user.university, email: user.email });
+  }, []);
 
-    const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-    const handlePassChange = e => setPassForm({ ...passForm, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handlePassChange = (e) => setPassForm({ ...passForm, [e.target.name]: e.target.value });
 
-    const saveProfile = async e => {
-        e.preventDefault();
-        try {
-            const token = localStorage.getItem("studyswap_token");
-            const updated = await updateProfile(form, token);
-            localStorage.setItem("studyswap_user", JSON.stringify(updated));
-            setUser(updated);
-            setMessage("✅ Perfil actualizado correctamente");
-        } catch (err) {
-            setMessage("❌ " + err.message);
-        }
-    };
+  const saveProfile = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("studyswap_token");
+      const updated = await updateProfile(form, token);
+      localStorage.setItem("studyswap_user", JSON.stringify(updated));
+      setUser(updated);
+      setMessage("✅ Perfil actualizado correctamente");
+    } catch (err) {
+      setMessage("❌ " + err.message);
+    }
+  };
 
-    const changePasswordHandler = async e => {
-        e.preventDefault();
-        try {
-            const token = localStorage.getItem("studyswap_token");
-            await changePassword(passForm, token);
-            setMessage("🔐 Contraseña cambiada correctamente");
-            setPassForm({ currentPassword: "", newPassword: "" });
-        } catch (err) {
-            setMessage("❌ " + err.message);
-        }
-    };
+  const changePasswordHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("studyswap_token");
+      await changePassword(passForm, token);
+      setMessage("🔐 Contraseña cambiada correctamente");
+      setPassForm({ currentPassword: "", newPassword: "" });
+    } catch (err) {
+      setMessage("❌ " + err.message);
+    }
+  };
 
-    if (!user) return null;
+  if (!user) return null;
 
-    return (
-        <div className="profile-container">
-            <h2 className="mb-4">Mi perfil</h2>
+  return (
+    <Box className="profile-container" sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3 }}>
 
-            {message && <div className="alert alert-info">{message}</div>}
+      {message && (
+        <Alert
+          severity={message.startsWith("✅") || message.startsWith("🔐") ? "success" : "error"}
+          sx={{ mb: 2 }}
+        >
+          {message}
+        </Alert>
+      )}
 
-            <form onSubmit={saveProfile}>
-                <h5>Editar datos</h5>
-                <div className="mb-3">
-                    <label>Nombre</label>
-                    <input name="name" className="form-control" value={form.name} onChange={handleChange} />
-                </div>
-                <div className="mb-3">
-                    <label>Universidad</label>
-                    <input name="university" className="form-control" value={form.university} onChange={handleChange} />
-                </div>
-                <div className="mb-3">
-                    <label>Email</label>
-                    <input name="email" className="form-control" type="email" value={form.email} onChange={handleChange} />
-                </div>
-                <button className="btn btn-success">Guardar cambios</button>
-            </form>
+      <Box component="form" onSubmit={saveProfile}>
+        <Typography variant="h6" gutterBottom>Editar datos</Typography>
+        <Stack spacing={2}>
+          <TextField
+            name="name"
+            label="Nombre"
+            value={form.name}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            name="university"
+            label="Universidad"
+            value={form.university}
+            onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            name="email"
+            label="Email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+            fullWidth
+          />
+          <Button type="submit" variant="contained" color="success">
+            Guardar cambios
+          </Button>
+        </Stack>
+      </Box>
 
-            <hr className="my-4" />
+      <Divider sx={{ my: 4 }} />
 
-            <form onSubmit={changePasswordHandler}>
-                <h5>Cambiar contraseña</h5>
-                <div className="mb-3">
-                    <label>Contraseña actual</label>
-                    <input name="currentPassword" type="password" className="form-control" required value={passForm.currentPassword} onChange={handlePassChange} />
-                </div>
-                <div className="mb-3">
-                    <label>Nueva contraseña</label>
-                    <input name="newPassword" type="password" className="form-control" required value={passForm.newPassword} onChange={handlePassChange} />
-                </div>
-                <button className="btn btn-outline-primary">Cambiar contraseña</button>
-            </form>
-        </div>
-    );
+      <Box component="form" onSubmit={changePasswordHandler}>
+        <Typography variant="h6" gutterBottom>Cambiar contraseña</Typography>
+        <Stack spacing={2}>
+          <TextField
+            name="currentPassword"
+            label="Contraseña actual"
+            type="password"
+            required
+            value={passForm.currentPassword}
+            onChange={handlePassChange}
+            fullWidth
+          />
+          <TextField
+            name="newPassword"
+            label="Nueva contraseña"
+            type="password"
+            required
+            value={passForm.newPassword}
+            onChange={handlePassChange}
+            fullWidth
+          />
+          <Button type="submit" variant="outlined" color="primary">
+            Cambiar contraseña
+          </Button>
+        </Stack>
+      </Box>
+    </Box>
+  );
 }

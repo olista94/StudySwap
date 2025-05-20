@@ -1,6 +1,16 @@
-// src/components/ResourceDetail/ResourceDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  TextField,
+  Stack,
+  Paper,
+  Link as MuiLink,
+  Alert,
+} from "@mui/material";
 import "./ResourceDetail.css";
 
 export default function ResourceDetail() {
@@ -14,19 +24,19 @@ export default function ResourceDetail() {
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/resources/${id}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setResource);
 
     fetch(`http://localhost:3000/api/votes/resources/${id}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setVotes);
 
     fetch(`http://localhost:3000/api/comments/resources/${id}/comments`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setComments);
   }, [id]);
 
-  const handleVote = async value => {
+  const handleVote = async (value) => {
     try {
       await fetch(`http://localhost:3000/api/votes/resources/${id}/vote`, {
         method: "POST",
@@ -37,14 +47,14 @@ export default function ResourceDetail() {
         body: JSON.stringify({ value }),
       });
 
-      const updated = await fetch(`http://localhost:3000/api/votes/resources/${id}`).then(res => res.json());
+      const updated = await fetch(`http://localhost:3000/api/votes/resources/${id}`).then((res) => res.json());
       setVotes(updated);
     } catch (err) {
       alert("Error al votar", err);
     }
   };
 
-  const handleComment = async e => {
+  const handleComment = async (e) => {
     e.preventDefault();
     try {
       await fetch(`http://localhost:3000/api/comments/resources/${id}/comments`, {
@@ -56,7 +66,9 @@ export default function ResourceDetail() {
         body: JSON.stringify({ content: newComment }),
       });
 
-      const updated = await fetch(`http://localhost:3000/api/comments/resources/${id}/comments`).then(res => res.json());
+      const updated = await fetch(`http://localhost:3000/api/comments/resources/${id}/comments`).then((res) =>
+        res.json()
+      );
       setComments(updated);
       setNewComment("");
     } catch (err) {
@@ -64,58 +76,75 @@ export default function ResourceDetail() {
     }
   };
 
-  if (!resource) return <p className="detail-loading">Cargando recurso...</p>;
+  if (!resource) {
+    return (
+      <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Alert severity="info">Cargando recurso...</Alert>
+      </Box>
+    );
+  }
 
   return (
-    <div className="detail-container">
-      <h2>{resource.title}</h2>
-      <p className="description">{resource.description}</p>
+    <Box className="detail-container" sx={{ maxWidth: 800, mx: "auto", mt: 4, p: 3 }}>
+      <Typography variant="h4" gutterBottom>{resource.title}</Typography>
+      <Typography className="description" sx={{ mb: 2 }}>{resource.description}</Typography>
 
-      <div className="detail-meta">
-        <span>Asignatura: {resource.subject}</span>
-        <span>Profesor: {resource.professor}</span>
-        <span>Universidad: {resource.university}</span>
-        <span>Año: {resource.year}</span>
-        <span>Autor: {resource.uploadedBy?.name}</span>
-      </div>
+      <Stack spacing={1} sx={{ mb: 2 }}>
+        <Typography variant="body2">📚 <strong>Asignatura:</strong> {resource.subject}</Typography>
+        <Typography variant="body2">👨‍🏫 <strong>Profesor:</strong> {resource.professor}</Typography>
+        <Typography variant="body2">🏛️ <strong>Universidad:</strong> {resource.university}</Typography>
+        <Typography variant="body2">📅 <strong>Año:</strong> {resource.year}</Typography>
+        <Typography variant="body2">👤 <strong>Autor:</strong> {resource.uploadedBy?.name}</Typography>
+      </Stack>
 
-      <div className="detail-votes">
-        <button onClick={() => handleVote(1)}>👍 {votes.likes}</button>
-        <button onClick={() => handleVote(-1)}>👎 {votes.dislikes}</button>
-      </div>
+      <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+        <Button onClick={() => handleVote(1)} variant="outlined">👍 {votes.likes}</Button>
+        <Button onClick={() => handleVote(-1)} variant="outlined">👎 {votes.dislikes}</Button>
+      </Stack>
 
-      <a
+      <Button
         href={`http://localhost:3000${resource.fileUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="detail-btn"
+        variant="contained"
+        color="primary"
+        sx={{ mb: 3 }}
       >
         Ver archivo
-      </a>
+      </Button>
 
-      <hr />
+      <Divider sx={{ my: 4 }} />
 
-      <h5>💬 Comentarios ({comments.length})</h5>
-      <ul className="detail-comments">
-        {comments.map(c => (
-          <li key={c._id}>
-            <strong>{c.userId.name}</strong>:
-            <p>{c.content}</p>
-          </li>
+      <Typography variant="h6" gutterBottom>
+        💬 Comentarios ({comments.length})
+      </Typography>
+
+      <Stack spacing={2} className="detail-comments" sx={{ mb: 3 }}>
+        {comments.map((c) => (
+          <Paper key={c._id} elevation={2} sx={{ p: 2 }}>
+            <Typography variant="subtitle2">{c.userId.name}</Typography>
+            <Typography variant="body2">{c.content}</Typography>
+          </Paper>
         ))}
-      </ul>
+      </Stack>
 
       {user && (
-        <form onSubmit={handleComment} className="detail-comment-form">
-          <textarea
-            placeholder="Escribe un comentario..."
+        <Box component="form" onSubmit={handleComment} className="detail-comment-form">
+          <TextField
+            multiline
+            minRows={3}
+            fullWidth
+            label="Escribe un comentario..."
             value={newComment}
-            onChange={e => setNewComment(e.target.value)}
+            onChange={(e) => setNewComment(e.target.value)}
             required
+            sx={{ mb: 2 }}
           />
-          <button type="submit">Enviar</button>
-        </form>
+          <Button type="submit" variant="contained" color="success">
+            Enviar
+          </Button>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }

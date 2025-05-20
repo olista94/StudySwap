@@ -1,4 +1,14 @@
 import { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  Button,
+  Stack,
+  Container
+} from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
 import "./TutorOffersList.css";
 
 export default function TutorOffersList() {
@@ -12,18 +22,40 @@ export default function TutorOffersList() {
   }, []);
 
   return (
-    <div className="tutors-container container mt-5">
-      <h2>🎓 Profesores disponibles</h2>
-      {offers.map(offer => (
-        <div key={offer._id} className="tutor-card">
-          <h5>{offer.subject} — <span className="text-muted">{offer.userId.name}</span></h5>
-          <p>{offer.description}</p>
-          <p><strong>Precio:</strong> {offer.price}€/h</p>
-          <p><strong>Modalidad:</strong> {offer.modality}</p>
-          <p><strong>Disponibilidad:</strong> {offer.availability}</p>
-          <a href={`mailto:${offer.userId.email}`} className="btn btn-sm">Contactar</a>
-        </div>
-      ))}
-    </div>
+    <Container maxWidth="md" sx={{ mt: 5 }}>
+      <Typography variant="h4" gutterBottom>
+        🎓 Profesores disponibles
+      </Typography>
+
+      <Stack spacing={3}>
+        {offers.map((offer) => (
+          <Card key={offer._id} className="tutor-card" sx={{ p: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                {offer.subject} —{" "}
+                <Typography component="span" color="text.secondary">
+                  {offer.userId.name}
+                </Typography>
+              </Typography>
+
+              <Typography variant="body2" sx={{ mb: 1 }}>{offer.description}</Typography>
+              <Typography variant="body2"><strong>Precio:</strong> {offer.price}€/h</Typography>
+              <Typography variant="body2"><strong>Modalidad:</strong> {offer.modality}</Typography>
+              <Typography variant="body2" sx={{ mb: 2 }}><strong>Disponibilidad:</strong> {offer.availability}</Typography>
+
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                startIcon={<EmailIcon />}
+                href={`mailto:${offer.userId.email}`}
+              >
+                Contactar
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </Stack>
+    </Container>
   );
 }
