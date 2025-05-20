@@ -151,7 +151,11 @@ export default function PublicResources() {
         <Grid container spacing={3}>
           {filtered.map((resource) => (
             <Grid item xs={12} sm={6} md={4} key={resource._id}>
-              <Card component={Link} to={`/resources/${resource._id}`} sx={{ textDecoration: "none", color: "inherit" }}>
+              <Card
+                component={Link}
+                to={`/resources/${resource._id}`}
+                className="public-resource-card"
+              >
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     {resource.title}

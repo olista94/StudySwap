@@ -15,7 +15,7 @@
 }
 
 .myresources-container h2 {
-  color: var(--primary-color);
+  color: var(--text-color);
   margin-bottom: 1.5rem;
   font-weight: 600;
 }
@@ -28,17 +28,22 @@
 
 .myresources-card {
   background-color: var(--card-bg);
+  border: 1px solid black;
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
   transition: transform 0.2s ease;
 }
 
 .myresources-card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(36, 130, 50, 0.2);
+  cursor: pointer;
 }
 
 .myresources-card h5 {
