@@ -132,7 +132,7 @@ export default function Navbar() {
 
           {user && (
             <Typography variant="body2" sx={{ mr: 1 }}>
-              👋 {user.name}
+              Hola {user.name}
             </Typography>
           )}
         </Toolbar>

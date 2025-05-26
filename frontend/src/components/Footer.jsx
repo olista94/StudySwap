@@ -31,7 +31,7 @@ export default function Footer() {
           <Typography>
             Soy Oscar, desarrollador web full-stack. Esta plataforma ha sido creada para conectar estudiantes y facilitar el intercambio de recursos académicos.
             <br />
-            Este es mi proyecto final del bootcamp de desarrollo web full-stack de Evolve Academy.
+            Este es mi proyecto final del <strong>Máster de desarrollo web full-stack & IA</strong> de Evolve Academy.
             <br />
             Para ver más proyectos, visita mi perfil de <Link href="https://github.com/olista94" target="_blank">GitHub</Link>
           </Typography>
