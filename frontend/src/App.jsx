@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import UserList from "./pages/UserList/UserList";
 import PublicResources from "./pages/PublicResources/PublicResources";
 import ResourceDetail from "./pages/ResourceDetail/ResourceDetail";
 import Navbar from "./components/Navbar";
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/admin/users" element={<UserList />} />
             <Route path="/explorer" element={<PublicResources />} />
             <Route path="/resources/:id" element={<ResourceDetail />} />
             <Route path="/upload" element={<Upload />} />

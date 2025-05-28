@@ -1,3 +1,5 @@
+// src/Navbar.jsx (This code is already correct based on your previous request)
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
@@ -24,6 +26,9 @@ import {
   faRightFromBracket,
   faChalkboardUser,
   faUserTie,
+  faBookOpen,
+  faUsersCog,
+  faLandmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
@@ -35,6 +40,8 @@ export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
+    // This part is key: it reads the 'user' object from localStorage
+    // which should contain the 'role' property.
     const storedUser = localStorage.getItem("studyswap_user");
     setUser(storedUser ? JSON.parse(storedUser) : null);
   }, [location]);
@@ -53,36 +60,67 @@ export default function Navbar() {
   const renderLinks = () =>
     user ? (
       <>
-        <ListItem button component={Link} to="/explorer" onClick={toggleDrawer(false)}>
-          <ListItemIcon><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
-          <ListItemText primary="Buscar apuntes" />
-        </ListItem>
-        <ListItem button component={Link} to="/my-resources" onClick={toggleDrawer(false)}>
-          <ListItemIcon><FontAwesomeIcon icon={faFolderOpen} /></ListItemIcon>
-          <ListItemText primary="Mis recursos" />
-        </ListItem>
-        <ListItem button component={Link} to="/upload" onClick={toggleDrawer(false)}>
-          <ListItemIcon><FontAwesomeIcon icon={faFileArrowUp} /></ListItemIcon>
-          <ListItemText primary="Subir apuntes" />
-        </ListItem>
-        <ListItem button component={Link} to="/tutors" onClick={toggleDrawer(false)}>
-          <ListItemIcon><FontAwesomeIcon icon={faChalkboardUser} /></ListItemIcon>
-          <ListItemText primary="Profesores particulares" />
-        </ListItem>
-        <ListItem button component={Link} to="/tutors/publish" onClick={toggleDrawer(false)}>
-          <ListItemIcon><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
-          <ListItemText primary="Dar clases" />
-        </ListItem>
-        <ListItem button component={Link} to="/profile" onClick={toggleDrawer(false)}>
-          <ListItemIcon><FontAwesomeIcon icon={faUser} /></ListItemIcon>
-          <ListItemText primary="Perfil" />
-        </ListItem>
-        <ListItem button onClick={() => { toggleDrawer(false)(); handleLogout(); }}>
-          <ListItemIcon><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
-          <ListItemText primary="Cerrar sesión" />
-        </ListItem>
+        {/* This is the part that checks the user's role */}
+        {user.role === "admin" ? (
+          // Admin links
+          <>
+            <ListItem button component={Link} to="/admin/manage-resources" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faBookOpen} /></ListItemIcon>
+              <ListItemText primary="Gestionar apuntes" />
+            </ListItem>
+            <ListItem button component={Link} to="/admin/manage-classes" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faLandmark} /></ListItemIcon>
+              <ListItemText primary="Gestionar clases" />
+            </ListItem>
+            <ListItem button component={Link} to="/admin/users" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faUsersCog} /></ListItemIcon>
+              <ListItemText primary="Gestionar usuarios" />
+            </ListItem>
+            <ListItem button component={Link} to="/profile" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faUser} /></ListItemIcon>
+              <ListItemText primary="Perfil" />
+            </ListItem>
+            <ListItem button onClick={() => { toggleDrawer(false)(); handleLogout(); }}>
+              <ListItemIcon><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
+              <ListItemText primary="Cerrar sesión" />
+            </ListItem>
+          </>
+        ) : (
+          // Regular user links
+          <>
+            <ListItem button component={Link} to="/explorer" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
+              <ListItemText primary="Buscar apuntes" />
+            </ListItem>
+            <ListItem button component={Link} to="/my-resources" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faFolderOpen} /></ListItemIcon>
+              <ListItemText primary="Mis recursos" />
+            </ListItem>
+            <ListItem button component={Link} to="/upload" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faFileArrowUp} /></ListItemIcon>
+              <ListItemText primary="Subir apuntes" />
+            </ListItem>
+            <ListItem button component={Link} to="/tutors" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faChalkboardUser} /></ListItemIcon>
+              <ListItemText primary="Profesores particulares" />
+            </ListItem>
+            <ListItem button component={Link} to="/tutors/publish" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
+              <ListItemText primary="Dar clases" />
+            </ListItem>
+            <ListItem button component={Link} to="/profile" onClick={toggleDrawer(false)}>
+              <ListItemIcon><FontAwesomeIcon icon={faUser} /></ListItemIcon>
+              <ListItemText primary="Perfil" />
+            </ListItem>
+            <ListItem button onClick={() => { toggleDrawer(false)(); handleLogout(); }}>
+              <ListItemIcon><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
+              <ListItemText primary="Cerrar sesión" />
+            </ListItem>
+          </>
+        )}
       </>
     ) : (
+      // Links for unauthenticated users
       <>
         <ListItem button component={Link} to="/login" onClick={toggleDrawer(false)}>
           <ListItemIcon><FontAwesomeIcon icon={faRightToBracket} /></ListItemIcon>

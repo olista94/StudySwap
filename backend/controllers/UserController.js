@@ -46,6 +46,15 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.getAll = async (req, res) => {
+  try {
+    const users = await User.find().select().select('-passwordHash');
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: 'Error al obtener todos los usuarios', error: err.message });
+  }
+};
+
 exports.getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-passwordHash');
