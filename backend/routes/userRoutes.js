@@ -7,6 +7,8 @@ const isAdmin = require('../middlewares/isAdmin');
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 router.get('/admin/users', authMiddleware, isAdmin, UserController.getAll);
+router.put("/:id", authMiddleware, isAdmin, UserController.updateByAdmin);
+router.delete("/:id", authMiddleware, isAdmin, UserController.deleteByAdmin);
 router.get('/me', authMiddleware, UserController.getMe);
 router.get('/:id', UserController.getUserById);
 router.put('/me', authMiddleware, UserController.updateProfile);
