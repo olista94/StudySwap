@@ -1,10 +1,11 @@
 import { Box, Container, Typography, Stack, Link, Modal, Paper } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Importa useEffect
 import "./Footer.css";
 
 export default function Footer() {
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+  const [showFooter, setShowFooter] = useState(false); // Nuevo estado para controlar la visibilidad
 
   const handleOpen = (type) => {
     setContent(type);
@@ -42,8 +43,32 @@ export default function Footer() {
     return null;
   };
 
+  // Lógica para detectar el scroll y mostrar/ocultar el footer
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.body.offsetHeight;
+      const threshold = 100; // Puedes ajustar este valor
+
+      if (scrollPosition >= documentHeight - threshold) {
+        setShowFooter(true);
+      } else {
+        setShowFooter(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Limpia el event listener cuando el componente se desmonte
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // El array vacío asegura que el efecto se ejecute solo una vez al montar
+
   return (
-    <Box component="footer" className="footer">
+    // Condicionalmente renderiza el footer basado en showFooter
+    // Opcional: puedes añadir una clase para transiciones suaves en CSS
+    <Box component="footer" className={`footer ${showFooter ? 'show' : ''}`}>
       <Container maxWidth="lg">
         <Stack direction="row" justifyContent="center" spacing={4} className="footer-links">
           <Link component="button" onClick={() => handleOpen("contact")} className="footer-link">

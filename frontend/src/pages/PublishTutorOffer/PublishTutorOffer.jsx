@@ -16,6 +16,7 @@ import "./PublishTutorOffer.css";
 
 export default function PublishTutorOffer() {
   const [form, setForm] = useState({
+    educationLevels: [],
     subject: "",
     description: "",
     price: "",
@@ -73,6 +74,34 @@ export default function PublishTutorOffer() {
             value={form.subject}
             onChange={handleChange}
           />
+          <FormControl fullWidth>
+            <InputLabel id="education-label">Tipo de estudios</InputLabel>
+            <Select
+              labelId="education-label"
+              name="educationLevels"
+              multiple
+              value={form.educationLevels}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, educationLevels: e.target.value }))
+              }
+              renderValue={(selected) => selected.join(", ")}
+            >
+              {[
+                "ESO",
+                "Bachillerato",
+                "FP",
+                "Universidad",
+                "Oposiciones",
+                "Postgrado",
+                "EBAU",
+                "Idiomas",
+              ].map((level) => (
+                <MenuItem key={level} value={level}>
+                  {level}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             name="description"
             label="Descripción"

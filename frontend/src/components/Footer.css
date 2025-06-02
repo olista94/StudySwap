@@ -2,9 +2,31 @@
   background-color: #040f0f;
   color: #fcfffc;
   padding: 24px 0;
-  margin-top: auto;
+  /* margin-top: auto; Remueve esto si quieres que siempre esté "oculto" hasta el scroll */
+
+  /* Estilos para ocultar el footer por defecto */
+  opacity: 0; /* Lo hace completamente transparente */
+  visibility: hidden; /* Asegura que no sea interactivo cuando está oculto */
+  transform: translateY(100%); /* Lo desplaza hacia abajo fuera de la vista */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out, visibility 0.5s; /* Transición suave */
+
+  /* Opcional: para que quede fijo en la parte inferior de la ventana, como un sticky footer */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos si es fixed */
 }
 
+/* Clase para mostrar el footer cuando showFooter es true */
+.footer.show {
+  opacity: 1; /* Lo hace completamente visible */
+  visibility: visible; /* Lo hace interactivo */
+  transform: translateY(0); /* Lo vuelve a su posición original */
+}
+
+
+/* Resto de tu CSS para el footer... */
 .footer-links {
   margin-bottom: 12px;
 }
