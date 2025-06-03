@@ -9,7 +9,8 @@ import {
   Typography,
   Divider,
   Stack,
-  Avatar
+  Avatar,
+  Modal
 } from "@mui/material";
 import "./Profile.css";
 
@@ -20,6 +21,7 @@ export default function Profile() {
   const [passForm, setPassForm] = useState({ currentPassword: "", newPassword: "" });
   const [message, setMessage] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("studyswap_user");
@@ -32,6 +34,9 @@ export default function Profile() {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handlePassChange = (e) => setPassForm({ ...passForm, [e.target.name]: e.target.value });
+
+  const handleAvatarClick = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const saveProfile = async (e) => {
     e.preventDefault();
@@ -101,7 +106,8 @@ export default function Profile() {
         <Avatar
           alt={user.name}
           src={user.profileImage || "https://res.cloudinary.com/studyswap/image/upload/v1/avatars/default-avatar.png"}
-          sx={{ width: 120, height: 120, mb: 2 }}
+          sx={{ width: 120, height: 120, mb: 2, cursor: "pointer" }}
+          onClick={handleAvatarClick}
         />
         <Typography variant="h6" gutterBottom>Imagen de Perfil</Typography>
         <Stack direction="row" spacing={2} alignItems="center">
@@ -128,6 +134,28 @@ export default function Profile() {
             Subir imagen
           </Button>
         </Stack>
+
+        <Modal open={openModal} onClose={handleCloseModal}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 1,
+              borderRadius: 2,
+              outline: "none"
+            }}
+          >
+            <img
+              src={user.profileImage || "https://res.cloudinary.com/studyswap/image/upload/v1/avatars/default-avatar.png"}
+              alt="Imagen ampliada"
+              style={{ maxWidth: "90vw", maxHeight: "90vh", borderRadius: "8px" }}
+            />
+          </Box>
+        </Modal>
       </Box>
 
       <Divider sx={{ my: 4 }} />
