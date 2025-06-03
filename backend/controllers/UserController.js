@@ -165,3 +165,35 @@ exports.deleteByAdmin = async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar usuario', error: err.message });
   }
 };
+
+exports.uploadProfileImage = async (req, res) => {
+  try {
+    const userId = req.user.id; 
+    const imageUrl = req.file.path; // URL de Cloudinary proporcionada por multer-storage-cloudinary
+
+    // console.log('Datos del usuario en req.user:', userId);
+    // console.log('Archivo recibido en req.file:', imageUrl);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profileImage: imageUrl },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ status: 'error', message: 'Usuario no encontrado.' });
+    }
+
+    const sanitizedUser = updatedUser.toObject();
+    delete sanitizedUser.passwordHash;
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Imagen de perfil actualizada correctamente',
+      user: sanitizedUser,
+    });
+  } catch (err) {
+    console.error('Error al subir la imagen de perfil:', err);
+    res.status(500).json({ status: 'error', message: 'Error interno del servidor al subir la imagen.' });
+  }
+};

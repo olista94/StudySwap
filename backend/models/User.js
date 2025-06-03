@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   university: { type: String },
   reputation: { type: Number, default: 0 },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  profileImage: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now }
 });
 

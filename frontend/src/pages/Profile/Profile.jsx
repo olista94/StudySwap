@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateProfile, changePassword } from "../../services/userService";
+import { updateProfile, changePassword, uploadProfileImage } from "../../services/userService";
 import {
   Box,
   TextField,
@@ -8,7 +8,8 @@ import {
   Alert,
   Typography,
   Divider,
-  Stack
+  Stack,
+  Avatar
 } from "@mui/material";
 import "./Profile.css";
 
@@ -18,6 +19,7 @@ export default function Profile() {
   const [form, setForm] = useState({ name: "", university: "", email: "" });
   const [passForm, setPassForm] = useState({ currentPassword: "", newPassword: "" });
   const [message, setMessage] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("studyswap_user");
@@ -56,6 +58,32 @@ export default function Profile() {
     }
   };
 
+  const handleImageChange = (e) => {
+    setSelectedImage(e.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    if (!selectedImage) {
+      setMessage("❌ Por favor, selecciona una imagen para subir.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('profileImage', selectedImage); // 'profileImage' debe coincidir con el nombre de campo en el backend
+
+    try {
+      const token = localStorage.getItem("studyswap_token");
+      // Asume que uploadProfileImage es una nueva función en tu userService
+      const updatedUser = await uploadProfileImage(formData, token);
+      localStorage.setItem("studyswap_user", JSON.stringify(updatedUser));
+      setUser(updatedUser); // Actualiza el estado del usuario con la nueva URL de la imagen
+      setSelectedImage(null); // Limpia la imagen seleccionada
+      setMessage("✅ Imagen de perfil actualizada correctamente");
+    } catch (err) {
+      setMessage("❌ Error al subir la imagen: " + err.message);
+    }
+  };
+
   if (!user) return null;
 
   return (
@@ -69,6 +97,41 @@ export default function Profile() {
           {message}
         </Alert>
       )}
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4 }}>
+        <Avatar
+          alt={user.name}
+          src={user.profileImage || "https://res.cloudinary.com/studyswap/image/upload/v1/avatars/default-avatar.png"}
+          sx={{ width: 120, height: 120, mb: 2 }}
+        />
+        <Typography variant="h6" gutterBottom>Imagen de Perfil</Typography>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <Button variant="outlined" component="label">
+            Seleccionar imagen
+            <input
+              type="file"
+              hidden
+              accept="image/jpeg,image/png,image/jpg"
+              onChange={handleImageChange}
+            />
+          </Button>
+          {selectedImage && (
+            <Typography variant="body2" sx={{ ml: 1 }}>
+              {selectedImage.name}
+            </Typography>
+          )}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={uploadImage}
+            disabled={!selectedImage} // Deshabilita el botón si no hay imagen seleccionada
+          >
+            Subir imagen
+          </Button>
+        </Stack>
+      </Box>
+
+      <Divider sx={{ my: 4 }} /> {/* Separador para la sección de imagen */}
 
       <Box component="form" onSubmit={saveProfile}>
         <Typography variant="h6" gutterBottom>Editar datos</Typography>
