@@ -74,7 +74,7 @@ export default function UserList() {
         throw new Error(errorData.message || 'Error al eliminar usuario');
       }
       setUserToDelete(null);
-      fetchUsers(); // Refrescar lista
+      fetchUsers();
     } catch (err) {
       alert("Error: " + err.message);
     } finally {

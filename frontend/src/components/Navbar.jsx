@@ -1,5 +1,3 @@
-// src/Navbar.jsx (This code is already correct based on your previous request)
-
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
@@ -40,8 +38,6 @@ export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
-    // This part is key: it reads the 'user' object from localStorage
-    // which should contain the 'role' property.
     const storedUser = localStorage.getItem("studyswap_user");
     setUser(storedUser ? JSON.parse(storedUser) : null);
   }, [location]);
@@ -60,7 +56,6 @@ export default function Navbar() {
   const renderLinks = () =>
     user ? (
       <>
-        {/* This is the part that checks the user's role */}
         {user.role === "admin" ? (
           // Admin links
           <>
@@ -86,7 +81,7 @@ export default function Navbar() {
             </ListItem>
           </>
         ) : (
-          // Regular user links
+          // User links
           <>
             <ListItem button component={Link} to="/explorer" onClick={toggleDrawer(false)}>
               <ListItemIcon><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
@@ -120,7 +115,7 @@ export default function Navbar() {
         )}
       </>
     ) : (
-      // Links for unauthenticated users
+      // Unauthenticated users
       <>
         <ListItem button component={Link} to="/login" onClick={toggleDrawer(false)}>
           <ListItemIcon><FontAwesomeIcon icon={faRightToBracket} /></ListItemIcon>

@@ -69,15 +69,14 @@ export default function Profile() {
     }
 
     const formData = new FormData();
-    formData.append('profileImage', selectedImage); // 'profileImage' debe coincidir con el nombre de campo en el backend
+    formData.append('profileImage', selectedImage);
 
     try {
       const token = localStorage.getItem("studyswap_token");
-      // Asume que uploadProfileImage es una nueva función en tu userService
       const updatedUser = await uploadProfileImage(formData, token);
       localStorage.setItem("studyswap_user", JSON.stringify(updatedUser));
-      setUser(updatedUser); // Actualiza el estado del usuario con la nueva URL de la imagen
-      setSelectedImage(null); // Limpia la imagen seleccionada
+      setUser(updatedUser);
+      setSelectedImage(null);
       setMessage("✅ Imagen de perfil actualizada correctamente");
     } catch (err) {
       setMessage("❌ Error al subir la imagen: " + err.message);
@@ -124,14 +123,14 @@ export default function Profile() {
             variant="contained"
             color="primary"
             onClick={uploadImage}
-            disabled={!selectedImage} // Deshabilita el botón si no hay imagen seleccionada
+            disabled={!selectedImage}
           >
             Subir imagen
           </Button>
         </Stack>
       </Box>
 
-      <Divider sx={{ my: 4 }} /> {/* Separador para la sección de imagen */}
+      <Divider sx={{ my: 4 }} />
 
       <Box component="form" onSubmit={saveProfile}>
         <Typography variant="h6" gutterBottom>Editar datos</Typography>
