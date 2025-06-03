@@ -7,13 +7,17 @@ import {
   Button,
   Stack,
   Container,
-  Chip
+  Chip,
+  Avatar,
+  Modal
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import "./TutorOffersList.css";
 
 export default function TutorOffersList() {
   const [offers, setOffers] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/tutors")
@@ -21,6 +25,13 @@ export default function TutorOffersList() {
       .then(setOffers)
       .catch(err => console.error("Error al cargar ofertas:", err));
   }, []);
+
+  const handleOpen = (img) => {
+    setActiveImage(img);
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
 
   return (
     <Container maxWidth="md" sx={{ mt: 5 }}>
@@ -32,13 +43,21 @@ export default function TutorOffersList() {
         {offers.map((offer) => (
           <Card key={offer._id} className="tutor-card" sx={{ p: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom>
-                {offer.subject} —{" "}
-                <Typography component="span" color="text.secondary">
-                  {offer.userId?.name}
-                </Typography>
-              </Typography>
+              <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 1 }}>
+                <Avatar
+                  alt={offer.userId?.name}
+                  src={offer.userId?.profileImage || "/default-avatar.png"}
+                  sx={{ width: 56, height: 56, cursor: "pointer" }}
+                  onClick={() => handleOpen(offer.userId?.profileImage || "/default-avatar.png")}
+                />
 
+                <Typography variant="h6" gutterBottom>
+                  {offer.subject} —{" "}
+                  <Typography component="span" color="text.secondary">
+                    {offer.userId?.name}
+                  </Typography>
+                </Typography>
+              </Stack>
               <Typography variant="body2" sx={{ mb: 1 }}>
                 {offer.description}
               </Typography>
@@ -73,6 +92,28 @@ export default function TutorOffersList() {
           </Card>
         ))}
       </Stack>
+
+      <Modal open={open} onClose={handleClose}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 1,
+            borderRadius: 2,
+            outline: "none"
+          }}
+        >
+          <img
+            src={activeImage}
+            alt="Imagen ampliada"
+            style={{ maxWidth: "90vw", maxHeight: "90vh", borderRadius: "8px" }}
+          />
+        </Box>
+      </Modal>
     </Container>
   );
 }

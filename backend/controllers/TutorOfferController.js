@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const offers = await TutorOffer.find().populate("userId", "name email");
+    const offers = await TutorOffer.find().populate("userId", "name email profileImage");
     res.json(offers);
   } catch (err) {
     res.status(500).json({ message: "Error al obtener ofertas" });
