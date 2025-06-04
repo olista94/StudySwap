@@ -78,7 +78,7 @@ JWT_SECRET=clave-secreta-segura
 | Rol   | Email                  | Contraseña |
 |-------|------------------------|------------|
 | Admin | admin@studyswap.com    | 123        |
-| User  | marta@estudiante.com   | 123        |
+| User  | iria@studyswap.com     | 123        |
 
 ---
 
