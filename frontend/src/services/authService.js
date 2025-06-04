@@ -1,4 +1,5 @@
-const API = "http://localhost:3000/api/users";
+// const API = "http://localhost:3000/api/users";
+const API = "https://study-swap.vercel.app";
 
 export async function registerUser(data) {
   const res = await fetch(`${API}/register`, {
