@@ -63,11 +63,11 @@ export default function Navbar() {
               <ListItemIcon><FontAwesomeIcon icon={faBookOpen} /></ListItemIcon>
               <ListItemText primary="Gestionar apuntes" />
             </ListItem>
-            <ListItem button component={Link} to="/admin/manage-classes" onClick={toggleDrawer(false)}>
+            <ListItem button component={Link} to="/admin/manage-tutors" onClick={toggleDrawer(false)}>
               <ListItemIcon><FontAwesomeIcon icon={faLandmark} /></ListItemIcon>
               <ListItemText primary="Gestionar tutores" />
             </ListItem>
-            <ListItem button component={Link} to="/admin/users" onClick={toggleDrawer(false)}>
+            <ListItem button component={Link} to="/admin/manage-users" onClick={toggleDrawer(false)}>
               <ListItemIcon><FontAwesomeIcon icon={faUsersCog} /></ListItemIcon>
               <ListItemText primary="Gestionar usuarios" />
             </ListItem>
