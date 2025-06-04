@@ -20,7 +20,7 @@ export default function TutorOffersList() {
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/tutors")
+    fetch("https://studyswap-2ejx.onrender.com/api/tutors")
       .then(res => res.json())
       .then(setOffers)
       .catch(err => console.error("Error al cargar ofertas:", err));

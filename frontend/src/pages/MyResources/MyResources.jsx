@@ -49,7 +49,7 @@ const handleUpdateResource = async () => {
   }
 
   try {
-    const res = await fetch(`http://localhost:3000/api/resources/${resourceToEdit._id}`, {
+    const res = await fetch(`https://studyswap-2ejx.onrender.com/api/resources/${resourceToEdit._id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ const handleUpdateResource = async () => {
     const fetchResources = async () => {
       const token = localStorage.getItem("studyswap_token");
       try {
-        const res = await fetch("http://localhost:3000/api/resources", {
+        const res = await fetch("https://studyswap-2ejx.onrender.com/api/resources", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -103,7 +103,7 @@ const handleUpdateResource = async () => {
   const handleDelete = async () => {
     const token = localStorage.getItem("studyswap_token");
     try {
-      const res = await fetch(`http://localhost:3000/api/resources/${resourceToDelete._id}`, {
+      const res = await fetch(`https://studyswap-2ejx.onrender.com/api/resources/${resourceToDelete._id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -165,7 +165,7 @@ const handleUpdateResource = async () => {
                     <IconButton
                       color="primary"
                       component="a"
-                      href={`http://localhost:3000${resource.fileUrl}`}
+                      href={`https://studyswap-2ejx.onrender.com${resource.fileUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

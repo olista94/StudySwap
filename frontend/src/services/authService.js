@@ -1,4 +1,4 @@
-// const API = "http://localhost:3000/api/users";
+// const API = "https://studyswap-2ejx.onrender.com/api/users";
 const API = "https://study-swap.vercel.app";
 
 export async function registerUser(data) {

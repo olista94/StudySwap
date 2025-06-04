@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/users";
+const API_URL = "https://studyswap-2ejx.onrender.com/api/users";
 
 export async function updateProfile(data, token) {
   const res = await fetch(`${API_URL}/me`, {

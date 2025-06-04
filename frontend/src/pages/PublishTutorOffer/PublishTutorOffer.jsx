@@ -36,7 +36,7 @@ export default function PublishTutorOffer() {
     const token = localStorage.getItem("studyswap_token");
 
     try {
-      const res = await fetch("http://localhost:3000/api/tutors", {
+      const res = await fetch("https://studyswap-2ejx.onrender.com/api/tutors", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -31,7 +31,7 @@ export default function ResourceList() {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/resources/admin/manage-resources`, {
+        const res = await fetch(`https://studyswap-2ejx.onrender.com/api/resources/admin/manage-resources`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -53,7 +53,7 @@ export default function ResourceList() {
 
   const handleDelete = async () => {
     try {
-      await fetch(`http://localhost:3000/api/resources/${resourceToDelete._id}`, {
+      await fetch(`https://studyswap-2ejx.onrender.com/api/resources/${resourceToDelete._id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -111,7 +111,7 @@ export default function ResourceList() {
                 <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
                   <Button
                     startIcon={<DownloadIcon />}
-                    href={`http://localhost:3000/${resource.filePath}`}
+                    href={`https://studyswap-2ejx.onrender.com/${resource.filePath}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     size="small"

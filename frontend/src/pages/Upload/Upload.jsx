@@ -39,7 +39,7 @@ export default function Upload() {
     Object.keys(form).forEach(key => data.append(key, form[key]));
 
     try {
-      const res = await fetch("http://localhost:3000/api/resources", {
+      const res = await fetch("https://studyswap-2ejx.onrender.com/api/resources", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: data
