@@ -44,7 +44,7 @@ export default function UserList() {
     setError(null);
     try {
       const token = localStorage.getItem('studyswap_token');
-      const response = await fetch('https://studyswap-2ejx.onrender.com/api/users/admin/users', {
+      const response = await fetch('http://localhost:3000/api/users/admin/users', {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (!response.ok) {
@@ -65,7 +65,7 @@ export default function UserList() {
     setDeleting(true);
     try {
       const token = localStorage.getItem('studyswap_token');
-      const response = await fetch(`https://studyswap-2ejx.onrender.com/api/users/${userToDelete._id}`, {
+      const response = await fetch(`http://localhost:3000/api/users/${userToDelete._id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });

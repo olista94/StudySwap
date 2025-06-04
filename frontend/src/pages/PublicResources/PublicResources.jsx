@@ -28,7 +28,7 @@ export default function PublicResources() {
     const fetchResourcesWithVotesAndComments = async () => {
       try {
         const res = await fetch("https://study-swap.vercel.app/api/resources");
-        // const res = await fetch("https://studyswap-2ejx.onrender.com/api/resources");
+        // const res = await fetch("http://localhost:3000/api/resources");
         const data = await res.json();
 
         const enriched = await Promise.all(
@@ -37,7 +37,7 @@ export default function PublicResources() {
             let comments = 0;
 
             try {
-              // const resVotes = await fetch(`https://studyswap-2ejx.onrender.com/api/votes/resources/${r._id}`);
+              // const resVotes = await fetch(`http://localhost:3000/api/votes/resources/${r._id}`);
               const resVotes = await fetch(`https://study-swap.vercel.app/api/votes/resources/${r._id}`);
               if (resVotes.ok) votes = await resVotes.json();
             } catch (err) {
@@ -45,7 +45,7 @@ export default function PublicResources() {
             }
 
             try {
-              // const resComments = await fetch(`https://studyswap-2ejx.onrender.com/api/comments/resources/${r._id}/comments/count`);
+              // const resComments = await fetch(`http://localhost:3000/api/comments/resources/${r._id}/comments/count`);
               const resComments = await fetch(`https://study-swap.vercel.app/api/comments/resources/${r._id}/comments/count`);
               if (resComments.ok) {
                 const json = await resComments.json();
@@ -88,7 +88,7 @@ export default function PublicResources() {
     if (!token) return alert("Debes iniciar sesión para votar.");
 
     try {
-      // await fetch(`https://studyswap-2ejx.onrender.com/api/votes/resources/${resourceId}/vote`, {
+      // await fetch(`http://localhost:3000/api/votes/resources/${resourceId}/vote`, {
       await fetch(`https://study-swap.vercel.app/api/votes/resources/${resourceId}/vote`, {
         method: "POST",
         headers: {
@@ -98,7 +98,7 @@ export default function PublicResources() {
         body: JSON.stringify({ value }),
       });
 
-      // const res = await fetch(`https://studyswap-2ejx.onrender.com/api/votes/resources/${resourceId}`);
+      // const res = await fetch(`http://localhost:3000/api/votes/resources/${resourceId}`);
       const res = await fetch(`https://study-swap.vercel.app/api/votes/resources/${resourceId}`);
       const updatedVotes = await res.json();
 

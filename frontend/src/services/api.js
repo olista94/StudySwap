@@ -1,1 +1,1 @@
-export const API = "https://studyswap-2ejx.onrender.com/api";
+export const API = "http://localhost:3000/api";
