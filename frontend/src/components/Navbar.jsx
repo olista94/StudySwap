@@ -60,23 +60,23 @@ export default function Navbar() {
           // Admin links
           <>
             <ListItem button component={Link} to="/admin/manage-resources" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faBookOpen} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faBookOpen} /></ListItemIcon>
               <ListItemText primary="Gestionar apuntes" />
             </ListItem>
             <ListItem button component={Link} to="/admin/manage-tutors" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faLandmark} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faLandmark} /></ListItemIcon>
               <ListItemText primary="Gestionar tutores" />
             </ListItem>
             <ListItem button component={Link} to="/admin/manage-users" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faUsersCog} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUsersCog} /></ListItemIcon>
               <ListItemText primary="Gestionar usuarios" />
             </ListItem>
             <ListItem button component={Link} to="/profile" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faUser} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUser} /></ListItemIcon>
               <ListItemText primary="Perfil" />
             </ListItem>
             <ListItem button onClick={() => { toggleDrawer(false)(); handleLogout(); }}>
-              <ListItemIcon><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
               <ListItemText primary="Cerrar sesión" />
             </ListItem>
           </>
@@ -84,31 +84,31 @@ export default function Navbar() {
           // User links
           <>
             <ListItem button component={Link} to="/explorer" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
               <ListItemText primary="Buscar apuntes" />
             </ListItem>
             <ListItem button component={Link} to="/my-resources" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faFolderOpen} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faFolderOpen} /></ListItemIcon>
               <ListItemText primary="Mis recursos" />
             </ListItem>
             <ListItem button component={Link} to="/upload" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faFileArrowUp} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faFileArrowUp} /></ListItemIcon>
               <ListItemText primary="Subir apuntes" />
             </ListItem>
             <ListItem button component={Link} to="/tutors" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faChalkboardUser} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faChalkboardUser} /></ListItemIcon>
               <ListItemText primary="Profesores particulares" />
             </ListItem>
             <ListItem button component={Link} to="/tutors/publish" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
               <ListItemText primary="Dar clases" />
             </ListItem>
             <ListItem button component={Link} to="/profile" onClick={toggleDrawer(false)}>
-              <ListItemIcon><FontAwesomeIcon icon={faUser} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUser} /></ListItemIcon>
               <ListItemText primary="Perfil" />
             </ListItem>
             <ListItem button onClick={() => { toggleDrawer(false)(); handleLogout(); }}>
-              <ListItemIcon><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
+              <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
               <ListItemText primary="Cerrar sesión" />
             </ListItem>
           </>
