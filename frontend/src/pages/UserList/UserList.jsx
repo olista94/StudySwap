@@ -101,7 +101,7 @@ export default function UserList() {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom align="center">
-        Lista de Usuarios
+        Lista de usuarios
       </Typography>
       {users.length === 0 ? (
         <Alert severity="info">No hay usuarios registrados.</Alert>
