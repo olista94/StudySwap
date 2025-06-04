@@ -5,10 +5,14 @@ const auth = require('../middlewares/auth');
 const isAdmin = require('../middlewares/isAdmin');
 const upload = require("../middlewares/multer");
 
+// Rutas de usuario
 router.get('/', ResourceController.getAll);
 router.get('/:id', ResourceController.getById);
 router.post('/', auth, upload.single("file"), ResourceController.uploadWithFile);
 router.put('/:id', auth, ResourceController.update);
 router.delete('/:id', auth, ResourceController.remove);
-router.get('/admin/resources', auth, isAdmin, ResourceController.getAll);
+
+// Rutas de administración
+router.get('/admin/manage-resources', auth, isAdmin, ResourceController.getAll);
+
 module.exports = router;

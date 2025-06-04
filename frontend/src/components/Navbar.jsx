@@ -65,7 +65,7 @@ export default function Navbar() {
             </ListItem>
             <ListItem button component={Link} to="/admin/manage-classes" onClick={toggleDrawer(false)}>
               <ListItemIcon><FontAwesomeIcon icon={faLandmark} /></ListItemIcon>
-              <ListItemText primary="Gestionar clases" />
+              <ListItemText primary="Gestionar tutores" />
             </ListItem>
             <ListItem button component={Link} to="/admin/users" onClick={toggleDrawer(false)}>
               <ListItemIcon><FontAwesomeIcon icon={faUsersCog} /></ListItemIcon>

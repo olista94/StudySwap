@@ -14,6 +14,7 @@ import PublishTutorOffer from "./pages/PublishTutorOffer/PublishTutorOffer";
 import TutorOffersList from "./pages/TutorOffersList/TutorOffersList";
 import Profile from "./pages/Profile/Profile";
 import UserEdit from "./pages/UserEdit/UserEdit";
+import ResourceList from "./pages/ResourceList/ResourceList";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/admin/manage-resources" element={<ResourceList />} />
             <Route path="/admin/users" element={<UserList />} />
             <Route path="/admin/users/:id/edit" element={<UserEdit />} />
             <Route path="/explorer" element={<PublicResources />} />

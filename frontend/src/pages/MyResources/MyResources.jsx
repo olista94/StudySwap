@@ -79,7 +79,7 @@ const handleUpdateResource = async () => {
         });
         const data = await res.json();
         const user = JSON.parse(localStorage.getItem("studyswap_user"));
-        const mine = data.filter((r) => r.uploadedBy._id === user._id);
+        const mine = data.filter((r) => r.uploadedBy && r.uploadedBy._id === user._id);
         setResources(mine);
       } catch (err) {
         console.error(err);
