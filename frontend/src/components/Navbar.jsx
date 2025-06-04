@@ -11,7 +11,7 @@ import {
   ListItemIcon,
   Typography,
   Box,
-  Button,
+  Avatar
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -164,9 +164,16 @@ export default function Navbar() {
           </Box>
 
           {user && (
-            <Typography variant="body2" sx={{ mr: 1 }}>
-              Hola {user.name}
-            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Avatar
+                src={user.profileImage || "https://res.cloudinary.com/studyswap/image/upload/v1/avatars/default-avatar.png"}
+                alt={user.name}
+                sx={{ width: 32, height: 32 }}
+              />
+              <Typography variant="body2" sx={{ color: "var(--white)" }}>
+                {user.name}
+              </Typography>
+            </Box>
           )}
         </Toolbar>
       </AppBar>
