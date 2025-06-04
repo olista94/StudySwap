@@ -29,7 +29,7 @@ export default function UserEdit() {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("studyswap_token");
-        const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+        const response = await fetch(`https://studyswap-2ejx.onrender.com/api/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -67,7 +67,7 @@ export default function UserEdit() {
 
     try {
       const token = localStorage.getItem("studyswap_token");
-      const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const response = await fetch(`https://studyswap-2ejx.onrender.com/api/users/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

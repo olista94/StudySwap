@@ -23,22 +23,22 @@ export default function ResourceDetail() {
   const user = JSON.parse(localStorage.getItem("studyswap_user") || "null");
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/resources/${id}`)
+    fetch(`https://studyswap-2ejx.onrender.com/api/resources/${id}`)
       .then((res) => res.json())
       .then(setResource);
 
-    fetch(`http://localhost:3000/api/votes/resources/${id}`)
+    fetch(`https://studyswap-2ejx.onrender.com/api/votes/resources/${id}`)
       .then((res) => res.json())
       .then(setVotes);
 
-    fetch(`http://localhost:3000/api/comments/resources/${id}/comments`)
+    fetch(`https://studyswap-2ejx.onrender.com/api/comments/resources/${id}/comments`)
       .then((res) => res.json())
       .then(setComments);
   }, [id]);
 
   const handleVote = async (value) => {
     try {
-      await fetch(`http://localhost:3000/api/votes/resources/${id}/vote`, {
+      await fetch(`https://studyswap-2ejx.onrender.com/api/votes/resources/${id}/vote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export default function ResourceDetail() {
         body: JSON.stringify({ value }),
       });
 
-      const updated = await fetch(`http://localhost:3000/api/votes/resources/${id}`).then((res) => res.json());
+      const updated = await fetch(`https://studyswap-2ejx.onrender.com/api/votes/resources/${id}`).then((res) => res.json());
       setVotes(updated);
     } catch (err) {
       alert("Error al votar", err);
@@ -57,7 +57,7 @@ export default function ResourceDetail() {
   const handleComment = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`http://localhost:3000/api/comments/resources/${id}/comments`, {
+      await fetch(`https://studyswap-2ejx.onrender.com/api/comments/resources/${id}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export default function ResourceDetail() {
         body: JSON.stringify({ content: newComment }),
       });
 
-      const updated = await fetch(`http://localhost:3000/api/comments/resources/${id}/comments`).then((res) =>
+      const updated = await fetch(`https://studyswap-2ejx.onrender.com/api/comments/resources/${id}/comments`).then((res) =>
         res.json()
       );
       setComments(updated);
@@ -103,7 +103,7 @@ export default function ResourceDetail() {
       </Stack>
 
       <Button
-        href={`http://localhost:3000${resource.fileUrl}`}
+        href={`https://studyswap-2ejx.onrender.com${resource.fileUrl}`}
         target="_blank"
         rel="noopener noreferrer"
         variant="contained"
