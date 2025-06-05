@@ -1,6 +1,6 @@
 # 📚 StudySwap
 
-**StudySwap** es una plataforma colaborativa donde estudiantes pueden compartir e intercambiar apuntes, exámenes resueltos y casos prácticos. El proyecto ha sido desarrollado como trabajo final de máster, siguiendo un enfoque full stack con React + Node.js + MongoDB.
+**StudySwap** es una plataforma colaborativa donde estudiantes pueden compartir e intercambiar apuntes, exámenes resueltos, casos prácticos y todo tipo de recursos académicos, además de publicar clases particulares. El proyecto ha sido desarrollado como trabajo final de máster, siguiendo un enfoque full stack con React + Node.js + MongoDB.
 
 ---
 
