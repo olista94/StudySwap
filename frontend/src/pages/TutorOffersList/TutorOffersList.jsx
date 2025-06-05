@@ -14,13 +14,15 @@ import {
 import EmailIcon from "@mui/icons-material/Email";
 import "./TutorOffersList.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function TutorOffersList() {
   const [offers, setOffers] = useState([]);
   const [open, setOpen] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/tutors")
+    fetch(`${API_URL}/api/tutors`)
       .then(res => res.json())
       .then(setOffers)
       .catch(err => console.error("Error al cargar ofertas:", err));

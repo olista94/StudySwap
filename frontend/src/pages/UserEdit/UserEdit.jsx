@@ -12,6 +12,8 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const roles = [
   { value: "user", label: "Usuario" },
   { value: "admin", label: "Administrador" }
@@ -29,7 +31,7 @@ export default function UserEdit() {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("studyswap_token");
-        const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+        const response = await fetch(`${API_URL}/api/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -67,7 +69,7 @@ export default function UserEdit() {
 
     try {
       const token = localStorage.getItem("studyswap_token");
-      const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const response = await fetch(`${API_URL}/api/users/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

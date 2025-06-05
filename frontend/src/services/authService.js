@@ -1,5 +1,6 @@
-// const API = "http://localhost:3000/api/users";
-const API = "https://study-swap.vercel.app";
+const API = import.meta.env.VITE_API_URL;
+
+console.log("API URL:", API);
 
 export async function registerUser(data) {
   const res = await fetch(`${API}/register`, {

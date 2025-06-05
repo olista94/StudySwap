@@ -16,6 +16,8 @@ import {
 import { Link } from "react-router-dom";
 import "./PublicResources.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function PublicResources() {
   const [resources, setResources] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -27,8 +29,7 @@ export default function PublicResources() {
   useEffect(() => {
     const fetchResourcesWithVotesAndComments = async () => {
       try {
-        const res = await fetch("https://study-swap.vercel.app/api/resources");
-        // const res = await fetch("http://localhost:3000/api/resources");
+        const res = await fetch(`${API_URL}/api/resources`);
         const data = await res.json();
 
         const enriched = await Promise.all(
@@ -37,16 +38,14 @@ export default function PublicResources() {
             let comments = 0;
 
             try {
-              // const resVotes = await fetch(`http://localhost:3000/api/votes/resources/${r._id}`);
-              const resVotes = await fetch(`https://study-swap.vercel.app/api/votes/resources/${r._id}`);
+              const resVotes = await fetch(`${API_URL}/api/votes/resources/${r._id}`);
               if (resVotes.ok) votes = await resVotes.json();
             } catch (err) {
               console.error(`Error al obtener votos del recurso ${r._id}:`, err);
             }
 
             try {
-              // const resComments = await fetch(`http://localhost:3000/api/comments/resources/${r._id}/comments/count`);
-              const resComments = await fetch(`https://study-swap.vercel.app/api/comments/resources/${r._id}/comments/count`);
+              const resComments = await fetch(`${API_URL}/api/comments/resources/${r._id}/comments/count`);
               if (resComments.ok) {
                 const json = await resComments.json();
                 comments = json.count;
@@ -88,8 +87,7 @@ export default function PublicResources() {
     if (!token) return alert("Debes iniciar sesión para votar.");
 
     try {
-      // await fetch(`http://localhost:3000/api/votes/resources/${resourceId}/vote`, {
-      await fetch(`https://study-swap.vercel.app/api/votes/resources/${resourceId}/vote`, {
+      await fetch(`${API_URL}/api/votes/resources/${resourceId}/vote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,8 +96,7 @@ export default function PublicResources() {
         body: JSON.stringify({ value }),
       });
 
-      // const res = await fetch(`http://localhost:3000/api/votes/resources/${resourceId}`);
-      const res = await fetch(`https://study-swap.vercel.app/api/votes/resources/${resourceId}`);
+      const res = await fetch(`${API_URL}/api/votes/resources/${resourceId}`);
       const updatedVotes = await res.json();
 
       setFiltered((prev) =>

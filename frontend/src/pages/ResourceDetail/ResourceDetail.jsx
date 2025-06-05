@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 import "./ResourceDetail.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function ResourceDetail() {
   const { id } = useParams();
   const [resource, setResource] = useState(null);
@@ -23,22 +25,22 @@ export default function ResourceDetail() {
   const user = JSON.parse(localStorage.getItem("studyswap_user") || "null");
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/resources/${id}`)
+    fetch(`${API_URL}/api/resources/${id}`)
       .then((res) => res.json())
       .then(setResource);
 
-    fetch(`http://localhost:3000/api/votes/resources/${id}`)
+    fetch(`${API_URL}/api/votes/resources/${id}`)
       .then((res) => res.json())
       .then(setVotes);
 
-    fetch(`http://localhost:3000/api/comments/resources/${id}/comments`)
+    fetch(`${API_URL}/api/comments/resources/${id}/comments`)
       .then((res) => res.json())
       .then(setComments);
   }, [id]);
 
   const handleVote = async (value) => {
     try {
-      await fetch(`http://localhost:3000/api/votes/resources/${id}/vote`, {
+      await fetch(`${API_URL}/api/votes/resources/${id}/vote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +49,7 @@ export default function ResourceDetail() {
         body: JSON.stringify({ value }),
       });
 
-      const updated = await fetch(`http://localhost:3000/api/votes/resources/${id}`).then((res) => res.json());
+      const updated = await fetch(`${API_URL}/api/votes/resources/${id}`).then((res) => res.json());
       setVotes(updated);
     } catch (err) {
       alert("Error al votar", err);
@@ -57,7 +59,7 @@ export default function ResourceDetail() {
   const handleComment = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`http://localhost:3000/api/comments/resources/${id}/comments`, {
+      await fetch(`${API_URL}/api/comments/resources/${id}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +68,7 @@ export default function ResourceDetail() {
         body: JSON.stringify({ content: newComment }),
       });
 
-      const updated = await fetch(`http://localhost:3000/api/comments/resources/${id}/comments`).then((res) =>
+      const updated = await fetch(`${API_URL}/api/comments/resources/${id}/comments`).then((res) =>
         res.json()
       );
       setComments(updated);
@@ -103,7 +105,7 @@ export default function ResourceDetail() {
       </Stack>
 
       <Button
-        href={`http://localhost:3000${resource.fileUrl}`}
+        href={`${API_URL}${resource.fileUrl}`}
         target="_blank"
         rel="noopener noreferrer"
         variant="contained"

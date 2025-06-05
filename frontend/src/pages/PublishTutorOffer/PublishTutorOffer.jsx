@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import "./PublishTutorOffer.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function PublishTutorOffer() {
   const [form, setForm] = useState({
     educationLevels: [],
@@ -36,7 +38,7 @@ export default function PublishTutorOffer() {
     const token = localStorage.getItem("studyswap_token");
 
     try {
-      const res = await fetch("http://localhost:3000/api/tutors", {
+      const res = await fetch(`${API_URL}/api/tutors`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

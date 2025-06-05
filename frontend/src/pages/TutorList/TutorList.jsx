@@ -26,10 +26,12 @@ export default function TutorList() {
 
   const token = localStorage.getItem("studyswap_token");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchTutors = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/tutors/admin/manage-tutors", {
+        const res = await fetch(`${API_URL}/api/tutors/admin/manage-tutors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -51,7 +53,7 @@ export default function TutorList() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/tutors/${tutorToDelete._id}`, {
+      const res = await fetch(`${API_URL}/api/tutors/${tutorToDelete._id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
