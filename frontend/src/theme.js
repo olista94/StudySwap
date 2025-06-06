@@ -25,7 +25,7 @@ const theme = createTheme({
     MuiListItemText: {
       styleOverrides: {
         primary: {
-          color: '#2BA84A',
+          color: '#040F0F',
           textDecoration: 'none'
         }
       }

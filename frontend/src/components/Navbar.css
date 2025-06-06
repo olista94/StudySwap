@@ -51,7 +51,7 @@
   background: none;
   border: none;
   font-size: 1.6rem;
-  color: var(--green);
+  color: var(--dark);
   cursor: pointer;
 }
 
@@ -95,7 +95,7 @@
 
 .navbar-links a:hover,
 .navbar-links button:hover {
-  color: var(--green-light);
+  color: var(--dark);
 }
 
 /* DESKTOP */

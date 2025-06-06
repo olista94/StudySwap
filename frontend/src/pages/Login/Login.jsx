@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser } from "../../services/authService";
 import {
   Box,
@@ -12,6 +12,8 @@ import {
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/explorer";
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ export default function Login() {
 
   useEffect(() => {
     const user = localStorage.getItem("studyswap_user");
-    if (user) navigate("/explorer");
+    if (user) navigate(from);
     else setLoading(false);
   }, []);
 
@@ -31,7 +33,7 @@ export default function Login() {
       const { token, user } = await loginUser(form);
       localStorage.setItem("studyswap_token", token);
       localStorage.setItem("studyswap_user", JSON.stringify(user));
-      navigate("/explorer");
+      navigate(from);
     } catch (err) {
       setError(err.message);
     }
@@ -41,10 +43,13 @@ export default function Login() {
 
   return (
     <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      sx={{ backgroundColor: "#FCFFFC", p: 2 }}
+      sx={{
+        minHeight: "calc(100vh - 64px)", // ajusta altura excluyendo AppBar
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        p: 3,
+      }}
     >
       <Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
         <Typography variant="h5" color="primary" gutterBottom>

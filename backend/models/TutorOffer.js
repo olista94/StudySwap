@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const tutorOfferSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   educationLevels: {
-  type: [String],
-  enum: ["ESO", "Bachillerato", "FP", "Universidad", "Oposiciones", "Postgrado", "EBAU", "Idiomas"],
-  required: true
+    type: [String],
+    enum: ["ESO", "Bachillerato", "FP", "Universidad", "Oposiciones", "Postgrado", "EBAU", "Idiomas"],
+    required: true
   },
   subject: { type: String, required: true },
   description: { type: String },

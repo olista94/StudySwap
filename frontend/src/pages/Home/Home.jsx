@@ -1,32 +1,54 @@
-import { useEffect, useState } from "react";
+import { Typography, Box, Stack, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const [option, setOption] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const u = localStorage.getItem("studyswap_user");
-    if (!u) return navigate("/login");
-    setUser(JSON.parse(u));
-  }, []);
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setOption(value);
 
-  if (!user) return null;
+    // Redirigir según la opción elegida
+    if (value === "tutors") navigate("/tutors");
+    if (value === "resources") navigate("/explorer");
+  };
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Hola, <span className="text-success">{user.name}</span> 👋</h2>
-      <div className="card-custom">
-        <p>¿Qué te gustaría hacer hoy?</p>
-        <div className="d-grid gap-2">
-          <button className="btn btn-custom" onClick={() => navigate("/upload")}>
-            📤 Subir un nuevo apunte
-          </button>
-          <button className="btn btn-outline-secondary" onClick={() => navigate("/my-resources")}>
-            📁 Ver mis recursos
-          </button>
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        minHeight: "calc(100vh - 64px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        pt: 10,
+        px: 2,
+        textAlign: "center",
+      }}
+    >
+      <Stack spacing={6} sx={{ width: "100%", maxWidth: 600 }}>
+        <Typography variant="h2" color="text" sx={{ fontWeight: "bold" }}>
+          Conecta estudiantes, comparte apuntes y mejora tu aprendizaje
+        </Typography>
+        <Typography variant="h5" color="text.secondary">
+          Aquí puedes encontrar recursos de estudio, publicar tus propios apuntes y conectar con estudiantes para dar o recibir clases particulares.
+        </Typography>
+
+        <FormControl fullWidth>
+          <InputLabel id="select-label">¿Qué te gustaría ver hoy?</InputLabel>
+          <Select
+            labelId="select-label"
+            value={option}
+            label="¿Qué te gustaría ver hoy?"
+            onChange={handleChange}
+            sx={{ bgcolor: "white" }}
+          >
+            <MenuItem value="tutors">Clases particulares</MenuItem>
+            <MenuItem value="resources">Apuntes y materiales</MenuItem>
+          </Select>
+        </FormControl>
+      </Stack>
+    </Box>
   );
 }

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Box } from "@mui/material";
 
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import UserList from "./pages/UserList/UserList";
@@ -17,30 +18,50 @@ import UserEdit from "./pages/UserEdit/UserEdit";
 import ResourceList from "./pages/ResourceList/ResourceList";
 import TutorList from "./pages/TutorList/TutorList";
 
+// const drawerWidth = -260;
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <Box sx={{ display: "flex" }}>
+        {/* Sidebar permanente */}
         <Navbar />
-        <Box component="main" sx={{ flexGrow: 1 }}>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/admin/manage-resources" element={<ResourceList />} />
-            <Route path="/admin/manage-tutors" element={<TutorList />} />
-            <Route path="/admin/manage-users" element={<UserList />} />
-            <Route path="/admin/users/:id/edit" element={<UserEdit />} />
-            <Route path="/explorer" element={<PublicResources />} />
-            <Route path="/resources/:id" element={<ResourceDetail />} />
-            <Route path="/upload" element={<Upload />} />
-            <Route path="/my-resources" element={<MyResources />} />
-            <Route path="/tutors" element={<TutorOffersList />} />
-            <Route path="/tutors/publish" element={<PublishTutorOffer />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
+
+        {/* Contenido principal con margen a la izquierda */}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            // ml: `${drawerWidth}px`,
+            mt: "64px", // altura del AppBar fijo
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+          }}
+        >
+          <Box sx={{ flexGrow: 1 }}>
+            <Routes>
+              {/* <Route path="/" element={<Navigate to="/login" />} /> */}
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/admin/manage-resources" element={<ResourceList />} />
+              <Route path="/admin/manage-tutors" element={<TutorList />} />
+              <Route path="/admin/manage-users" element={<UserList />} />
+              <Route path="/admin/users/:id/edit" element={<UserEdit />} />
+              <Route path="/explorer" element={<PublicResources />} />
+              <Route path="/resources/:id" element={<ResourceDetail />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/my-resources" element={<MyResources />} />
+              <Route path="/tutors" element={<TutorOffersList />} />
+              <Route path="/tutors/publish" element={<PublishTutorOffer />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </Box>
+
+          {/* Footer al final del contenido */}
+          <Footer />
         </Box>
-        <Footer />
       </Box>
     </BrowserRouter>
   );
