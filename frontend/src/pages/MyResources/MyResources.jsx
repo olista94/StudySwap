@@ -128,7 +128,7 @@ const handleUpdateResource = async () => {
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
-        📁 Mis recursos subidos
+        📁 Mis apuntes subidos
       </Typography>
 
       {loading ? (

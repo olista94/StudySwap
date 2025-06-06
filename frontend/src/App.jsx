@@ -17,6 +17,9 @@ import Profile from "./pages/Profile/Profile";
 import UserEdit from "./pages/UserEdit/UserEdit";
 import ResourceList from "./pages/ResourceList/ResourceList";
 import TutorList from "./pages/TutorList/TutorList";
+import UploadSelector from "./pages/UploadSelector/UploadSelector";
+import MyClasses from "./pages/MyClasses/MyClasses";
+
 
 // const drawerWidth = -260;
 
@@ -50,6 +53,8 @@ export default function App() {
               <Route path="/admin/manage-users" element={<UserList />} />
               <Route path="/admin/users/:id/edit" element={<UserEdit />} />
               <Route path="/explorer" element={<PublicResources />} />
+              <Route path="/select-type" element={<UploadSelector />} />
+              <Route path="/my-classes" element={<MyClasses />} />
               <Route path="/resources/:id" element={<ResourceDetail />} />
               <Route path="/upload" element={<Upload />} />
               <Route path="/my-resources" element={<MyResources />} />

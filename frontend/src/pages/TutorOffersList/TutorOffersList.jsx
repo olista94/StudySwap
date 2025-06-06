@@ -20,7 +20,7 @@ import {
   ListItemText,
   InputAdornment
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import EmailIcon from "@mui/icons-material/Email";
 import "./TutorOffersList.css";
 import { API_TUTORS } from "../../config/apiConfig";
@@ -33,6 +33,7 @@ export default function TutorOffersList() {
   const [activeImage, setActiveImage] = useState(null);
   const [filteredOffers, setFilteredOffers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     subject: "",
     modality: "",
@@ -42,6 +43,7 @@ export default function TutorOffersList() {
     education: []
   });
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("studyswap_user") || "null");
 
   const token = localStorage.getItem("studyswap_token");
 
@@ -253,7 +255,18 @@ export default function TutorOffersList() {
                   color="primary"
                   size="small"
                   startIcon={<EmailIcon />}
-                  href={`mailto:${offer.userId?.email}`}
+                  onClick={() => {
+                    if (!user) {
+                      navigate("/login", {
+                        state: {
+                          from: location.pathname,
+                          contactEmail: offer.userId?.email
+                        }
+                      });
+                    } else {
+                      window.open(`mailto:${offer.userId?.email}`, "_blank");
+                    }
+                  }}
                 >
                   Contactar
                 </Button>
@@ -261,6 +274,48 @@ export default function TutorOffersList() {
             </Card>
           ))}
         </Stack>
+
+        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 2,
+              textAlign: "center",
+              maxWidth: 400,
+              width: "90%",
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
+              Para poder contactar debes loguearte o registrarte
+            </Typography>
+
+            <Stack direction="column" spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => navigate("/login", { state: { from: location.pathname } })}
+              >
+                Iniciar sesión
+              </Button>
+
+              <Typography variant="body2">
+                ¿No tienes cuenta?{" "}
+                <Link
+                  to="/register"
+                  style={{ textDecoration: "none", color: "#2BA84A", fontWeight: 500 }}
+                >
+                  Regístrate
+                </Link>
+              </Typography>
+            </Stack>
+          </Box>
+        </Modal>
 
         <Modal open={open} onClose={handleClose}>
           <Box

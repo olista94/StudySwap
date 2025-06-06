@@ -10,7 +10,7 @@ import {
   ListItemIcon,
   Typography,
   Box,
-  Avatar,
+  Avatar
 } from "@mui/material";
 import {
   faMagnifyingGlass,
@@ -25,6 +25,7 @@ import {
   faBookOpen,
   faUsersCog,
   faLandmark,
+  faSchool
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
@@ -35,6 +36,8 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
+  const [temarioOpen, setTemarioOpen] = useState(false);
+  const [clasesOpen, setClasesOpen] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("studyswap_user");
@@ -45,7 +48,15 @@ export default function Navbar() {
     localStorage.removeItem("studyswap_token");
     localStorage.removeItem("studyswap_user");
     setUser(null);
-    navigate("/login");
+    navigate("/");
+  };
+
+  const toggleTemario = () => {
+    setTemarioOpen(!temarioOpen);
+  };
+
+  const toggleClases = () => {
+    setClasesOpen(!clasesOpen);
   };
 
   const renderLinks = () =>
@@ -75,26 +86,107 @@ export default function Navbar() {
         </>
       ) : (
         <>
-          <ListItem button component={Link} to="/explorer">
-            <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faMagnifyingGlass} /></ListItemIcon>
-            <ListItemText primary="Buscar apuntes" />
+          {/* BOTÓN PRINCIPAL DEL TEMARIO */}
+          <ListItem button onClick={toggleTemario}>
+            <ListItemIcon sx={{ minWidth: 32 }}>
+              <FontAwesomeIcon icon={faBookOpen} />
+            </ListItemIcon>
+            <ListItemText primary="Temario" />
           </ListItem>
-          <ListItem button component={Link} to="/my-resources">
-            <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faFolderOpen} /></ListItemIcon>
-            <ListItemText primary="Mis recursos" />
+
+          {/* SUBMENÚ DESPLEGABLE DE TEMARIO */}
+          {temarioOpen && (
+            <>
+              <ListItem
+                button
+                component={Link}
+                to="/explorer"
+                sx={{ pl: 6 }}
+              >
+                <ListItemIcon sx={{ minWidth: 32 }}>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </ListItemIcon>
+                <ListItemText primary="Buscar temario" />
+              </ListItem>
+              <ListItem
+                button
+                component={Link}
+                to="/my-resources"
+                sx={{ pl: 6 }}
+              >
+                <ListItemIcon sx={{ minWidth: 32 }}>
+                  <FontAwesomeIcon icon={faFolderOpen} />
+                </ListItemIcon>
+                <ListItemText primary="Mi temario" />
+              </ListItem>
+              <ListItem
+                button
+                component={Link}
+                to="/upload"
+                sx={{ pl: 6 }}
+              >
+                <ListItemIcon sx={{ minWidth: 32 }}>
+                  <FontAwesomeIcon icon={faFileArrowUp} />
+                </ListItemIcon>
+                <ListItemText primary="Subir temario" />
+              </ListItem>
+            </>
+          )}
+
+          {/* BOTÓN PRINCIPAL DE CLASES */}
+          <ListItem button onClick={toggleClases}>
+            <ListItemIcon sx={{ minWidth: 32 }}>
+              <FontAwesomeIcon icon={faSchool} />
+            </ListItemIcon>
+            <ListItemText primary="Clases particulares" />
           </ListItem>
-          <ListItem button component={Link} to="/upload">
-            <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faFileArrowUp} /></ListItemIcon>
-            <ListItemText primary="Subir apuntes" />
-          </ListItem>
-          <ListItem button component={Link} to="/tutors">
+
+          {/* SUBMENÚ DESPLEGABLE DE CLASES */}
+          {clasesOpen && (
+            <>
+              <ListItem
+                button
+                component={Link}
+                to="/tutors"
+                sx={{ pl: 6 }}
+              >
+                <ListItemIcon sx={{ minWidth: 32 }}>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </ListItemIcon>
+                <ListItemText primary="Buscar clases" />
+              </ListItem>
+              <ListItem
+                button
+                component={Link}
+                to="/my-classes"
+                sx={{ pl: 6 }}
+              >
+                <ListItemIcon sx={{ minWidth: 32 }}>
+                  <FontAwesomeIcon icon={faChalkboardUser} />
+                </ListItemIcon>
+                <ListItemText primary="Mis clases" />
+              </ListItem>
+              <ListItem
+                button
+                component={Link}
+                to="/tutors/publish"
+                sx={{ pl: 6 }}
+              >
+                <ListItemIcon sx={{ minWidth: 32 }}>
+                  <FontAwesomeIcon icon={faUserTie} />
+                </ListItemIcon>
+                <ListItemText primary="Publicar clases" />
+              </ListItem>
+            </>
+          )}
+          {/* <ListItem button component={Link} to="/tutors">
             <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faChalkboardUser} /></ListItemIcon>
             <ListItemText primary="Profesores particulares" />
           </ListItem>
           <ListItem button component={Link} to="/tutors/publish">
             <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
             <ListItemText primary="Dar clases" />
-          </ListItem>
+          </ListItem> */}
           <ListItem button component={Link} to="/profile">
             <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUser} /></ListItemIcon>
             <ListItemText primary="Perfil" />
@@ -115,9 +207,11 @@ export default function Navbar() {
           <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUserPlus} /></ListItemIcon>
           <ListItemText primary="Registrarse" />
         </ListItem>
-        <ListItem button component={Link} to="/upload">
-          <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faFileArrowUp} /></ListItemIcon>
-          <ListItemText primary="Colgar mis apuntes o clases particulares" />
+        <ListItem button component={Link} to="/login" state={{ from: "/select-type" }}>
+          <ListItemIcon sx={{ minWidth: 32 }}>
+            <FontAwesomeIcon icon={faFileArrowUp} />
+          </ListItemIcon>
+          <ListItemText primary="Colgar temario o clases particulares" />
         </ListItem>
         {/* <ListItem button component={Link} to="/tutors/publish">
           <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>

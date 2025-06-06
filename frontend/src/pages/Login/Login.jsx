@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { loginUser } from "../../services/authService";
 import {
   Box,
@@ -17,6 +17,7 @@ export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const contactEmail = location.state?.contactEmail || null;
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -33,7 +34,14 @@ export default function Login() {
       const { token, user } = await loginUser(form);
       localStorage.setItem("studyswap_token", token);
       localStorage.setItem("studyswap_user", JSON.stringify(user));
-      navigate(from);
+
+      if (contactEmail) {
+        window.location.href = `mailto:${contactEmail}`;
+
+        setTimeout(() => navigate(from), 500); // `setTimeout` para esperar antes de navegar:
+      } else {
+        navigate(from);
+      }
     } catch (err) {
       setError(err.message);
     }
@@ -93,6 +101,15 @@ export default function Login() {
           >
             Entrar
           </Button>
+          <Typography variant="body2" sx={{ mt: 2 }}>
+            ¿No tienes cuenta?{" "}
+            <Link
+              to="/register"
+              style={{ textDecoration: "none", color: "#2BA84A", fontWeight: 500 }}
+            >
+              Regístrate
+            </Link>
+          </Typography>
         </Box>
       </Paper>
     </Box>
