@@ -14,15 +14,13 @@ const tutorOfferRoutes = require("./routes/tutorOfferRoutes");
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'https://study-swap.vercel.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(express.json());
-
-// app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -32,6 +30,12 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/votes', voteRoutes);
 app.use('/api/tutors', tutorOfferRoutes);
+
+// Ruta raíz
+app.get("/", (req, res) => {
+  // res.send("🚀 API de StudySwap funcionando correctamente.");
+  res.redirect("https://study-swap.vercel.app");
+});
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI, {
