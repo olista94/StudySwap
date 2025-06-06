@@ -45,7 +45,7 @@ export default function UserList() {
     setError(null);
     try {
       const token = localStorage.getItem('studyswap_token');
-      const response = await fetch(`${API_USERS}/admin/users`, {
+      const response = await fetch(`${API_USERS}/admin/manage-users`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (!response.ok) {

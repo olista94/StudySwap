@@ -82,7 +82,7 @@ export default function UserEdit() {
         throw new Error(errorData.message || "Error al guardar cambios");
       }
 
-      navigate("/admin/users");
+      navigate("/admin/manage-users");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -154,7 +154,7 @@ export default function UserEdit() {
         </TextField>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-          <Button variant="outlined" color="secondary" onClick={() => navigate("/admin/users")}>
+          <Button variant="outlined" color="secondary" onClick={() => navigate("/admin/manage-users")}>
             Cancelar
           </Button>
           <Button variant="contained" onClick={handleSave} disabled={saving}>

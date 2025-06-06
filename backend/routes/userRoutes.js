@@ -20,6 +20,7 @@ router.put('/me/password', authMiddleware, UserController.changePassword);
 
 // Rutas de administración
 router.get('/:id', UserController.getUserById);
+router.get("/admin/manage-users", authMiddleware, isAdmin, UserController.getAll);
 router.put('/:id', authMiddleware, isAdmin, UserController.updateByAdmin);
 router.delete('/:id', authMiddleware, isAdmin, UserController.deleteByAdmin);
 
