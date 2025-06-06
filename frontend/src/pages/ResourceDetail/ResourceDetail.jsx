@@ -24,15 +24,15 @@ export default function ResourceDetail() {
   const user = JSON.parse(localStorage.getItem("studyswap_user") || "null");
 
   useEffect(() => {
-    fetch(`${API_RESOURCES}/${id}`) // resources
+    fetch(`${API_RESOURCES}/${id}`)
       .then((res) => res.json())
       .then(setResource);
 
-    fetch(`${API_VOTES}/resources/${id}`) // votes
+    fetch(`${API_VOTES}/resources/${id}`)
       .then((res) => res.json())
       .then(setVotes);
 
-    fetch(`${API_COMMENTS}/resources/${id}/comments`) // comments
+    fetch(`${API_COMMENTS}/resources/${id}/comments`)
       .then((res) => res.json())
       .then(setComments);
   }, [id]);

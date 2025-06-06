@@ -64,7 +64,7 @@ exports.update = async (req, res) => {
     // Si se ha subido nuevo archivo
     if (req.file) {
       const fileUrl = `/uploads/${req.file.filename}`;
-      const fileType = getFileType(req.file.originalname); // Implementar esto
+      const fileType = getFileType(req.file.originalname);
       resource.fileUrl = fileUrl;
       resource.fileType = fileType;
     }

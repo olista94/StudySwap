@@ -199,9 +199,6 @@ exports.uploadProfileImage = async (req, res) => {
     const userId = req.user.id;
     const imageUrl = req.file.path; // URL de Cloudinary proporcionada por multer-storage-cloudinary
 
-    // console.log('Datos del usuario en req.user:', userId);
-    // console.log('Archivo recibido en req.file:', imageUrl);
-
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { profileImage: imageUrl },
