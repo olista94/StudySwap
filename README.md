@@ -71,6 +71,9 @@ MONGO_URI=mongodb://localhost:27017/studyswap
 JWT_SECRET=clave-secreta-segura
 ```
 
+## Despliegue
+
+Para ver la aplicación de StusySwap debes acceder mediante el link [StudySwap](https://study-swap.vercel.app/)
 ---
 
 ## 👤 Usuarios de Prueba
