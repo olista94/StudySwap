@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
+import { API_BASE, API_RESOURCES } from "../../config/apiConfig";
 
 export default function ResourceList() {
   const [resources, setResources] = useState([]);
@@ -31,7 +32,7 @@ export default function ResourceList() {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/resources/admin/manage-resources`, {
+        const res = await fetch(`${API_RESOURCES}/admin/manage-resources`, { // resources
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -53,7 +54,7 @@ export default function ResourceList() {
 
   const handleDelete = async () => {
     try {
-      await fetch(`http://localhost:3000/api/resources/${resourceToDelete._id}`, {
+      await fetch(`${API_RESOURCES}/${resourceToDelete._id}`, { // resources
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -111,7 +112,7 @@ export default function ResourceList() {
                 <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }}>
                   <Button
                     startIcon={<DownloadIcon />}
-                    href={`http://localhost:3000/${resource.filePath}`}
+                    href={`${API_BASE}/${resource.filePath}`} // base
                     target="_blank"
                     rel="noopener noreferrer"
                     size="small"

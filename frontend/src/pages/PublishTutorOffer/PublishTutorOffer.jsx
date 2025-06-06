@@ -13,6 +13,7 @@ import {
   FormControl
 } from "@mui/material";
 import "./PublishTutorOffer.css";
+import { API_TUTORS } from "../../config/apiConfig";
 
 export default function PublishTutorOffer() {
   const [form, setForm] = useState({
@@ -36,7 +37,7 @@ export default function PublishTutorOffer() {
     const token = localStorage.getItem("studyswap_token");
 
     try {
-      const res = await fetch("http://localhost:3000/api/tutors", {
+      const res = await fetch(`${API_TUTORS}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

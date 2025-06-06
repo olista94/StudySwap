@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { API_USERS } from '../../config/apiConfig';
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
@@ -44,7 +45,7 @@ export default function UserList() {
     setError(null);
     try {
       const token = localStorage.getItem('studyswap_token');
-      const response = await fetch('http://localhost:3000/api/users/admin/users', {
+      const response = await fetch(`${API_USERS}/admin/users`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (!response.ok) {
@@ -65,7 +66,7 @@ export default function UserList() {
     setDeleting(true);
     try {
       const token = localStorage.getItem('studyswap_token');
-      const response = await fetch(`http://localhost:3000/api/users/${userToDelete._id}`, {
+      const response = await fetch(`${API_USERS}/${userToDelete._id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });

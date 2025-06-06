@@ -26,6 +26,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import "./MyResources.css";
 
+import { API_BASE, API_RESOURCES } from "../../config/apiConfig";
+
 export default function MyResources() {
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +51,7 @@ const handleUpdateResource = async () => {
   }
 
   try {
-    const res = await fetch(`http://localhost:3000/api/resources/${resourceToEdit._id}`, {
+    const res = await fetch(`${API_RESOURCES}/${resourceToEdit._id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,7 +76,7 @@ const handleUpdateResource = async () => {
     const fetchResources = async () => {
       const token = localStorage.getItem("studyswap_token");
       try {
-        const res = await fetch("http://localhost:3000/api/resources", {
+        const res = await fetch(API_RESOURCES, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -103,7 +105,7 @@ const handleUpdateResource = async () => {
   const handleDelete = async () => {
     const token = localStorage.getItem("studyswap_token");
     try {
-      const res = await fetch(`http://localhost:3000/api/resources/${resourceToDelete._id}`, {
+      const res = await fetch(`${API_RESOURCES}/${resourceToDelete._id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -165,7 +167,7 @@ const handleUpdateResource = async () => {
                     <IconButton
                       color="primary"
                       component="a"
-                      href={`http://localhost:3000${resource.fileUrl}`}
+                      href={`${API_BASE}${resource.fileUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

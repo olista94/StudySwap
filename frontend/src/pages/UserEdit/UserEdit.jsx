@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { API_USERS } from "../../config/apiConfig";
 
 const roles = [
   { value: "user", label: "Usuario" },
@@ -29,7 +30,7 @@ export default function UserEdit() {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("studyswap_token");
-        const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+        const response = await fetch(`${API_USERS}/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -67,7 +68,7 @@ export default function UserEdit() {
 
     try {
       const token = localStorage.getItem("studyswap_token");
-      const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const response = await fetch(`${API_USERS}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

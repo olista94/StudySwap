@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import "./TutorOffersList.css";
+import { API_TUTORS } from "../../config/apiConfig";
 
 export default function TutorOffersList() {
   const [offers, setOffers] = useState([]);
@@ -20,7 +21,7 @@ export default function TutorOffersList() {
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/tutors")
+    fetch(`${API_TUTORS}`)
       .then(res => res.json())
       .then(setOffers)
       .catch(err => console.error("Error al cargar ofertas:", err));

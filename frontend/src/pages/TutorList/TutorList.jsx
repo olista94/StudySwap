@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { API_TUTORS } from "../../config/apiConfig";
 
 export default function TutorList() {
   const [tutors, setTutors] = useState([]);
@@ -29,7 +30,7 @@ export default function TutorList() {
   useEffect(() => {
     const fetchTutors = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/tutors/admin/manage-tutors", {
+        const res = await fetch(`${API_TUTORS}/admin/manage-tutors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -51,7 +52,7 @@ export default function TutorList() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/tutors/${tutorToDelete._id}`, {
+      const res = await fetch(`${API_TUTORS}/${tutorToDelete._id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
