@@ -80,26 +80,54 @@ exports.updateProfile = async (req, res) => {
 
   try {
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
-
-    if (email && email !== user.email) {
-      const emailUsed = await User.findOne({ email });
-      if (emailUsed) return res.status(400).json({ message: "Email ya registrado" });
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    user.name = name || user.name;
-    user.email = email || user.email;
-    user.university = university || user.university;
-    
+    if (email && email !== user.email) {
+      const emailExists = await User.findOne({ email });
+      if (emailExists && emailExists._id.toString() !== userId) {
+        return res.status(400).json({ message: "El email ya está registrado por otro usuario." });
+      }
+    }
+
+    if (name !== undefined) {
+      user.name = name;
+    }
+    if (email !== undefined) {
+      user.email = email;
+    }
+    if (university !== undefined) {
+      user.university = university;
+    }
+
     await user.save();
 
     const sanitizedUser = user.toObject();
-    delete sanitizedUser.passwordHash;
+    delete sanitizedUser.password;
 
-    res.json(sanitizedUser);
+    res.status(200).json({
+      message: "Perfil actualizado correctamente",
+      user: sanitizedUser
+    });
+
   } catch (err) {
-    res.status(500).json({ message: "Error al actualizar el perfil", error: err.message });
+    if (err.name === 'ValidationError') {
+      const errors = {};
+      for (let field in err.errors) {
+        errors[field] = err.errors[field].message;
+      }
+      return res.status(400).json({
+        message: "Error de validación al actualizar el perfil",
+        errors: errors
+      });
+    }
+
+    res.status(500).json({
+      message: "Error interno del servidor al actualizar el perfil",
+      error: err.message
+    });
   }
 };
 
@@ -168,11 +196,8 @@ exports.deleteByAdmin = async (req, res) => {
 
 exports.uploadProfileImage = async (req, res) => {
   try {
-    const userId = req.user.id; 
+    const userId = req.user.id;
     const imageUrl = req.file.path; // URL de Cloudinary proporcionada por multer-storage-cloudinary
-
-    // console.log('Datos del usuario en req.user:', userId);
-    // console.log('Archivo recibido en req.file:', imageUrl);
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,

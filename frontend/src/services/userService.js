@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = `${import.meta.env.VITE_API_BASE}/api/users`;
 
 export async function updateProfile(data, token) {
   const res = await fetch(`${API_URL}/me`, {

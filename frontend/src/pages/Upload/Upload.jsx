@@ -9,6 +9,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import "./Upload.css";
+import { API_RESOURCES } from "../../config/apiConfig";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -41,7 +42,7 @@ export default function Upload() {
     Object.keys(form).forEach(key => data.append(key, form[key]));
 
     try {
-      const res = await fetch(`${API_URL}/api/resources`, {
+      const res = await fetch(`${API_RESOURCES}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: data

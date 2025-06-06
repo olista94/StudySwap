@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { API_USERS } from "../../config/apiConfig";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -31,7 +32,7 @@ export default function UserEdit() {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("studyswap_token");
-        const response = await fetch(`${API_URL}/api/users/${id}`, {
+        const response = await fetch(`${API_USERS}/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -69,7 +70,7 @@ export default function UserEdit() {
 
     try {
       const token = localStorage.getItem("studyswap_token");
-      const response = await fetch(`${API_URL}/api/users/${id}`, {
+      const response = await fetch(`${API_USERS}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +84,7 @@ export default function UserEdit() {
         throw new Error(errorData.message || "Error al guardar cambios");
       }
 
-      navigate("/admin/users");
+      navigate("/admin/manage-users");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -155,7 +156,7 @@ export default function UserEdit() {
         </TextField>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-          <Button variant="outlined" color="secondary" onClick={() => navigate("/admin/users")}>
+          <Button variant="outlined" color="secondary" onClick={() => navigate("/admin/manage-users")}>
             Cancelar
           </Button>
           <Button variant="contained" onClick={handleSave} disabled={saving}>

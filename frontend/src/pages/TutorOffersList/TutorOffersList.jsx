@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import "./TutorOffersList.css";
+import { API_TUTORS } from "../../config/apiConfig";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -22,7 +23,7 @@ export default function TutorOffersList() {
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/tutors`)
+    fetch(`${API_TUTORS}`)
       .then(res => res.json())
       .then(setOffers)
       .catch(err => console.error("Error al cargar ofertas:", err));

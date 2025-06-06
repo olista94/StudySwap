@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import "./PublicResources.css";
 
-const API_URL = import.meta.env.VITE_API_URL;
+import { API_RESOURCES, API_COMMENTS, API_VOTES } from "../../config/apiConfig";
 
 export default function PublicResources() {
   const [resources, setResources] = useState([]);
@@ -29,7 +29,7 @@ export default function PublicResources() {
   useEffect(() => {
     const fetchResourcesWithVotesAndComments = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/resources`);
+        const res = await fetch(`${API_RESOURCES}`);
         const data = await res.json();
 
         const enriched = await Promise.all(
@@ -38,14 +38,14 @@ export default function PublicResources() {
             let comments = 0;
 
             try {
-              const resVotes = await fetch(`${API_URL}/api/votes/resources/${r._id}`);
+              const resVotes = await fetch(`${API_VOTES}/resources/${r._id}`);
               if (resVotes.ok) votes = await resVotes.json();
             } catch (err) {
               console.error(`Error al obtener votos del recurso ${r._id}:`, err);
             }
 
             try {
-              const resComments = await fetch(`${API_URL}/api/comments/resources/${r._id}/comments/count`);
+              const resComments = await fetch(`${API_COMMENTS}/resources/${r._id}/comments/count`);
               if (resComments.ok) {
                 const json = await resComments.json();
                 comments = json.count;
@@ -87,7 +87,7 @@ export default function PublicResources() {
     if (!token) return alert("Debes iniciar sesión para votar.");
 
     try {
-      await fetch(`${API_URL}/api/votes/resources/${resourceId}/vote`, {
+      await fetch(`${API_VOTES}/resources/${resourceId}/vote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export default function PublicResources() {
         body: JSON.stringify({ value }),
       });
 
-      const res = await fetch(`${API_URL}/api/votes/resources/${resourceId}`);
+      const res = await fetch(`${API_VOTES}/resources/${resourceId}`);
       const updatedVotes = await res.json();
 
       setFiltered((prev) =>

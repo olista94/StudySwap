@@ -13,6 +13,7 @@ import {
   FormControl
 } from "@mui/material";
 import "./PublishTutorOffer.css";
+import { API_TUTORS } from "../../config/apiConfig";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -38,7 +39,7 @@ export default function PublishTutorOffer() {
     const token = localStorage.getItem("studyswap_token");
 
     try {
-      const res = await fetch(`${API_URL}/api/tutors`, {
+      const res = await fetch(`${API_TUTORS}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -12,6 +12,7 @@ import {
   Alert,
 } from "@mui/material";
 import "./ResourceDetail.css";
+import { API_RESOURCES, API_VOTES, API_COMMENTS, API_BASE } from "../../config/apiConfig";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -25,22 +26,22 @@ export default function ResourceDetail() {
   const user = JSON.parse(localStorage.getItem("studyswap_user") || "null");
 
   useEffect(() => {
-    fetch(`${API_URL}/api/resources/${id}`)
+    fetch(`${API_RESOURCES}/${id}`)
       .then((res) => res.json())
       .then(setResource);
 
-    fetch(`${API_URL}/api/votes/resources/${id}`)
+    fetch(`${API_VOTES}/resources/${id}`)
       .then((res) => res.json())
       .then(setVotes);
 
-    fetch(`${API_URL}/api/comments/resources/${id}/comments`)
+    fetch(`${API_COMMENTS}/resources/${id}/comments`)
       .then((res) => res.json())
       .then(setComments);
   }, [id]);
 
   const handleVote = async (value) => {
     try {
-      await fetch(`${API_URL}/api/votes/resources/${id}/vote`, {
+      await fetch(`${API_VOTES}/resources/${id}/vote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +50,7 @@ export default function ResourceDetail() {
         body: JSON.stringify({ value }),
       });
 
-      const updated = await fetch(`${API_URL}/api/votes/resources/${id}`).then((res) => res.json());
+      const updated = await fetch(`${API_VOTES}/resources/${id}`).then((res) => res.json());
       setVotes(updated);
     } catch (err) {
       alert("Error al votar", err);
@@ -59,7 +60,7 @@ export default function ResourceDetail() {
   const handleComment = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`${API_URL}/api/comments/resources/${id}/comments`, {
+      await fetch(`${API_COMMENTS}/resources/${id}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +69,7 @@ export default function ResourceDetail() {
         body: JSON.stringify({ content: newComment }),
       });
 
-      const updated = await fetch(`${API_URL}/api/comments/resources/${id}/comments`).then((res) =>
+      const updated = await fetch(`${API_COMMENTS}/resources/${id}/comments`).then((res) =>
         res.json()
       );
       setComments(updated);
@@ -105,7 +106,7 @@ export default function ResourceDetail() {
       </Stack>
 
       <Button
-        href={`${API_URL}${resource.fileUrl}`}
+        href={`${API_BASE}${resource.fileUrl}`}
         target="_blank"
         rel="noopener noreferrer"
         variant="contained"

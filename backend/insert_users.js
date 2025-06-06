@@ -26,7 +26,7 @@ async function run() {
     await User.deleteMany({ email: "admin@studyswap.com" });
 
     const admin = new User({
-      name: "Oscar Lista",
+      name: "Admin Admínez",
       email: "admin@studyswap.com",
       passwordHash: hash,
       university: "Universidad Autónoma",
