@@ -186,7 +186,7 @@ export default function Profile() {
             fullWidth
           />
           <Button type="submit" variant="contained" color="success">
-            Guardar cambios
+            Actualizar perfil
           </Button>
         </Stack>
       </Box>
