@@ -42,9 +42,14 @@ export default function Profile() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("studyswap_token");
+
       const updated = await updateProfile(form, token);
-      localStorage.setItem("studyswap_user", JSON.stringify(updated));
-      setUser(updated);
+
+      const current = JSON.parse(localStorage.getItem("studyswap_user"));
+      const merged = { ...current, ...updated.user };
+
+      localStorage.setItem("studyswap_user", JSON.stringify(merged));
+      setUser(merged);
       setMessage("✅ Perfil actualizado correctamente");
     } catch (err) {
       setMessage("❌ " + err.message);
@@ -74,13 +79,17 @@ export default function Profile() {
     }
 
     const formData = new FormData();
-    formData.append('profileImage', selectedImage);
+    formData.append("profileImage", selectedImage);
 
     try {
       const token = localStorage.getItem("studyswap_token");
       const updatedUser = await uploadProfileImage(formData, token);
-      localStorage.setItem("studyswap_user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
+
+      const current = JSON.parse(localStorage.getItem("studyswap_user"));
+      const merged = { ...current, ...updatedUser.user };
+
+      localStorage.setItem("studyswap_user", JSON.stringify(merged));
+      setUser(merged);
       setSelectedImage(null);
       setMessage("✅ Imagen de perfil actualizada correctamente");
     } catch (err) {
