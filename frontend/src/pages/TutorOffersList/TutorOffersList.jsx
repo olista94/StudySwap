@@ -166,9 +166,9 @@ export default function TutorOffersList() {
               onChange={handleFilter}
             >
               <MenuItem value="">Todas</MenuItem>
-              <MenuItem value="presencial">Presencial</MenuItem>
-              <MenuItem value="online">Online</MenuItem>
-              <MenuItem value="ambas">Ambas</MenuItem>
+              <MenuItem value="Presencial">Presencial</MenuItem>
+              <MenuItem value="Online">Online</MenuItem>
+              <MenuItem value="Ambas">Ambas</MenuItem>
             </Select>
           </FormControl>
 

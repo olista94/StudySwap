@@ -8,6 +8,7 @@ const isAdmin = require("../middlewares/isAdmin");
 router.post("/", auth, TutorOfferController.create);
 router.get("/", TutorOfferController.getAll);
 router.get("/my-classes", auth, TutorOfferController.getMyOffers);
+router.put("/:id", auth, TutorOfferController.update);
 router.delete("/:id", auth, TutorOfferController.remove);
 
 // Rutas de administración

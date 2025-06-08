@@ -24,7 +24,7 @@ export default function PublishTutorOffer() {
     subject: "",
     description: "",
     price: "",
-    modality: "online",
+    modality: "Online",
     location: ""
   });
 
@@ -146,9 +146,9 @@ export default function PublishTutorOffer() {
               label="Modalidad"
               onChange={handleChange}
             >
-              <MenuItem value="online">Online</MenuItem>
-              <MenuItem value="presencial">Presencial</MenuItem>
-              <MenuItem value="ambas">Ambas</MenuItem>
+              <MenuItem value="Online">Online</MenuItem>
+              <MenuItem value="Presencial">Presencial</MenuItem>
+              <MenuItem value="Ambas">Ambas</MenuItem>
             </Select>
           </FormControl>
           <Autocomplete

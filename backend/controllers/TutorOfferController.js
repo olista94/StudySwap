@@ -41,3 +41,19 @@ exports.remove = async (req, res) => {
     res.status(500).json({ message: "Error al eliminar oferta" });
   }
 };
+
+exports.update = async (req, res) => {
+  try {
+    const offer = await TutorOffer.findById(req.params.id);
+    if (!offer) return res.status(404).json({ message: "Oferta no encontrada" });
+    if (offer.userId.toString() !== req.user.id && req.user.role !== "admin") {
+      return res.status(403).json({ message: "No autorizado" });
+    }
+    Object.assign(offer, req.body);
+    await offer.save();
+    res.json(offer);
+  } catch (err) {
+    console.error("❌ Error en update de TutorOffer:", err);
+    res.status(500).json({ message: "Error al actualizar oferta", error: err.message });
+  }
+};
