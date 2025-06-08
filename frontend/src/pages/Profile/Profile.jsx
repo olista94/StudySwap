@@ -100,7 +100,7 @@ export default function Profile() {
   if (!user) return null;
 
   return (
-    <Box className="profile-container" sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3 }}>
+    <Box className="profile-container" sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3, pb: "100px" }}>
 
       {message && (
         <Alert
