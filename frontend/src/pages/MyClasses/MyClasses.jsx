@@ -23,7 +23,8 @@ import {
   FormControl,
   Checkbox,
   ListItemText,
-  OutlinedInput
+  OutlinedInput,
+  Alert
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -146,39 +147,45 @@ export default function MyClasses() {
       <Typography variant="h4" gutterBottom>📈 Mis clases particulares</Typography>
       {message && <Typography color="error">{message}</Typography>}
 
-      <Grid container spacing={3}>
-        {classes.map((offer) => (
-          <Grid item xs={12} sm={6} md={4} key={offer._id}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Asignatura: {offer.subject}</Typography>
-                <Stack direction="row" spacing={1} mb={1} flexWrap="wrap">
-                  {offer.educationLevels.map(level => (
-                    <Chip key={level} label={level} size="small" />
-                  ))}
-                </Stack>
-                <Typography variant="body2">💰 {offer.price} €/hora</Typography>
-                <Typography variant="body2">🌐 Modalidad: {offer.modality}</Typography>
-                <Typography variant="body2">📍 Ciudad: {offer.location}</Typography>
-                <Typography variant="body2">Descripción: {offer.description}</Typography>
+      {classes.length === 0 ? (
+        <Alert severity="info" sx={{ mt: 2 }}>
+          No has publicado ninguna clase todavía.
+        </Alert>
+      ) : (
+        <Grid container spacing={3}>
+          {classes.map((offer) => (
+            <Grid item xs={12} sm={6} md={4} key={offer._id}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">Asignatura: {offer.subject}</Typography>
+                  <Stack direction="row" spacing={1} mb={1} flexWrap="wrap">
+                    {offer.educationLevels.map(level => (
+                      <Chip key={level} label={level} size="small" />
+                    ))}
+                  </Stack>
+                  <Typography variant="body2">💰 {offer.price} €/hora</Typography>
+                  <Typography variant="body2">🌐 Modalidad: {offer.modality}</Typography>
+                  <Typography variant="body2">📍 Ciudad: {offer.location}</Typography>
+                  <Typography variant="body2">Descripción: {offer.description}</Typography>
 
-                <Stack direction="row" spacing={1} mt={2}>
-                  <Tooltip title="Editar">
-                    <IconButton onClick={() => openEditDialog(offer)}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Eliminar">
-                    <IconButton color="error" onClick={() => openDeleteDialog(offer)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Stack>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+                  <Stack direction="row" spacing={1} mt={2}>
+                    <Tooltip title="Editar">
+                      <IconButton onClick={() => openEditDialog(offer)}>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Eliminar">
+                      <IconButton color="error" onClick={() => openDeleteDialog(offer)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
 
       {/* Modal edición */}
       <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} fullWidth>
