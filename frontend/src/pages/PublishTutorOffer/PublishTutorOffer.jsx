@@ -29,10 +29,10 @@ export default function PublishTutorOffer() {
   });
 
   const cities = [
-    "Albacete", "Alicante", "Almería", "Ávila", "Badajoz", "Barcelona", "Bilbao",
+    "A Coruña", "Albacete", "Alicante", "Almería", "Ávila", "Badajoz", "Barcelona", "Bilbao",
     "Burgos", "Cáceres", "Cádiz", "Castellón de la Plana", "Ceuta", "Ciudad Real",
     "Córdoba", "Cuenca", "Girona", "Granada", "Guadalajara", "Huelva", "Huesca",
-    "Jaén", "A Coruña", "Logroño", "Las Palmas de Gran Canaria", "León", "Lleida",
+    "Jaén", "Logroño", "Las Palmas de Gran Canaria", "León", "Lleida",
     "Lugo", "Madrid", "Málaga", "Melilla", "Murcia", "Ourense", "Oviedo", "Palencia",
     "Palma", "Pamplona", "Pontevedra", "Salamanca", "San Sebastián", "Santa Cruz de Tenerife",
     "Santander", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia",
