@@ -99,9 +99,6 @@ export default function TutorList() {
                   <Typography variant="body2" color="text.secondary">
                     {tutor.description}
                   </Typography>
-                  <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                    Universidad: {tutor.university}
-                  </Typography>
                   <Typography variant="caption">
                     Publicado por: {tutor.uploadedBy?.name || "Desconocido"}
                   </Typography>

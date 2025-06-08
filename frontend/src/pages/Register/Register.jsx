@@ -15,7 +15,6 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    university: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -67,15 +66,6 @@ export default function Register() {
             label="Nombre"
             name="name"
             value={form.name}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Universidad"
-            name="university"
-            value={form.university}
             onChange={handleChange}
             fullWidth
             margin="normal"

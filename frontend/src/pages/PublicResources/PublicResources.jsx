@@ -243,7 +243,6 @@ export default function PublicResources() {
             ))}
           </Grid>
         )}
-        {/* <Box sx={{ height: "96px" }} /> */}
       </Container>
     </>
   );

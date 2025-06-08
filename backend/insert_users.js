@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   passwordHash: String,
-  university: String,
   reputation: Number,
   role: String,
   createdAt: { type: Date, default: Date.now }
@@ -29,7 +28,6 @@ async function run() {
       name: "Admin Admínez",
       email: "admin@studyswap.com",
       passwordHash: hash,
-      university: "Universidad Autónoma",
       reputation: 100,
       role: "admin"
     });

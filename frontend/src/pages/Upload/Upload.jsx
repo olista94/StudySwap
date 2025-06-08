@@ -67,7 +67,7 @@ export default function Upload() {
 
   return (
     <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
-      <Typography variant="h5" gutterBottom>📤 Subir apunte</Typography>
+      <Typography variant="h5" gutterBottom>📤 Subir temario</Typography>
 
       {message && (
         <Alert severity={message.startsWith("✅") ? "success" : "error"} sx={{ mb: 2 }}>

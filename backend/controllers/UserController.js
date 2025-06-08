@@ -6,14 +6,13 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.JWT_SECRET || 'studyswap-secret';
 
 exports.register = async (req, res) => {
-  const { name, email, password, university } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: 'Email ya registrado' });
-
     const hashed = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, passwordHash: hashed, university });
+    const newUser = new User({ name, email, passwordHash: hashed});
     await newUser.save();
 
     await sendWelcomeEmail(newUser.email, newUser.name);
@@ -76,7 +75,7 @@ exports.getUserById = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   const userId = req.user.id;
-  const { name, university, email } = req.body;
+  const { name, email } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -97,9 +96,6 @@ exports.updateProfile = async (req, res) => {
     }
     if (email !== undefined) {
       user.email = email;
-    }
-    if (university !== undefined) {
-      user.university = university;
     }
 
     await user.save();
@@ -154,7 +150,7 @@ exports.changePassword = async (req, res) => {
 
 exports.updateByAdmin = async (req, res) => {
   const userId = req.params.id;
-  const { name, email, university, role } = req.body;
+  const { name, email, role } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -167,7 +163,6 @@ exports.updateByAdmin = async (req, res) => {
 
     user.name = name || user.name;
     user.email = email || user.email;
-    user.university = university || user.university;
     user.role = role || user.role;
 
     await user.save();

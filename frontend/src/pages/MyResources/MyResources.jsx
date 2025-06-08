@@ -34,7 +34,7 @@ export default function MyResources() {
   const [error, setError] = useState("");
   const [resourceToDelete, setResourceToDelete] = useState(null);
   const [resourceToEdit, setResourceToEdit] = useState(null);
-  const [editForm, setEditForm] = useState({ title: "", description: "", subject: "", year: "" });
+  const [editForm, setEditForm] = useState({ title: "", description: "", subject: "", professor: "", university: "", year: "" });
 
   const handleUpdateResource = async () => {
     const token = localStorage.getItem("studyswap_token");
@@ -43,6 +43,7 @@ export default function MyResources() {
     formData.append("title", editForm.title);
     formData.append("description", editForm.description);
     formData.append("subject", editForm.subject);
+    formData.append("professor", editForm.professor);
     formData.append("university", editForm.university);
     formData.append("year", editForm.year);
 
@@ -180,7 +181,7 @@ export default function MyResources() {
                       color="text"
                       onClick={() => {
                         setResourceToEdit(resource);
-                        setEditForm({ title: resource.title, description: resource.description, subject: resource.subject, year: resource.year });
+                        setEditForm({ title: resource.title, description: resource.description, subject: resource.subject, year: resource.year, professor: resource.professor, university: resource.university });
                       }}
                     >
                       <EditIcon />
@@ -245,6 +246,24 @@ export default function MyResources() {
             rows={1}
             value={editForm.subject}
             onChange={(e) => setEditForm({ ...editForm, subject: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Pofesor"
+            fullWidth
+            multiline
+            rows={1}
+            value={editForm.professor}
+            onChange={(e) => setEditForm({ ...editForm, professor: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Universidad"
+            fullWidth
+            multiline
+            rows={1}
+            value={editForm.university}
+            onChange={(e) => setEditForm({ ...editForm, university: e.target.value })}
           />
           <TextField
             margin="dense"

@@ -134,13 +134,6 @@ export default function UserEdit() {
           required
         />
         <TextField
-          label="Universidad"
-          name="university"
-          value={user.university || ""}
-          onChange={handleChange}
-          fullWidth
-        />
-        <TextField
           select
           label="Rol"
           name="role"

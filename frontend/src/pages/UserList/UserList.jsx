@@ -133,7 +133,7 @@ export default function UserList() {
                       primary={<Typography variant="h6">{user.name}</Typography>}
                       secondary={
                         <Typography variant="body2" color="text.secondary">
-                          Email: {user.email} | Universidad: {user.university || 'N/A'} | Rol: {user.role || 'user'}
+                          Email: {user.email} | Rol: {user.role || 'user'}
                         </Typography>
                       }
                     />

@@ -241,13 +241,16 @@ export default function Navbar() {
           </Box>
 
           {user && (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box
+              sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+              onClick={() => navigate("/profile")}
+            >
               <Avatar
                 src={user.profileImage || "https://res.cloudinary.com/studyswap/image/upload/v1/avatars/default-avatar.png"}
                 alt={user.name}
                 sx={{ width: 32, height: 32 }}
               />
-              <Typography variant="body2" sx={{ color: "#040F0F" }}>
+              <Typography variant="body2" sx={{ color: "#040F0F", ml: 1 }}>
                 {user.name}
               </Typography>
             </Box>

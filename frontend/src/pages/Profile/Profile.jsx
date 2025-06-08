@@ -17,7 +17,7 @@ import "./Profile.css";
 export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [form, setForm] = useState({ name: "", university: "", email: "" });
+  const [form, setForm] = useState({ name: "", email: "" });
   const [passForm, setPassForm] = useState({ currentPassword: "", newPassword: "" });
   const [message, setMessage] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
@@ -29,7 +29,7 @@ export default function Profile() {
 
     const user = JSON.parse(stored);
     setUser(user);
-    setForm({ name: user.name, university: user.university, email: user.email });
+    setForm({ name: user.name, email: user.email });
   }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -176,13 +176,6 @@ export default function Profile() {
             name="name"
             label="Nombre"
             value={form.name}
-            onChange={handleChange}
-            fullWidth
-          />
-          <TextField
-            name="university"
-            label="Universidad"
-            value={form.university}
             onChange={handleChange}
             fullWidth
           />
