@@ -24,7 +24,7 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const { title, description, fileUrl, fileType, subject, professor, university, year } = req.body;
+    const { title, description, fileUrl, fileType, subject, professor, center, year } = req.body;
 
     const resource = new Resource({
       title,
@@ -33,7 +33,8 @@ exports.create = async (req, res) => {
       fileType,
       subject,
       professor,
-      university,
+      center,
+      otherCenter: center === "Otra" ? req.body.otherCenter : null, // Si es "Otra", toma el valor del campo adicional
       year,
       uploadedBy: req.user.id
     });
@@ -55,11 +56,14 @@ exports.update = async (req, res) => {
     }
 
     // Actualiza campos
-    const { title, description, subject, university, year } = req.body;
+    const { title, description, subject, center, year } = req.body;
     if (title) resource.title = title;
     if (description) resource.description = description;
     if (subject) resource.subject = subject;
-    if (university) resource.university = university;
+    if (center) resource.center = center;
+    if (center === "Otra" && req.body.otherCenter) {
+      resource.otherCenter = req.body.otherCenter;
+    }
     if (year) resource.year = year;
 
     // Si se ha subido nuevo archivo
@@ -80,7 +84,7 @@ exports.update = async (req, res) => {
 // Subida a Cloudinary
 exports.uploadWithFile = async (req, res) => {
   try {
-    const { title, description, subject, professor, university, year } = req.body;
+    const { title, description, subject, professor, center, otherCenter, year } = req.body;
     const file = req.file;
 
     if (!file) return res.status(400).json({ message: "Archivo no enviado" });
@@ -95,7 +99,8 @@ exports.uploadWithFile = async (req, res) => {
       fileType,
       subject,
       professor,
-      university,
+      center,
+      otherCenter: center === "Otra" ? otherCenter : null,
       year,
       uploadedBy: req.user.id,
       cloudinary_id: file.filename || file.public_id, // importante para eliminar luego

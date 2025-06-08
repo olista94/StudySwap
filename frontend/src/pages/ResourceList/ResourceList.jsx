@@ -103,7 +103,7 @@ export default function ResourceList() {
                   </Typography>
                   <Stack direction="row" spacing={1} mb={1}>
                     <Chip label={resource.subject} size="small" />
-                    <Chip label={resource.university} size="small" />
+                    <Chip label={resource.center} size="small" />
                     <Chip label={resource.year} size="small" />
                   </Stack>
                   <Typography variant="caption">

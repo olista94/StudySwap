@@ -21,7 +21,7 @@ import { API_RESOURCES, API_COMMENTS, API_VOTES } from "../../config/apiConfig";
 export default function PublicResources() {
   const [resources, setResources] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [filters, setFilters] = useState({ subject: "", university: "", year: "" });
+  const [filters, setFilters] = useState({ subject: "", center: "", year: "" });
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
@@ -90,13 +90,13 @@ export default function PublicResources() {
         r.title,
         r.description,
         r.subject,
-        r.university,
+        r.center,
         r.year?.toString()
       ].join(" ").toLowerCase();
 
       return (
         (!newFilterState.subject || r.subject?.toLowerCase().includes(newFilterState.subject.toLowerCase())) &&
-        (!newFilterState.university || r.university?.toLowerCase().includes(newFilterState.university.toLowerCase())) &&
+        (!newFilterState.center || r.center?.toLowerCase().includes(newFilterState.center.toLowerCase())) &&
         (!newFilterState.year || r.year?.toString().includes(newFilterState.year)) &&
         textFields.includes(search)
       );
@@ -175,9 +175,9 @@ export default function PublicResources() {
             size="small"
           />
           <TextField
-            name="university"
-            label="Universidad"
-            value={filters.university}
+            name="center"
+            label="Centro"
+            value={filters.center}
             onChange={handleFilter}
             fullWidth
             size="small"
@@ -213,7 +213,7 @@ export default function PublicResources() {
                     </Typography>
                     <Stack direction="row" spacing={1} mb={1}>
                       <Chip label={resource.subject} size="small" />
-                      <Chip label={resource.university} size="small" />
+                      <Chip label={resource.center} size="small" />
                       <Chip label={resource.year} size="small" />
                     </Stack>
                   </CardContent>

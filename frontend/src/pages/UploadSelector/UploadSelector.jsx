@@ -25,7 +25,7 @@ export default function UploadSelector() {
     description: "",
     subject: "",
     professor: "",
-    university: "",
+    center: "",
     year: "",
     file: null
   });
@@ -80,7 +80,7 @@ export default function UploadSelector() {
         description: "",
         subject: "",
         professor: "",
-        university: "",
+        center: "",
         year: "",
         file: null
       });
@@ -155,7 +155,7 @@ export default function UploadSelector() {
               <TextField name="description" label="Descripción" multiline rows={3} fullWidth value={uploadForm.description} onChange={handleUploadChange} />
               <TextField name="subject" label="Asignatura" required fullWidth value={uploadForm.subject} onChange={handleUploadChange} />
               <TextField name="professor" label="Profesor" fullWidth value={uploadForm.professor} onChange={handleUploadChange} />
-              <TextField name="university" label="Universidad" fullWidth value={uploadForm.university} onChange={handleUploadChange} />
+              <TextField name="center" label="Centro" fullWidth value={uploadForm.center} onChange={handleUploadChange} />
               <TextField name="year" label="Año" type="number" fullWidth value={uploadForm.year} onChange={handleUploadChange} />
               <Box>
                 <InputLabel>Archivo (PDF o imagen)</InputLabel>

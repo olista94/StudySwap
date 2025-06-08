@@ -108,7 +108,7 @@ export default function ResourceDetail() {
         <Stack spacing={1} sx={{ mb: 2 }}>
           <Typography variant="body2">📚 <strong>Asignatura:</strong> {resource.subject}</Typography>
           <Typography variant="body2">👨‍🏫 <strong>Profesor:</strong> {resource.professor}</Typography>
-          <Typography variant="body2">🏛️ <strong>Universidad:</strong> {resource.university}</Typography>
+          <Typography variant="body2">🏛️ <strong>Centro:</strong> {resource.center}</Typography>
           <Typography variant="body2">📅 <strong>Año:</strong> {resource.year}</Typography>
           <Typography variant="body2">👤 <strong>Autor:</strong> {resource.uploadedBy?.name}</Typography>
         </Stack>

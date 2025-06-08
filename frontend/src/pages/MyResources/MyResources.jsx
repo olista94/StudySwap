@@ -34,7 +34,7 @@ export default function MyResources() {
   const [error, setError] = useState("");
   const [resourceToDelete, setResourceToDelete] = useState(null);
   const [resourceToEdit, setResourceToEdit] = useState(null);
-  const [editForm, setEditForm] = useState({ title: "", description: "", subject: "", professor: "", university: "", year: "" });
+  const [editForm, setEditForm] = useState({ title: "", description: "", subject: "", professor: "", center: "", year: "" });
 
   const handleUpdateResource = async () => {
     const token = localStorage.getItem("studyswap_token");
@@ -44,7 +44,7 @@ export default function MyResources() {
     formData.append("description", editForm.description);
     formData.append("subject", editForm.subject);
     formData.append("professor", editForm.professor);
-    formData.append("university", editForm.university);
+    formData.append("center", editForm.center);
     formData.append("year", editForm.year);
 
     if (editForm.newFile) {
@@ -158,7 +158,7 @@ export default function MyResources() {
 
                   <Stack direction="row" spacing={1} sx={{ mt: 2 }} useFlexGap flexWrap="wrap">
                     <Chip label={resource.subject} variant="outlined" />
-                    <Chip label={resource.university} variant="outlined" />
+                    <Chip label={resource.center} variant="outlined" />
                     <Chip label={`Año: ${resource.year}`} variant="outlined" />
                   </Stack>
                 </CardContent>
@@ -181,7 +181,7 @@ export default function MyResources() {
                       color="text"
                       onClick={() => {
                         setResourceToEdit(resource);
-                        setEditForm({ title: resource.title, description: resource.description, subject: resource.subject, year: resource.year, professor: resource.professor, university: resource.university });
+                        setEditForm({ title: resource.title, description: resource.description, subject: resource.subject, year: resource.year, professor: resource.professor, center: resource.center });
                       }}
                     >
                       <EditIcon />
@@ -258,12 +258,12 @@ export default function MyResources() {
           />
           <TextField
             margin="dense"
-            label="Universidad"
+            label="Centro"
             fullWidth
             multiline
             rows={1}
-            value={editForm.university}
-            onChange={(e) => setEditForm({ ...editForm, university: e.target.value })}
+            value={editForm.center}
+            onChange={(e) => setEditForm({ ...editForm, center: e.target.value })}
           />
           <TextField
             margin="dense"
