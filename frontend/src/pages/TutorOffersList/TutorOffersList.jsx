@@ -119,14 +119,15 @@ export default function TutorOffersList() {
   return (
     <>
       {!token && (
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => navigate("/")}
-          sx={{ ml: 3, mt: 4 }}
-        >
-          ← Volver al inicio
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-start", mt: 4, px: 3 }}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => navigate("/")}
+          >
+            ← Volver al inicio
+          </Button>
+        </Box>
       )}
 
       <Container sx={{ mt: 4 }}>
