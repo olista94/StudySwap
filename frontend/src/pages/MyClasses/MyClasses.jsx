@@ -31,7 +31,7 @@ import { API_TUTORS } from "../../config/apiConfig";
 
 const modalities = ["Presencial", "Online", "Ambas"];
 const educationLevels = ["ESO", "Bachillerato", "FP", "Universidad", "Oposiciones", "Postgrado", "EBAU", "Idiomas"];
-const cities = [ // Puedes mover esto a un archivo aparte si prefieres
+const cities = [
   "A Coruña", "Albacete", "Alicante", "Almería", "Ávila", "Badajoz", "Barcelona", "Bilbao", "Burgos",
   "Cáceres", "Cádiz", "Castellón de la Plana", "Ceuta", "Ciudad Real", "Córdoba", "Cuenca",
   "Girona", "Granada", "Guadalajara", "Huelva", "Huesca", "Jaén", "Logroño",

@@ -272,6 +272,7 @@ export default function Upload() {
           <TextField
             name="professor"
             label="Profesor"
+            required
             value={form.professor}
             onChange={handleChange}
             fullWidth
@@ -280,9 +281,9 @@ export default function Upload() {
             select
             name="center"
             value={form.center}
+            required
             onChange={handleChange}
             SelectProps={{ native: true }}
-            required
             fullWidth
           >
             <option value="">Selecciona un centro educativo</option>
@@ -306,6 +307,7 @@ export default function Upload() {
           <TextField
             name="year"
             label="Año"
+            required
             type="number"
             value={form.year}
             onChange={handleChange}
