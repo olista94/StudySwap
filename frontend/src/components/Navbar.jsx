@@ -164,7 +164,7 @@ export default function Navbar() {
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <FontAwesomeIcon icon={faChalkboardUser} />
                 </ListItemIcon>
-                <ListItemText primary="Mis clases" />
+                <ListItemText primary="Mis anuncios" />
               </ListItem>
               <ListItem
                 button
@@ -213,10 +213,6 @@ export default function Navbar() {
           </ListItemIcon>
           <ListItemText primary="Colgar temario o clases particulares" />
         </ListItem>
-        {/* <ListItem button component={Link} to="/tutors/publish">
-          <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
-          <ListItemText primary="Dar clases" />
-        </ListItem> */}
       </>
     );
 
@@ -226,7 +222,7 @@ export default function Navbar() {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: "#FFFFFF",
+          backgroundColor: "#F9FFF9",
           // ml: `${drawerWidth}px`,
         }}
       >
@@ -266,9 +262,10 @@ export default function Navbar() {
           width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
+            zIndex: 1200,
             width: drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: "#FFFFFF",
+            backgroundColor: "#FCFFFC",
             color: "#FCFFFC",
           },
         }}

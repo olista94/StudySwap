@@ -114,8 +114,8 @@ export default function ResourceDetail() {
         </Stack>
 
         <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-          <Button onClick={() => handleVote(1)} variant="outlined">👍 {votes.likes}</Button>
-          <Button onClick={() => handleVote(-1)} variant="outlined">👎 {votes.dislikes}</Button>
+          <Button disabled={!token} onClick={() => handleVote(1)} variant="outlined">👍 {votes.likes}</Button>
+          <Button disabled={!token} onClick={() => handleVote(-1)} variant="outlined">👎 {votes.dislikes}</Button>
         </Stack>
 
         <Button
@@ -126,7 +126,7 @@ export default function ResourceDetail() {
             if (!user) {
               setModalOpen(true);
             } else {
-              window.open(`${API_BASE}${resource.fileUrl}`, "_blank");
+              window.open(resource.fileUrl, "_blank");
             }
           }}
         >

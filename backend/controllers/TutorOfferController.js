@@ -2,7 +2,7 @@ const TutorOffer = require("../models/TutorOffer");
 
 exports.getMyOffers = async (req, res) => {
   try {
-    const offers = await TutorOffer.find({ user: req.user.id });
+    const offers = await TutorOffer.find({ userId: req.user.id });
     res.json(offers);
   } catch (err) {
     res.status(500).json({ message: "Error al obtener tus clases" });

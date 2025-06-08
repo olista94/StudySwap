@@ -18,7 +18,7 @@ import {
   OutlinedInput,
   Checkbox,
   ListItemText,
-  InputAdornment
+  Slider
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import EmailIcon from "@mui/icons-material/Email";
@@ -37,15 +37,26 @@ export default function TutorOffersList() {
   const [filters, setFilters] = useState({
     subject: "",
     modality: "",
-    price: "",
+    priceRange: [0, 100], // rango inicial de 0€ a 100€
     name: "",
-    availability: "",
+    location: "",
     education: []
   });
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("studyswap_user") || "null");
 
   const token = localStorage.getItem("studyswap_token");
+
+  const locations = [
+    "Albacete", "Alicante", "Almería", "Ávila", "Badajoz", "Barcelona", "Bilbao",
+    "Burgos", "Cáceres", "Cádiz", "Castellón de la Plana", "Ceuta", "Ciudad Real",
+    "Córdoba", "Cuenca", "Girona", "Granada", "Guadalajara", "Huelva", "Huesca",
+    "Jaén", "La Coruña", "Logroño", "Las Palmas de Gran Canaria", "León", "Lleida",
+    "Lugo", "Madrid", "Málaga", "Melilla", "Murcia", "Ourense", "Oviedo", "Palencia",
+    "Palma", "Pamplona", "Pontevedra", "Salamanca", "San Sebastián", "Santa Cruz de Tenerife",
+    "Santander", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia",
+    "Valladolid", "Vigo", "Vitoria-Gasteiz", "Zamora", "Zaragoza"
+  ];
 
   useEffect(() => {
     fetch(`${API_TUTORS}`)
@@ -63,7 +74,7 @@ export default function TutorOffersList() {
         offer.modality,
         offer.price?.toString(),
         offer.userId?.name,
-        offer.availability,
+        offer.location,
         offer.description,
         offer.educationLevels?.join(" ")
       ].join(" ").toLowerCase();
@@ -72,9 +83,10 @@ export default function TutorOffersList() {
         combined.includes(query) &&
         (!filters.subject || offer.subject?.toLowerCase().includes(filters.subject.toLowerCase())) &&
         (!filters.modality || offer.modality?.toLowerCase().includes(filters.modality.toLowerCase())) &&
-        (!filters.price || offer.price?.toString().includes(filters.price)) &&
+        (offer.price >= filters.priceRange[0]) &&
+        (filters.priceRange[1] >= 60 || offer.price <= filters.priceRange[1]) &&
         (!filters.name || offer.userId?.name?.toLowerCase().includes(filters.name.toLowerCase())) &&
-        (!filters.availability || offer.availability?.toLowerCase().includes(filters.availability.toLowerCase())) &&
+        (!filters.location || offer.location?.toLowerCase().includes(filters.location.toLowerCase())) &&
         (filters.education.length === 0 ||
           filters.education.some((filterLevel) =>
             (offer.educationLevels || []).includes(filterLevel)
@@ -189,27 +201,76 @@ export default function TutorOffersList() {
             fullWidth
             size="small"
           />
-          <TextField
-            name="availability"
-            label="Disponibilidad"
-            value={filters.availability}
-            onChange={handleFilter}
-            fullWidth
-            size="small"
-          />
-          <TextField
-            name="price"
-            label="Precio"
-            value={filters.price}
-            onChange={handleFilter}
-            fullWidth
-            size="small"
-            InputProps={{
-              endAdornment: <InputAdornment position="end">€/hora</InputAdornment>,
-            }}
-          />
-        </Stack>
 
+          <FormControl fullWidth size="small">
+            <InputLabel id="location-label">Ciudad</InputLabel>
+            <Select
+              labelId="location-label"
+              name="location"
+              value={filters.location}
+              onChange={handleFilter}
+              label="Ciudad"
+            >
+              <MenuItem value="">Todas</MenuItem>
+              {locations.map((loc) => (
+                <MenuItem key={loc} value={loc}>
+                  {loc}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth size="small" sx={{ px: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                mb: 0.5,
+                fontSize: "1rem",
+                color: "rgba(0, 0, 0, 0.6)",
+              }}
+            >
+              Precio por hora: {filters.priceRange[0]}€ -{" "}
+              {filters.priceRange[1] >= 60 ? "Más de 50€" : filters.priceRange[1] + "€"}
+            </Typography>
+
+            <Slider
+              name="priceRange"
+              value={filters.priceRange}
+              onChange={(e, newValue) =>
+                setFilters((prev) => ({ ...prev, priceRange: newValue }))
+              }
+              valueLabelDisplay="auto"
+              min={0}
+              max={60}
+              step={1}
+              disableSwap
+              marks={[
+                { value: 0, label: "0€" },
+                { value: 10, label: "10€" },
+                { value: 20, label: "20€" },
+                { value: 30, label: "30€" },
+                { value: 40, label: "40€" },
+                { value: 50, label: "" },
+                { value: 51, label: "Más de 50€" },
+              ]}
+              sx={{
+                height: 2,
+                mt: 1,
+                "& .MuiSlider-markLabel": {
+                  fontSize: "0.8rem",
+                },
+                "& .MuiSlider-valueLabel": {
+                  fontSize: "0.8rem",
+                },
+                "& .MuiSlider-thumb": {
+                  width: 14,
+                  height: 14,
+                },
+              }}
+            />
+          </FormControl>
+
+        </Stack>
         <Stack spacing={3}>
           {filteredOffers.map((offer) => (
             <Card key={offer._id} className="tutor-card" sx={{ p: 2 }}>
@@ -247,7 +308,7 @@ export default function TutorOffersList() {
                 <Typography variant="body2"><strong>Precio:</strong> {offer.price}€/h</Typography>
                 <Typography variant="body2"><strong>Modalidad:</strong> {offer.modality}</Typography>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                  <strong>Disponibilidad:</strong> {offer.availability}
+                  <strong>Ciudad:</strong> {offer.location}
                 </Typography>
 
                 <Button

@@ -35,7 +35,7 @@ export default function UploadSelector() {
     description: "",
     price: "",
     modality: "online",
-    availability: ""
+    location: ""
   });
   const [uploadMessage, setUploadMessage] = useState("");
   const [offerMessage, setOfferMessage] = useState("");
@@ -112,7 +112,7 @@ export default function UploadSelector() {
         description: "",
         price: "",
         modality: "online",
-        availability: ""
+        location: ""
       });
     } catch (err) {
       setOfferMessage("❌ " + err.message);
@@ -220,7 +220,7 @@ export default function UploadSelector() {
                   <MenuItem value="ambas">Ambas</MenuItem>
                 </Select>
               </FormControl>
-              <TextField name="availability" label="Disponibilidad" fullWidth value={offerForm.availability} onChange={handleOfferChange} />
+              <TextField name="location" label="Ciudad" fullWidth value={offerForm.location} onChange={handleOfferChange} />
               <Button type="submit" variant="contained" color="success" fullWidth>
                 Publicar
               </Button>

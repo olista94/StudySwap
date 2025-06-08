@@ -25,9 +25,13 @@ export default function Home() {
         pt: 10,
         px: 2,
         textAlign: "center",
+        backgroundImage: `url("/images/wallpaper.png")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      <Stack spacing={6} sx={{ width: "100%", maxWidth: 600 }}>
+      <Stack spacing={6} sx={{ width: "100%", maxWidth: 800 }}>
         <Typography variant="h2" color="text" sx={{ fontWeight: "bold" }}>
           Conecta estudiantes, comparte apuntes y mejora tu aprendizaje
         </Typography>

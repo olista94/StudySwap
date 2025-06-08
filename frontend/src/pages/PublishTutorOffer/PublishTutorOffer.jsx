@@ -10,9 +10,10 @@ import {
   Alert,
   Stack,
   InputLabel,
-  FormControl
+  FormControl,
+  Autocomplete
 } from "@mui/material";
-import "./PublishTutorOffer.css";
+// import "./PublishTutorOffer.css";
 import { API_TUTORS } from "../../config/apiConfig";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -24,8 +25,20 @@ export default function PublishTutorOffer() {
     description: "",
     price: "",
     modality: "online",
-    availability: ""
+    location: ""
   });
+
+  const cities = [
+    "Albacete", "Alicante", "Almería", "Ávila", "Badajoz", "Barcelona", "Bilbao",
+    "Burgos", "Cáceres", "Cádiz", "Castellón de la Plana", "Ceuta", "Ciudad Real",
+    "Córdoba", "Cuenca", "Girona", "Granada", "Guadalajara", "Huelva", "Huesca",
+    "Jaén", "La Coruña", "Logroño", "Las Palmas de Gran Canaria", "León", "Lleida",
+    "Lugo", "Madrid", "Málaga", "Melilla", "Murcia", "Ourense", "Oviedo", "Palencia",
+    "Palma", "Pamplona", "Pontevedra", "Salamanca", "San Sebastián", "Santa Cruz de Tenerife",
+    "Santander", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia",
+    "Valladolid", "Vigo", "Vitoria-Gasteiz", "Zamora", "Zaragoza"
+  ];
+
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -78,7 +91,7 @@ export default function PublishTutorOffer() {
             onChange={handleChange}
           />
           <FormControl fullWidth>
-            <InputLabel id="education-label">Tipo de estudios</InputLabel>
+            <InputLabel id="education-label">Tipos de estudios</InputLabel>
             <Select
               labelId="education-label"
               name="educationLevels"
@@ -87,6 +100,7 @@ export default function PublishTutorOffer() {
               onChange={(e) =>
                 setForm((prev) => ({ ...prev, educationLevels: e.target.value }))
               }
+              label="Tipos de estudios"
               renderValue={(selected) => selected.join(", ")}
             >
               {[
@@ -137,12 +151,20 @@ export default function PublishTutorOffer() {
               <MenuItem value="ambas">Ambas</MenuItem>
             </Select>
           </FormControl>
-          <TextField
-            name="availability"
-            label="Disponibilidad"
-            fullWidth
-            value={form.availability}
-            onChange={handleChange}
+          <Autocomplete
+            options={cities}
+            value={form.location}
+            onChange={(event, newValue) =>
+              setForm((prev) => ({ ...prev, location: newValue }))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Ciudad"
+                fullWidth
+                name="location"
+              />
+            )}
           />
           <Button type="submit" variant="contained" color="success" fullWidth>
             Publicar

@@ -106,8 +106,6 @@ export default function PublicResources() {
   };
 
   const handleVote = async (resourceId, value) => {
-    if (!token) return alert("Debes iniciar sesión para votar.");
-
     try {
       await fetch(`${API_VOTES}/resources/${resourceId}/vote`, {
         method: "POST",
@@ -220,16 +218,20 @@ export default function PublicResources() {
                   </CardContent>
                   <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }} onClick={(e) => e.stopPropagation()}>
                     <Stack direction="row" spacing={1}>
-                      <Button size="small" onClick={(e) => {
-                        e.preventDefault();
-                        handleVote(resource._id, 1);
-                      }}>
+                      <Button size="small"
+                        disabled={!token}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleVote(resource._id, 1);
+                        }}>
                         👍 {resource.votes?.likes || 0}
                       </Button>
-                      <Button size="small" onClick={(e) => {
-                        e.preventDefault();
-                        handleVote(resource._id, -1);
-                      }}>
+                      <Button size="small"
+                        disabled={!token}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleVote(resource._id, -1);
+                        }}>
                         👎 {resource.votes?.dislikes || 0}
                       </Button>
                     </Stack>
