@@ -130,7 +130,7 @@ export default function TutorOffersList() {
         </Box>
       )}
 
-      <Container sx={{ mt: 4 }}>
+      <Container sx={{ mt: 4, pb: "96px" }}>
         <Typography variant="h4" gutterBottom>
           🎓 Profesores particulares
         </Typography>

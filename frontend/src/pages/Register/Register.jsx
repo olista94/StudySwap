@@ -8,6 +8,7 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
+import "./Register.css";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -35,10 +36,15 @@ export default function Register() {
 
   return (
     <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      sx={{ backgroundColor: "#FCFFFC", p: 2 }}
+      className="register-container"
+      sx={{
+        minHeight: "70vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#FCFFFC",
+        px: 2,
+      }}
     >
       <Paper elevation={3} sx={{ p: 4, width: "100%", maxWidth: 450 }}>
         <Typography variant="h5" color="primary" gutterBottom>

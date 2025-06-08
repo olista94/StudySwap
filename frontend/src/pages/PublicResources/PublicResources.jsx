@@ -150,7 +150,7 @@ export default function PublicResources() {
         </Box>
       )}
 
-      <Container sx={{ mt: 4 }}>
+      <Container sx={{ mt: 4, pb: "96px" }}>
         <Typography variant="h4" gutterBottom>
           📚 Apuntes y materiales
         </Typography>
@@ -243,6 +243,7 @@ export default function PublicResources() {
             ))}
           </Grid>
         )}
+        {/* <Box sx={{ height: "96px" }} /> */}
       </Container>
     </>
   );
