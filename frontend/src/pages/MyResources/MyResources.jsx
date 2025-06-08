@@ -19,7 +19,7 @@ import {
   DialogActions,
   Button,
   TextField,
-  InputLabel
+  Box
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -36,41 +36,41 @@ export default function MyResources() {
   const [resourceToEdit, setResourceToEdit] = useState(null);
   const [editForm, setEditForm] = useState({ title: "", description: "", subject: "", year: "" });
 
-const handleUpdateResource = async () => {
-  const token = localStorage.getItem("studyswap_token");
+  const handleUpdateResource = async () => {
+    const token = localStorage.getItem("studyswap_token");
 
-  const formData = new FormData();
-  formData.append("title", editForm.title);
-  formData.append("description", editForm.description);
-  formData.append("subject", editForm.subject);
-  formData.append("university", editForm.university);
-  formData.append("year", editForm.year);
+    const formData = new FormData();
+    formData.append("title", editForm.title);
+    formData.append("description", editForm.description);
+    formData.append("subject", editForm.subject);
+    formData.append("university", editForm.university);
+    formData.append("year", editForm.year);
 
-  if (editForm.newFile) {
-    formData.append("file", editForm.newFile);
-  }
+    if (editForm.newFile) {
+      formData.append("file", editForm.newFile);
+    }
 
-  try {
-    const res = await fetch(`${API_RESOURCES}/${resourceToEdit._id}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
+    try {
+      const res = await fetch(`${API_RESOURCES}/${resourceToEdit._id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
-    const updated = await res.json();
+      const updated = await res.json();
 
-    if (!res.ok) throw new Error(updated.message || "Error al actualizar recurso");
+      if (!res.ok) throw new Error(updated.message || "Error al actualizar recurso");
 
-    setResources((prev) =>
-      prev.map((r) => (r._id === updated._id ? updated : r))
-    );
-    setResourceToEdit(null);
-  } catch (err) {
-    console.error("❌ Error al actualizar:", err.message);
-  }
-};
+      setResources((prev) =>
+        prev.map((r) => (r._id === updated._id ? updated : r))
+      );
+      setResourceToEdit(null);
+    } catch (err) {
+      console.error("❌ Error al actualizar:", err.message);
+    }
+  };
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -167,7 +167,7 @@ const handleUpdateResource = async () => {
                     <IconButton
                       color="primary"
                       component="a"
-                      href={`${API_BASE}${resource.fileUrl}`}
+                      href={resource.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -255,12 +255,29 @@ const handleUpdateResource = async () => {
             value={editForm.year}
             onChange={(e) => setEditForm({ ...editForm, year: e.target.value })}
           />
-          <InputLabel>Archivo (PDF o imagen)</InputLabel>
-          <input
-            type="file"
-            accept=".pdf,.png,.jpg,.jpeg,.md"
-            onChange={(e) => setEditForm({ ...editForm, newFile: e.target.files[0] })}
-          />
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle2" gutterBottom>
+              Archivo actual:
+            </Typography>
+            <Button
+              variant="outlined"
+              size="small"
+              href={resourceToEdit?.fileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver archivo actual
+            </Button>
+
+            <Typography variant="body2" sx={{ mt: 2 }}>
+              Puedes subir un nuevo archivo si deseas reemplazarlo:
+            </Typography>
+            <input
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg,.md"
+              onChange={(e) => setEditForm({ ...editForm, newFile: e.target.files[0] })}
+            />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setResourceToEdit(null)}>Cancelar</Button>

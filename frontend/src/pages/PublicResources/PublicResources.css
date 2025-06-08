@@ -1,12 +1,12 @@
 .public-resource-card:hover {
   transform: translateY(-2px);
   transition: transform 0.2s ease;
-  box-shadow: 0 4px 20px rgba(36, 130, 50, 0.2); /* sombra verde suave */
+  box-shadow: 0 4px 20px rgba(36, 130, 50, 0.2);
   cursor: pointer;
 }
 
 .public-resource-title {
-  color: #040F0F; /* texto oscuro */
+  color: #040F0F;
   font-weight: 600;
 }
 

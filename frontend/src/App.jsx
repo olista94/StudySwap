@@ -19,9 +19,7 @@ import ResourceList from "./pages/ResourceList/ResourceList";
 import TutorList from "./pages/TutorList/TutorList";
 import UploadSelector from "./pages/UploadSelector/UploadSelector";
 import MyClasses from "./pages/MyClasses/MyClasses";
-
-
-// const drawerWidth = -260;
+import "./App.css";
 
 export default function App() {
   return (

@@ -9,7 +9,7 @@ const upload = require("../middlewares/multer");
 router.get('/', ResourceController.getAll);
 router.get('/:id', ResourceController.getById);
 router.post('/', auth, upload.single("file"), ResourceController.uploadWithFile);
-router.put('/:id', auth, ResourceController.update);
+router.put('/:id', auth, upload.single("file"), ResourceController.update);
 router.delete('/:id', auth, ResourceController.remove);
 
 // Rutas de administración

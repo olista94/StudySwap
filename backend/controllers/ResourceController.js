@@ -1,4 +1,5 @@
 const Resource = require('../models/Resource.js');
+const { cloudinary } = require("../config/cloudinary");
 
 exports.getAll = async (req, res) => {
   const filters = req.query;
@@ -63,10 +64,9 @@ exports.update = async (req, res) => {
 
     // Si se ha subido nuevo archivo
     if (req.file) {
-      const fileUrl = `/uploads/${req.file.filename}`;
-      const fileType = getFileType(req.file.originalname);
-      resource.fileUrl = fileUrl;
-      resource.fileType = fileType;
+      resource.fileUrl = req.file.path; // path contiene la URL pública de    Cloudinary
+      resource.fileType = getFileType(req.file.originalname);
+      resource.cloudinary_id = req.file.public_id;
     }
 
     await resource.save();
@@ -77,13 +77,45 @@ exports.update = async (req, res) => {
   }
 };
 
+// Subida a Cloudinary
+exports.uploadWithFile = async (req, res) => {
+  try {
+    const { title, description, subject, professor, university, year } = req.body;
+    const file = req.file;
+
+    if (!file) return res.status(400).json({ message: "Archivo no enviado" });
+
+    // No necesitas subir nada manualmente, req.file ya viene con la URL
+    const fileType = getFileType(file.originalname);
+
+    const resource = new Resource({
+      title,
+      description,
+      fileUrl: file.path, // 👈 URL pública de Cloudinary
+      fileType,
+      subject,
+      professor,
+      university,
+      year,
+      uploadedBy: req.user.id,
+      cloudinary_id: file.filename || file.public_id, // importante para eliminar luego
+    });
+
+    await resource.save();
+    res.status(201).json(resource);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error al subir recurso", error: err.message });
+  }
+};
+
 // Función para detectar el tipo de archivo
 function getFileType(filename) {
   const ext = filename.split('.').pop().toLowerCase();
   if (ext === 'pdf') return 'pdf';
   if (ext === 'md') return 'markdown';
   if (['jpg', 'jpeg', 'png'].includes(ext)) return 'image';
-  return 'unknown';
+  return 'other';
 }
 
 exports.remove = async (req, res) => {
@@ -95,6 +127,13 @@ exports.remove = async (req, res) => {
       return res.status(403).json({ message: 'No autorizado' });
     }
 
+    // 🔥 Eliminar archivo de Cloudinary si existe
+    if (resource.cloudinary_id) {
+      await cloudinary.uploader.destroy(resource.cloudinary_id, {
+        resource_type: "raw", // importante si son PDF o archivos no imagen
+      });
+    }
+
     await resource.deleteOne();
     res.json({ message: 'Recurso eliminado' });
   } catch (err) {
@@ -102,31 +141,47 @@ exports.remove = async (req, res) => {
   }
 };
 
-exports.uploadWithFile = async (req, res) => {
-  try {
-    const { title, description, subject, professor, university, year } = req.body;
-    const file = req.file;
+// exports.remove = async (req, res) => {
+//   try {
+//     const resource = await Resource.findById(req.params.id);
+//     if (!resource) return res.status(404).json({ message: 'Recurso no encontrado' });
 
-    if (!file) return res.status(400).json({ message: "Archivo no enviado" });
+//     if (resource.uploadedBy.toString() !== req.user.id && req.user.role !== 'admin') {
+//       return res.status(403).json({ message: 'No autorizado' });
+//     }
 
-    const fileType = file.mimetype.includes("pdf") ? "pdf" :
-                     file.mimetype.includes("markdown") ? "markdown" : "image";
+//     await resource.deleteOne();
+//     res.json({ message: 'Recurso eliminado' });
+//   } catch (err) {
+//     res.status(500).json({ message: 'Error al eliminar recurso' });
+//   }
+// };
 
-    const resource = new Resource({
-      title,
-      description,
-      fileUrl: `/uploads/${file.filename}`,
-      fileType,
-      subject,
-      professor,
-      university,
-      year,
-      uploadedBy: req.user.id
-    });
+// exports.uploadWithFile = async (req, res) => {
+//   try {
+//     const { title, description, subject, professor, university, year } = req.body;
+//     const file = req.file;
 
-    await resource.save();
-    res.status(201).json(resource);
-  } catch (err) {
-    res.status(500).json({ message: "Error al subir recurso", error: err.message });
-  }
-};
+//     if (!file) return res.status(400).json({ message: "Archivo no enviado" });
+
+//     const fileType = file.mimetype.includes("pdf") ? "pdf" :
+//                      file.mimetype.includes("markdown") ? "markdown" : "image";
+
+//     const resource = new Resource({
+//       title,
+//       description,
+//       fileUrl: `/uploads/${file.filename}`,
+//       fileType,
+//       subject,
+//       professor,
+//       university,
+//       year,
+//       uploadedBy: req.user.id
+//     });
+
+//     await resource.save();
+//     res.status(201).json(resource);
+//   } catch (err) {
+//     res.status(500).json({ message: "Error al subir recurso", error: err.message });
+//   }
+// };

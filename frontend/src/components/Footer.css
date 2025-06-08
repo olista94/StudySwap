@@ -1,7 +1,17 @@
+:root {
+  --dark: #040f0f;
+  --green: #248232;
+  --green-light: #2ba84a;
+  --gray-green: #2d3a3a;
+  --white: #fcfffc;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --radius: 10px;
+}
+
 .footer {
-  background-color: #040f0f;
-  color: #fcfffc;
-  padding: 24px 0;
+  background-color: #f7fbf8;
+  color: var(--dark);
+  padding: 12px 0;
   opacity: 0;
   visibility: hidden;
   transform: translateY(100%);
@@ -15,9 +25,12 @@
 }
 
 .footer.show {
+  position: fixed;
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  width: 100%;
+  z-index: 9999;
 }
 
 .footer-links {
@@ -25,7 +38,7 @@
 }
 
 .footer-link {
-  color: #2ba84a;
+  color: var(--green-light);
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
@@ -33,12 +46,28 @@
 }
 
 .footer-link:hover {
-  color: #fcfffc;
+  color: var(--green);
 }
 
 .footer-copy {
   font-size: 0.85rem;
-  color: #cccccc;
+   color: var(--dark);
+}
+
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background-color: #f7fbf8;
+  color: var(--dark);
+  padding: 12px 0;
+  box-shadow: var(--shadow);
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .footer-modal {

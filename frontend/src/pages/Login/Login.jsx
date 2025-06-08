@@ -52,7 +52,7 @@ export default function Login() {
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 64px)", // ajusta altura excluyendo AppBar
+        minHeight: "70vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

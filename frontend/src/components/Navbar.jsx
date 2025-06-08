@@ -267,6 +267,7 @@ export default function Navbar() {
             boxSizing: "border-box",
             backgroundColor: "#FCFFFC",
             color: "#FCFFFC",
+            backgroundImage: `url("/images/navbar.png")`,
           },
         }}
       >

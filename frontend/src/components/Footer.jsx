@@ -1,11 +1,14 @@
 import { Box, Container, Typography, Stack, Link, Modal, Paper } from "@mui/material";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./Footer.css";
 
 export default function Footer() {
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
   const [showFooter, setShowFooter] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   const handleOpen = (type) => {
     setContent(type);
@@ -64,7 +67,10 @@ export default function Footer() {
   }, []);
 
   return (
-    <Box component="footer" className={`footer ${showFooter ? 'show' : ''}`}>
+    <Box
+      component="footer"
+      className={`footer ${isHome ? "fixed-footer" : showFooter ? "show" : ""}`}
+    >
       <Container maxWidth="lg">
         <Stack direction="row" justifyContent="center" spacing={4} className="footer-links">
           <Link component="button" onClick={() => handleOpen("contact")} className="footer-link">

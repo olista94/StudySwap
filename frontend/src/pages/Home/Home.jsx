@@ -18,7 +18,10 @@ export default function Home() {
   return (
     <Box
       sx={{
+        // flexGrow: 1,
         minHeight: "calc(100vh - 64px)",
+        // height: "100vh",
+        // minHeight: "calc(100vh - 64px - 96px)", // 64px del Navbar fijo + 96px del Footer fijo
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",
