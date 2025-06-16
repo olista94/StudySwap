@@ -25,7 +25,12 @@ exports.vote = async (req, res) => {
     if (existing) {
       // Si el voto ya es el mismo, se ignora
       if (existing.value === value) {
-        return res.status(200).json({ message: 'Ya has votado' });
+        // Deshacer el voto
+        const undo = value === 1 ? { likes: -1 } : { dislikes: -1 };
+        await Resource.findByIdAndUpdate(req.params.id, { $inc: undo });
+        await Vote.deleteOne({ _id: existing._id });
+
+        return res.status(200).json({ message: 'Voto eliminado' });
       }
 
       // Revertir voto anterior

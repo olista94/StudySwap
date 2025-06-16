@@ -298,7 +298,7 @@ export default function TutorOffersList() {
                 {offer.educationLevels?.length > 0 && (
                   <Box sx={{ mb: 1 }}>
                     <Typography variant="body2"><strong>Tipo de estudios:</strong></Typography>
-                    <Stack direction="row" spacing={1} flexWrap="wrap">
+                    <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center" mt={1}>
                       {offer.educationLevels.map((level, index) => (
                         <Chip key={index} label={level} size="small" color="success" />
                       ))}
