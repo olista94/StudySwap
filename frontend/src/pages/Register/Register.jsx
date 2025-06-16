@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { registerUser } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
+import { registerUser, loginUser } from "../../services/authService";
 import {
   Box,
   TextField,
@@ -11,6 +12,7 @@ import {
 import "./Register.css";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -26,8 +28,20 @@ export default function Register() {
     e.preventDefault();
     try {
       await registerUser(form);
+
+      const { token, user } = await loginUser({
+        email: form.email,
+        password: form.password,
+      });
+
+      localStorage.setItem("studyswap_token", token);
+      localStorage.setItem("studyswap_user", JSON.stringify(user));
+
       setSuccess(true);
       setError("");
+
+      // Redirigir
+      navigate("/explorer");
     } catch (err) {
       setError(err.message);
     }

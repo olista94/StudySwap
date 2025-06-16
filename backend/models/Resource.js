@@ -145,7 +145,7 @@ const centrosEducativos = [
   "CIFP A Farixa",
   "CIFP As Mercedes",
   "CIFP A Carballeira",
-  "Otra"
+  "Otro"
 ];
 
 const resourceSchema = new mongoose.Schema({
@@ -170,8 +170,8 @@ const resourceSchema = new mongoose.Schema({
 });
 
 resourceSchema.pre("validate", function (next) {
-  if (this.center === "Otra" && !this.otherCenter) {
-    this.invalidate("otherCenter", "Debes especificar el nombre del centro educativo si seleccionas 'Otra'.");
+  if (this.center === "Otro" && !this.otherCenter) {
+    this.invalidate("otherCenter", "Debes especificar el nombre del centro educativo si seleccionas 'Otro'.");
   }
   next();
 });

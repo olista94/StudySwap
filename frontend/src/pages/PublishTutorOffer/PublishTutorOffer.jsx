@@ -72,7 +72,7 @@ export default function PublishTutorOffer() {
 
   return (
     <Box className="publish-container" sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3 }}>
-      <Typography variant="h5" gutterBottom>🎯 Publicar clases particulares</Typography>
+      <Typography variant="h4" gutterBottom>🎯 Publicar clases particulares</Typography>
 
       {message && (
         <Alert severity={message.startsWith("✅") ? "success" : "error"} sx={{ mb: 2 }}>

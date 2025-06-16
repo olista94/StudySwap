@@ -177,7 +177,7 @@ export default function UploadSelector() {
 
         {value === 1 && (
           <Box component="form" onSubmit={handleOfferSubmit}>
-            <Typography variant="h6" gutterBottom>📈 Publicar clases particulares</Typography>
+            <Typography variant="h6" gutterBottom>🎯 Publicar clases particulares</Typography>
             {offerMessage && (
               <Alert severity={offerMessage.startsWith("✅") ? "success" : "error"} sx={{ mb: 2 }}>
                 {offerMessage}

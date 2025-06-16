@@ -158,7 +158,7 @@ const centrosEducativos = [
   "CIFP A Farixa",
   "CIFP As Mercedes",
   "CIFP A Carballeira",
-  "Otra"
+  "Otro"
 ];
 
 export default function Upload() {
@@ -183,8 +183,8 @@ export default function Upload() {
       [name]: files ? files[0] : value
     });
 
-    // Si el usuario cambia el centro, vaciamos el campo adicional si no es "Otra"
-    if (name === "center" && value !== "Otra") {
+    // Si el usuario cambia el centro, vaciamos el campo adicional si no es "Otro"
+    if (name === "center" && value !== "Otro") {
       setOtherCenter("");
     }
   };
@@ -201,8 +201,8 @@ export default function Upload() {
       data.append(key, form[key]);
     });
 
-    // Añadir `otherCenter` solo si se ha seleccionado "Otra"
-    if (form.center === "Otra" && otherCenter.trim()) {
+    // Añadir `otherCenter` solo si se ha seleccionado "Otro"
+    if (form.center === "Otro" && otherCenter.trim()) {
       data.append("otherCenter", otherCenter.trim());
     }
 
@@ -234,7 +234,7 @@ export default function Upload() {
 
   return (
     <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
-      <Typography variant="h5" gutterBottom>📤 Subir temario</Typography>
+      <Typography variant="h4" gutterBottom>📤 Subir temario</Typography>
 
       {message && (
         <Alert severity={message.startsWith("✅") ? "success" : "error"} sx={{ mb: 2 }}>
@@ -292,8 +292,8 @@ export default function Upload() {
             ))}
           </TextField>
 
-          {/* Campo adicional si elige "Otra" */}
-          {form.center === "Otra" && (
+          {/* Campo adicional si elige "Otro" */}
+          {form.center === "Otro" && (
             <TextField
               name="otherCenter"
               label="Nombre del centro educativo"

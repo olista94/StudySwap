@@ -213,7 +213,7 @@ export default function PublicResources() {
                     </Typography>
                     <Stack direction="row" spacing={1} mb={1}>
                       <Chip label={resource.subject} size="small" />
-                      <Chip label={resource.center} size="small" />
+                      <Chip label={resource.center === 'Otro' ? (resource.otherCenter || 'Otro') : resource.center} size="small" />
                       <Chip label={resource.year} size="small" />
                     </Stack>
                   </CardContent>

@@ -34,7 +34,7 @@ exports.create = async (req, res) => {
       subject,
       professor,
       center,
-      otherCenter: center === "Otra" ? req.body.otherCenter : null, // Si es "Otra", toma el valor del campo adicional
+      otherCenter: center === "Otro" ? req.body.otherCenter : null,
       year,
       uploadedBy: req.user.id
     });
@@ -61,7 +61,7 @@ exports.update = async (req, res) => {
     if (description) resource.description = description;
     if (subject) resource.subject = subject;
     if (center) resource.center = center;
-    if (center === "Otra" && req.body.otherCenter) {
+    if (center === "Otro" && req.body.otherCenter) {
       resource.otherCenter = req.body.otherCenter;
     }
     if (year) resource.year = year;
@@ -100,7 +100,7 @@ exports.uploadWithFile = async (req, res) => {
       subject,
       professor,
       center,
-      otherCenter: center === "Otra" ? otherCenter : null,
+      otherCenter: center === "Otro" ? otherCenter : null,
       year,
       uploadedBy: req.user.id,
       cloudinary_id: file.filename || file.public_id, // importante para eliminar luego

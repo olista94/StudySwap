@@ -92,14 +92,15 @@ export default function ResourceDetail() {
 
   return (
     <>
-      <Button
-        variant="outlined"
-        color="secondary"
-        onClick={() => navigate("/explorer")}
-        sx={{ ml: 3, mt: 4 }}
-      >
-        ← Volver a los apuntes
-      </Button>
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mt: 4, px: 3 }}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => navigate("/explorer")}
+        >
+          ← Volver a los apuntes
+        </Button>
+      </Box>
 
       <Box className="detail-container" sx={{ maxWidth: 800, mx: "auto", mt: 4, p: 3 }}>
         <Typography variant="h4" gutterBottom>{resource.title}</Typography>
@@ -108,7 +109,9 @@ export default function ResourceDetail() {
         <Stack spacing={1} sx={{ mb: 2 }}>
           <Typography variant="body2">📚 <strong>Asignatura:</strong> {resource.subject}</Typography>
           <Typography variant="body2">👨‍🏫 <strong>Profesor:</strong> {resource.professor}</Typography>
-          <Typography variant="body2">🏛️ <strong>Centro:</strong> {resource.center}</Typography>
+          <Typography variant="body2">
+            🏛️ <strong>Centro:</strong> {resource.center === 'Otro' ? (resource.otherCenter || 'Otro') : resource.center}
+          </Typography>
           <Typography variant="body2">📅 <strong>Año:</strong> {resource.year}</Typography>
           <Typography variant="body2">👤 <strong>Autor:</strong> {resource.uploadedBy?.name}</Typography>
         </Stack>
