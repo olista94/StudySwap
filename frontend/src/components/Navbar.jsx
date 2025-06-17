@@ -38,6 +38,7 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
   const [temarioOpen, setTemarioOpen] = useState(false);
   const [clasesOpen, setClasesOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("studyswap_user");
@@ -49,6 +50,7 @@ export default function Navbar() {
     localStorage.removeItem("studyswap_user");
     setUser(null);
     navigate("/");
+    if (mobileOpen) setMobileOpen(false)
   };
 
   const toggleTemario = () => {
@@ -57,6 +59,10 @@ export default function Navbar() {
 
   const toggleClases = () => {
     setClasesOpen(!clasesOpen);
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileOpen((prev) => !prev);
   };
 
   const renderLinks = () =>
@@ -102,6 +108,9 @@ export default function Navbar() {
                 component={Link}
                 to="/explorer"
                 sx={{ pl: 6 }}
+                onClick={() => {
+                  if (window.innerWidth < 768) toggleMobileMenu();
+                }}
               >
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -113,6 +122,9 @@ export default function Navbar() {
                 component={Link}
                 to="/my-resources"
                 sx={{ pl: 6 }}
+                onClick={() => {
+                  if (window.innerWidth < 768) toggleMobileMenu();
+                }}
               >
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <FontAwesomeIcon icon={faFolderOpen} />
@@ -124,6 +136,9 @@ export default function Navbar() {
                 component={Link}
                 to="/upload"
                 sx={{ pl: 6 }}
+                onClick={() => {
+                  if (window.innerWidth < 768) toggleMobileMenu();
+                }}
               >
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <FontAwesomeIcon icon={faFileArrowUp} />
@@ -149,6 +164,9 @@ export default function Navbar() {
                 component={Link}
                 to="/tutors"
                 sx={{ pl: 6 }}
+                onClick={() => {
+                  if (window.innerWidth < 768) toggleMobileMenu();
+                }}
               >
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -160,6 +178,9 @@ export default function Navbar() {
                 component={Link}
                 to="/my-classes"
                 sx={{ pl: 6 }}
+                onClick={() => {
+                  if (window.innerWidth < 768) toggleMobileMenu();
+                }}
               >
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <FontAwesomeIcon icon={faChalkboardUser} />
@@ -171,6 +192,9 @@ export default function Navbar() {
                 component={Link}
                 to="/tutors/publish"
                 sx={{ pl: 6 }}
+                onClick={() => {
+                  if (window.innerWidth < 768) toggleMobileMenu();
+                }}
               >
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <FontAwesomeIcon icon={faUserTie} />
@@ -187,11 +211,13 @@ export default function Navbar() {
             <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUserTie} /></ListItemIcon>
             <ListItemText primary="Dar clases" />
           </ListItem> */}
-          <ListItem button component={Link} to="/profile">
+          <ListItem button component={Link} to="/profile" onClick={() => {
+            if (window.innerWidth < 768) toggleMobileMenu();
+          }}>
             <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUser} /></ListItemIcon>
             <ListItemText primary="Perfil" />
           </ListItem>
-          <ListItem button onClick={handleLogout}>
+          <ListItem button onClick={handleLogout} >
             <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faRightFromBracket} /></ListItemIcon>
             <ListItemText primary="Cerrar sesión" />
           </ListItem>
@@ -199,15 +225,21 @@ export default function Navbar() {
       )
     ) : (
       <>
-        <ListItem button component={Link} to="/login">
+        <ListItem button component={Link} to="/login" onClick={() => {
+          if (window.innerWidth < 768) toggleMobileMenu();
+        }}>
           <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faRightToBracket} /></ListItemIcon>
           <ListItemText primary="Iniciar sesión" />
         </ListItem>
-        <ListItem button component={Link} to="/register">
+        <ListItem button component={Link} to="/register" onClick={() => {
+          if (window.innerWidth < 768) toggleMobileMenu();
+        }}>
           <ListItemIcon sx={{ minWidth: 32 }}><FontAwesomeIcon icon={faUserPlus} /></ListItemIcon>
           <ListItemText primary="Registrarse" />
         </ListItem>
-        <ListItem button component={Link} to="/login" state={{ from: "/select-type" }}>
+        <ListItem button component={Link} to="/login" state={{ from: "/select-type" }} onClick={() => {
+          if (window.innerWidth < 768) toggleMobileMenu();
+        }}>
           <ListItemIcon sx={{ minWidth: 32 }}>
             <FontAwesomeIcon icon={faFileArrowUp} />
           </ListItemIcon>
@@ -223,12 +255,20 @@ export default function Navbar() {
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
           backgroundColor: "#F9FFF9",
-          // ml: `${drawerWidth}px`,
         }}
       >
-        <Toolbar>
-          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-            <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box sx={{ display: { xs: "block", md: "none" }, mr: 2 }}>
+            <button className="menu-toggle" onClick={toggleMobileMenu}>☰</button>
+          </Box>
+          {/* Logo y título */}
+          <Box
+            sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}
+          >
+            <Link
+              to={user ? "/explorer" : "/"}
+              style={{ display: "flex", alignItems: "center", textDecoration: "none" }}
+            >
               <img
                 src="/images/icon.png"
                 alt="StudySwap"
@@ -239,7 +279,6 @@ export default function Navbar() {
               </Typography>
             </Link>
           </Box>
-
           {user && (
             <Box
               sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
@@ -250,18 +289,45 @@ export default function Navbar() {
                 alt={user.name}
                 sx={{ width: 32, height: 32 }}
               />
-              <Typography variant="body2" sx={{ color: "#040F0F", ml: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#040F0F",
+                  ml: 1,
+                  display: { xs: "none", md: "inline" }, // Oculto en móvil
+                }}
+              >
                 {user.name}
               </Typography>
             </Box>
           )}
         </Toolbar>
       </AppBar>
-
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={toggleMobileMenu}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: "block", md: "none" },
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            backgroundColor: "#FCFFFC",
+            backgroundImage: `url("/images/navbar.jpg")`,
+          },
+        }}
+      >
+        <Toolbar />
+        <Box sx={{ overflow: "auto" }}>
+          <List>{renderLinks()}</List>
+        </Box>
+      </Drawer>
       <Drawer
         variant="permanent"
         anchor="left"
         sx={{
+          display: { xs: "none", md: "block" },
           width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
@@ -269,7 +335,6 @@ export default function Navbar() {
             width: drawerWidth,
             boxSizing: "border-box",
             backgroundColor: "#FCFFFC",
-            color: "#FCFFFC",
             backgroundImage: `url("/images/navbar.jpg")`,
           },
         }}

@@ -33,7 +33,6 @@ export default function App() {
           component="main"
           sx={{
             flexGrow: 1,
-            // ml: `${drawerWidth}px`,
             mt: "64px", // altura del AppBar fijo
             display: "flex",
             flexDirection: "column",
