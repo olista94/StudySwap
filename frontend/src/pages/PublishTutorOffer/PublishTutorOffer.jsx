@@ -71,7 +71,7 @@ export default function PublishTutorOffer() {
   };
 
   return (
-    <Box className="publish-container" sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3 }}>
+    <Box className="publish-container" sx={{ maxWidth: 600, mx: "auto", mt: 4, p: 3, pb: 15 }}>
       <Typography variant="h4" gutterBottom>🎯 Publicar clases particulares</Typography>
 
       {message && (

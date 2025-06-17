@@ -1,10 +1,3 @@
-.public-resource-card:hover {
-  transform: translateY(-2px);
-  transition: transform 0.2s ease;
-  box-shadow: 0 4px 20px rgba(36, 130, 50, 0.2);
-  cursor: pointer;
-}
-
 .public-resource-title {
   color: #040F0F;
   font-weight: 600;
@@ -26,7 +19,7 @@
   border-radius: 6px;
 }
 
-.public-resource-card {
+/* .public-resource-card {
   background-color: white;
   border: 1px solid black;
   border-radius: 10px;
@@ -37,11 +30,34 @@
   text-decoration: none;
   color: inherit;
   transition: transform 0.2s ease;
+} */
+
+ .public-resource-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+  overflow-wrap: break-word;
+  padding: 1rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
+
+/* .public-resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(36, 130, 50, 0.2);
+  cursor: pointer;
+} */
 
 .public-resource-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 20px rgba(36, 130, 50, 0.2);
+  box-shadow: 0 6px 18px rgba(36, 130, 50, 0.2);
   cursor: pointer;
 }
 
@@ -53,4 +69,53 @@
 .comments-count {
   font-size: 0.875rem;
   color: #2d3a3a;
+}
+
+.public-resource-card h6 {
+  color: #040f0f;
+  font-weight: 600;
+}
+
+.public-resource-card .MuiButton-root {
+  text-transform: none;
+  font-weight: bold;
+}
+
+.public-resource-card .MuiTypography-body2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* número de líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip-fixed {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+@media (max-width: 600px) {
+  .public-resource-card {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .public-filters {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .public-filters input {
+    width: 100% !important;
+  }
+
+  .chip-fixed {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
 }

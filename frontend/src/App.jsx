@@ -37,11 +37,11 @@ export default function App() {
             display: "flex",
             flexDirection: "column",
             minHeight: "100vh",
+            width: "100%"
           }}
         >
           <Box sx={{ flexGrow: 1 }}>
             <Routes>
-              {/* <Route path="/" element={<Navigate to="/login" />} /> */}
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

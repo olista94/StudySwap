@@ -155,13 +155,15 @@ export default function PublicResources() {
           📚 Apuntes y materiales
         </Typography>
 
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={1} mb={2}>
+        <Stack spacing={1} mb={2}>
           <TextField
             name="search"
             label="¿Qué estás buscando?"
             value={searchQuery}
             onChange={handleFilter}
             fullWidth
+            size="medium"
+            sx={{ fontSize: "1.2rem" }}
           />
         </Stack>
 
@@ -198,23 +200,36 @@ export default function PublicResources() {
         ) : (
           <Grid container spacing={3}>
             {filtered.map((resource) => (
-              <Grid item xs={12} sm={6} md={4} key={resource._id}>
+              <Grid item xs={12} sm={6} md={4} key={resource._id} sx={{ width: "100%" }}>
                 <Card
                   component={Link}
                   to={`/resources/${resource._id}`}
                   className="public-resource-card"
+                  sx={{
+                    p: 2,
+                    borderRadius: 2,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    textDecoration: "none",
+                    color: "inherit"
+                  }}
                 >
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      {resource.title}
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 1 }}>
-                      {resource.description}
-                    </Typography>
-                    <Stack direction="row" spacing={1} mb={1}>
-                      <Chip label={resource.subject} size="small" />
-                      <Chip label={resource.center === 'Otro' ? (resource.otherCenter || 'Otro') : resource.center} size="small" />
-                      <Chip label={resource.year} size="small" />
+                  <CardContent sx={{ display: "flex", flexDirection: "column", gap: 1, alignItems: "center"}}>
+                    <Typography variant="h6">{resource.title}</Typography>
+                    <Typography variant="body2">{resource.description}</Typography>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Chip className="chip-fixed" label={resource.subject} size="small" />
+                      <Chip className="chip-fixed" label={resource.center === 'Otro' ? (resource.otherCenter || 'Otro') : resource.center} size="small" />
+                      <Chip className="chip-fixed" label={resource.year} size="small" />
                     </Stack>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 2 }} onClick={(e) => e.stopPropagation()}>

@@ -233,7 +233,7 @@ export default function Upload() {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
+    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4, p: 3, pb: 15  }}>
       <Typography variant="h4" gutterBottom>📤 Subir temario</Typography>
 
       {message && (

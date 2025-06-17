@@ -23,6 +23,7 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 import EmailIcon from "@mui/icons-material/Email";
 import "./TutorOffersList.css";
+
 import { API_TUTORS } from "../../config/apiConfig";
 
 const API_URL = import.meta.env.VITE_API_URL;

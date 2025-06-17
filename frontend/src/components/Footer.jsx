@@ -73,10 +73,10 @@ export default function Footer() {
     >
       <Container maxWidth="lg">
         <Stack direction="row" justifyContent="center" spacing={4} className="footer-links">
-          <Link component="button" onClick={() => handleOpen("contact")} className="footer-link">
+          <Link sx={{ textDecoration: 'none' }} component="button" onClick={() => handleOpen("contact")} className="footer-link">
             Contact
           </Link>
-          <Link component="button" onClick={() => handleOpen("about")} className="footer-link">
+          <Link sx={{ textDecoration: 'none' }} component="button" onClick={() => handleOpen("about")} className="footer-link">
             About
           </Link>
         </Stack>
