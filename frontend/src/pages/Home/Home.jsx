@@ -18,15 +18,12 @@ export default function Home() {
   return (
     <Box
       sx={{
-        // flexGrow: 1,
         minHeight: "calc(100vh - 64px)",
-        // height: "100vh",
-        // minHeight: "calc(100vh - 64px - 96px)", // 64px del Navbar fijo + 96px del Footer fijo
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",
-        pt: 10,
-        px: 2,
+        pt: { xs: 6, sm: 8, md: 10 },
+        px: { xs: 2, sm: 4 },
         textAlign: "center",
         backgroundImage: `url("/images/wallpaper.png")`,
         backgroundSize: "cover",
@@ -34,11 +31,22 @@ export default function Home() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Stack spacing={6} sx={{ width: "100%", maxWidth: 800 }}>
-        <Typography variant="h2" color="text" sx={{ fontWeight: "bold" }}>
+      <Stack spacing={6} sx={{ width: "100%", maxWidth: 800, mx: "auto" }}>
+        <Typography
+          variant="h2"
+          color="text"
+          sx={{
+            fontWeight: "bold",
+            fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+          }}>
           Conecta estudiantes, comparte apuntes y mejora tu aprendizaje
         </Typography>
-        <Typography variant="h5" color="text.secondary">
+        <Typography
+          variant="h5"
+          color="text.secondary"
+          sx={{
+            fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" }
+          }}>
           Aquí puedes encontrar recursos de estudio, publicar tus propios apuntes y conectar con estudiantes para dar o recibir clases particulares.
         </Typography>
 
