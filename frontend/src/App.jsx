@@ -33,7 +33,7 @@ export default function App() {
           component="main"
           sx={{
             flexGrow: 1,
-            mt: "64px", // altura del AppBar fijo
+            mt: "40px", // altura del AppBar fijo
             display: "flex",
             flexDirection: "column",
             minHeight: "100vh",
